@@ -1,0 +1,87 @@
+[
+  {
+    "id": "f1",
+    "text": "Brazil is the only country to have played in every single World Cup since 1930!",
+    "category": "records"
+  },
+  {
+    "id": "f2",
+    "text": "The first World Cup was held in Uruguay in 1930, and Uruguay won it at home!",
+    "year": 1930,
+    "category": "history"
+  },
+  {
+    "id": "f3",
+    "text": "Germany scored 7 goals against Brazil in a single match in 2014 - the most goals ever in a World Cup semi-final!",
+    "year": 2014,
+    "category": "records"
+  },
+  {
+    "id": "f4",
+    "text": "Lionel Messi finally won his first World Cup trophy in 2022 after playing in 5 World Cups!",
+    "year": 2022,
+    "category": "players"
+  },
+  {
+    "id": "f5",
+    "text": "The youngest player to score in a World Cup Final was Pele - he was only 17 years old!",
+    "year": 1958,
+    "category": "players"
+  },
+  {
+    "id": "f6",
+    "text": "The 2022 World Cup in Qatar was the first ever held in the Middle East!",
+    "year": 2022,
+    "category": "history"
+  },
+  {
+    "id": "f7",
+    "text": "A World Cup soccer ball travels about 3,000 kilometers during the whole tournament!",
+    "category": "fun"
+  },
+  {
+    "id": "f8",
+    "text": "Brazil has won the most World Cups ever - 5 times! They won in 1958, 1962, 1970, 1994, and 2002.",
+    "category": "records"
+  },
+  {
+    "id": "f9",
+    "text": "Diego Maradona scored the famous 'Hand of God' goal against England in 1986!",
+    "year": 1986,
+    "category": "players"
+  },
+  {
+    "id": "f10",
+    "text": "The World Cup trophy is made of 18 karat gold and weighs about 6 kilograms - that's like a small dog!",
+    "category": "fun"
+  },
+  {
+    "id": "f11",
+    "text": "Over 3 billion people watched the 2022 World Cup Final - that's almost half of everyone on Earth!",
+    "year": 2022,
+    "category": "fun"
+  },
+  {
+    "id": "f12",
+    "text": "The 2022 World Cup Final between Argentina and France is considered one of the greatest finals ever, ending 3-3 before penalties!",
+    "year": 2022,
+    "category": "matches"
+  },
+  {
+    "id": "f13",
+    "text": "Kylian Mbappe scored a hat-trick (3 goals) in the 2022 World Cup Final - the first since 1966!",
+    "year": 2022,
+    "category": "players"
+  },
+  {
+    "id": "f14",
+    "text": "The fastest goal in World Cup history was scored in just 11 seconds!",
+    "category": "records"
+  },
+  {
+    "id": "f15",
+    "text": "The mascot for the first World Cup was a boy named Gauchito in Argentina 1978!",
+    "year": 1978,
+    "category": "fun"
+  }
+]

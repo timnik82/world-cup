@@ -6,9 +6,28 @@ export default {
   theme: {
     extend: {
       borderRadius: {
-        lg: ".5625rem", /* 9px */
-        md: ".375rem", /* 6px */
-        sm: ".1875rem", /* 3px */
+        lg: ".75rem", /* 12px - more rounded for kids */
+        md: ".5rem", /* 8px */
+        sm: ".25rem", /* 4px */
+        xl: "1rem", /* 16px */
+        "2xl": "1.5rem", /* 24px */
+      },
+      fontFamily: {
+        sans: ["Poppins", "Inter", "system-ui", "sans-serif"],
+        display: ["Poppins", "system-ui", "sans-serif"],
+        mono: ["JetBrains Mono", "monospace"],
+      },
+      fontSize: {
+        "kid-xs": ["0.875rem", { lineHeight: "1.4" }],
+        "kid-sm": ["1rem", { lineHeight: "1.5" }],
+        "kid-base": ["1.125rem", { lineHeight: "1.6" }],
+        "kid-lg": ["1.25rem", { lineHeight: "1.5" }],
+        "kid-xl": ["1.5rem", { lineHeight: "1.4" }],
+        "kid-2xl": ["1.875rem", { lineHeight: "1.3" }],
+        "kid-3xl": ["2.25rem", { lineHeight: "1.2" }],
+        "kid-4xl": ["3rem", { lineHeight: "1.1" }],
+        "kid-5xl": ["3.75rem", { lineHeight: "1.1" }],
+        "kid-6xl": ["4.5rem", { lineHeight: "1" }],
       },
       colors: {
         // Flat / base colors (regular buttons)

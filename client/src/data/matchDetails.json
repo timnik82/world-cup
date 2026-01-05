@@ -1,0 +1,105 @@
+{
+  "m1986-final": {
+    "matchId": "m1986-final",
+    "stadium": "Azteca Stadium",
+    "city": "Mexico City",
+    "attendance": 114600,
+    "referee": "Romualdo Arppi Filho (Brazil)",
+    "goals": [
+      { "player": "Jose Luis Brown", "team": "Argentina", "minute": 23, "type": "header" },
+      { "player": "Jorge Valdano", "team": "Argentina", "minute": 55 },
+      { "player": "Karl-Heinz Rummenigge", "team": "West Germany", "minute": 74 },
+      { "player": "Rudi Voller", "team": "West Germany", "minute": 80 },
+      { "player": "Jorge Burruchaga", "team": "Argentina", "minute": 84 }
+    ],
+    "cards": [
+      { "player": "Lothar Matthaus", "team": "West Germany", "minute": 65, "type": "yellow" }
+    ],
+    "substitutions": [
+      { "playerOut": "Hector Enrique", "playerIn": "Marcelo Trobbiani", "team": "Argentina", "minute": 89 }
+    ]
+  },
+  "m1986-qf": {
+    "matchId": "m1986-qf",
+    "stadium": "Azteca Stadium",
+    "city": "Mexico City",
+    "attendance": 114580,
+    "referee": "Ali Bin Nasser (Tunisia)",
+    "goals": [
+      { "player": "Diego Maradona", "team": "Argentina", "minute": 51, "type": "Hand of God" },
+      { "player": "Diego Maradona", "team": "Argentina", "minute": 55, "type": "Goal of the Century" },
+      { "player": "Gary Lineker", "team": "England", "minute": 81 }
+    ],
+    "cards": [],
+    "substitutions": [
+      { "playerOut": "Trevor Steven", "playerIn": "Chris Waddle", "team": "England", "minute": 68 },
+      { "playerOut": "Peter Reid", "playerIn": "John Barnes", "team": "England", "minute": 74 }
+    ]
+  },
+  "m2014-sf1": {
+    "matchId": "m2014-sf1",
+    "stadium": "Mineirao",
+    "city": "Belo Horizonte",
+    "attendance": 58141,
+    "referee": "Marco Rodriguez (Mexico)",
+    "goals": [
+      { "player": "Thomas Muller", "team": "Germany", "minute": 11 },
+      { "player": "Miroslav Klose", "team": "Germany", "minute": 23 },
+      { "player": "Toni Kroos", "team": "Germany", "minute": 24 },
+      { "player": "Toni Kroos", "team": "Germany", "minute": 26 },
+      { "player": "Sami Khedira", "team": "Germany", "minute": 29 },
+      { "player": "Andre Schurrle", "team": "Germany", "minute": 69 },
+      { "player": "Andre Schurrle", "team": "Germany", "minute": 79 },
+      { "player": "Oscar", "team": "Brazil", "minute": 90 }
+    ],
+    "cards": [
+      { "player": "Fernandinho", "team": "Brazil", "minute": 45, "type": "yellow" }
+    ],
+    "substitutions": [
+      { "playerOut": "Oscar", "playerIn": "Hernanes", "team": "Brazil", "minute": 46 },
+      { "playerOut": "Paulinho", "playerIn": "Ramires", "team": "Brazil", "minute": 46 }
+    ]
+  },
+  "m2022-final": {
+    "matchId": "m2022-final",
+    "stadium": "Lusail Stadium",
+    "city": "Lusail",
+    "attendance": 88966,
+    "referee": "Szymon Marciniak (Poland)",
+    "goals": [
+      { "player": "Lionel Messi", "team": "Argentina", "minute": 23, "type": "penalty" },
+      { "player": "Angel Di Maria", "team": "Argentina", "minute": 36 },
+      { "player": "Kylian Mbappe", "team": "France", "minute": 80, "type": "penalty" },
+      { "player": "Kylian Mbappe", "team": "France", "minute": 81 },
+      { "player": "Lionel Messi", "team": "Argentina", "minute": 108 },
+      { "player": "Kylian Mbappe", "team": "France", "minute": 118, "type": "penalty" }
+    ],
+    "cards": [
+      { "player": "Dayot Upamecano", "team": "France", "minute": 89, "type": "yellow" },
+      { "player": "Cristian Romero", "team": "Argentina", "minute": 105, "type": "yellow" },
+      { "player": "Aurelien Tchouameni", "team": "France", "minute": 110, "type": "yellow" },
+      { "player": "Gonzalo Montiel", "team": "Argentina", "minute": 120, "type": "yellow" }
+    ],
+    "substitutions": [
+      { "playerOut": "Olivier Giroud", "playerIn": "Marcus Thuram", "team": "France", "minute": 41 },
+      { "playerOut": "Ousmane Dembele", "playerIn": "Randal Kolo Muani", "team": "France", "minute": 71 },
+      { "playerOut": "Angel Di Maria", "playerIn": "Marcos Acuna", "team": "Argentina", "minute": 64 }
+    ]
+  },
+  "m2022-sf1": {
+    "matchId": "m2022-sf1",
+    "stadium": "Lusail Stadium",
+    "city": "Lusail",
+    "attendance": 88966,
+    "referee": "Daniele Orsato (Italy)",
+    "goals": [
+      { "player": "Lionel Messi", "team": "Argentina", "minute": 34, "type": "penalty" },
+      { "player": "Julian Alvarez", "team": "Argentina", "minute": 39 },
+      { "player": "Julian Alvarez", "team": "Argentina", "minute": 69 }
+    ],
+    "cards": [
+      { "player": "Josip Juranovic", "team": "Croatia", "minute": 33, "type": "yellow" }
+    ],
+    "substitutions": []
+  }
+}

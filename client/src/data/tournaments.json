@@ -1,0 +1,62 @@
+[
+  {
+    "year": 1986,
+    "host": "Mexico",
+    "champion": "Argentina",
+    "runnerUp": "West Germany",
+    "finalScore": "3-2",
+    "thirdPlace": "France",
+    "fourthPlace": "Belgium",
+    "totalMatches": 52,
+    "totalGoals": 132,
+    "attendance": 2394031
+  },
+  {
+    "year": 1994,
+    "host": "United States",
+    "champion": "Brazil",
+    "runnerUp": "Italy",
+    "finalScore": "0-0 (3-2 pen)",
+    "thirdPlace": "Sweden",
+    "fourthPlace": "Bulgaria",
+    "totalMatches": 52,
+    "totalGoals": 141,
+    "attendance": 3587538
+  },
+  {
+    "year": 2006,
+    "host": "Germany",
+    "champion": "Italy",
+    "runnerUp": "France",
+    "finalScore": "1-1 (5-3 pen)",
+    "thirdPlace": "Germany",
+    "fourthPlace": "Portugal",
+    "totalMatches": 64,
+    "totalGoals": 147,
+    "attendance": 3359439
+  },
+  {
+    "year": 2014,
+    "host": "Brazil",
+    "champion": "Germany",
+    "runnerUp": "Argentina",
+    "finalScore": "1-0",
+    "thirdPlace": "Netherlands",
+    "fourthPlace": "Brazil",
+    "totalMatches": 64,
+    "totalGoals": 171,
+    "attendance": 3429873
+  },
+  {
+    "year": 2022,
+    "host": "Qatar",
+    "champion": "Argentina",
+    "runnerUp": "France",
+    "finalScore": "3-3 (4-2 pen)",
+    "thirdPlace": "Croatia",
+    "fourthPlace": "Morocco",
+    "totalMatches": 64,
+    "totalGoals": 172,
+    "attendance": 3404252
+  }
+]

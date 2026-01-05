@@ -1,0 +1,83 @@
+import tournamentsData from "./tournaments.json";
+import matchesData from "./matches.json";
+import factsData from "./facts.json";
+import matchDetailsData from "./matchDetails.json";
+import {
+  TournamentsDataSchema,
+  MatchesDataSchema,
+  FactsDataSchema,
+  MatchDetailsSchema,
+  type Tournament,
+  type Match,
+  type Fact,
+  type MatchDetails,
+} from "./schemas";
+
+export const tournaments: Tournament[] = TournamentsDataSchema.parse(tournamentsData);
+export const matches: Match[] = MatchesDataSchema.parse(matchesData);
+export const facts: Fact[] = FactsDataSchema.parse(factsData);
+
+export const matchDetails: Record<string, MatchDetails> = {};
+for (const [key, value] of Object.entries(matchDetailsData)) {
+  matchDetails[key] = MatchDetailsSchema.parse(value);
+}
+
+export function getTournamentByYear(year: number): Tournament | undefined {
+  return tournaments.find((t) => t.year === year);
+}
+
+export function getMatchesByYear(year: number): Match[] {
+  return matches.filter((m) => m.tournamentYear === year);
+}
+
+export function getMatchesByStage(stage: string): Match[] {
+  return matches.filter((m) => m.stage === stage);
+}
+
+export function getMatchesByYearAndStage(year: number, stage: string): Match[] {
+  return matches.filter((m) => m.tournamentYear === year && m.stage === stage);
+}
+
+export function getRandomFact(): Fact {
+  const randomIndex = Math.floor(Math.random() * facts.length);
+  return facts[randomIndex];
+}
+
+export function getAllYears(): number[] {
+  return tournaments.map((t) => t.year).sort((a, b) => a - b);
+}
+
+export function getAllStages(): string[] {
+  const stages = new Set(matches.map((m) => m.stage));
+  return Array.from(stages);
+}
+
+export function computeStats() {
+  const totalGoalsByTournament = tournaments.map((t) => ({
+    year: t.year,
+    goals: t.totalGoals,
+    host: t.host,
+  }));
+
+  const topScoringMatches = [...matches]
+    .map((m) => ({
+      ...m,
+      totalGoals: m.homeScore + m.awayScore,
+    }))
+    .sort((a, b) => b.totalGoals - a.totalGoals)
+    .slice(0, 5);
+
+  const mostGoalsInTournament = tournaments.reduce((max, t) =>
+    t.totalGoals > max.totalGoals ? t : max
+  );
+
+  return {
+    totalGoalsByTournament,
+    topScoringMatches,
+    mostGoalsInTournament,
+    totalTournaments: tournaments.length,
+    totalMatchesInData: matches.length,
+  };
+}
+
+export type { Tournament, Match, Fact, MatchDetails };
