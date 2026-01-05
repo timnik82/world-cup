@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Trophy, MapPin, Users, Calendar } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Slider } from "@/components/ui/slider";
+import { Button } from "@/components/ui/button";
 import { getAllYears, getTournamentByYear, type Tournament } from "@/data";
 
 export function TimelineSlide() {
@@ -59,18 +60,20 @@ export function TimelineSlide() {
             className="w-full cursor-pointer"
             data-testid="slider-year"
           />
-          <div className="flex justify-between mt-3 text-kid-sm font-medium text-muted-foreground flex-wrap gap-2">
+          <div className="flex justify-between mt-3 flex-wrap gap-2">
             {years.map((year) => (
-              <span
+              <Button
                 key={year}
-                className={`transition-colors cursor-pointer ${
-                  year === selectedYear ? "text-violet-600 font-bold" : ""
-                }`}
+                variant="ghost"
+                size="sm"
                 onClick={() => setSelectedYear(year)}
+                className={`text-kid-sm font-medium transition-colors ${
+                  year === selectedYear ? "text-violet-600 font-bold bg-violet-100" : "text-muted-foreground"
+                }`}
                 data-testid={`button-year-${year}`}
               >
                 {year}
-              </span>
+              </Button>
             ))}
           </div>
         </div>

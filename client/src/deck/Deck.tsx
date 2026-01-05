@@ -71,6 +71,14 @@ export function Deck({ children }: DeckProps) {
 
     return () => {
       clearTimeout(timer);
+      if (globalReveal) {
+        try {
+          globalReveal.destroy();
+        } catch (e) {
+          console.warn("Error destroying Reveal:", e);
+        }
+        globalReveal = null;
+      }
     };
   }, [setCurrentSlide]);
 
