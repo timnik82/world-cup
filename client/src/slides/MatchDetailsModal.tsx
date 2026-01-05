@@ -5,7 +5,8 @@ import { Card, CardContent } from "@/components/ui/card";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Badge } from "@/components/ui/badge";
 import { useQuery } from "@tanstack/react-query";
-import { matchDetails, type Match, type MatchDetails } from "@/data";
+import type { Match, MatchDetails } from "@/data";
+import { fetchMatchDetails } from "@/lib/api";
 
 interface MatchDetailsModalProps {
   match: Match | null;
@@ -13,13 +14,8 @@ interface MatchDetailsModalProps {
   onClose: () => void;
 }
 
-async function fetchMatchDetails(matchId: string): Promise<MatchDetails | null> {
-  await new Promise((resolve) => setTimeout(resolve, 800));
-  return matchDetails[matchId] || null;
-}
-
 export function MatchDetailsModal({ match, isOpen, onClose }: MatchDetailsModalProps) {
-  const { data, isLoading, isError, refetch, isFetched } = useQuery({
+  const { data, isLoading, isError, refetch, isFetched } = useQuery<MatchDetails | null>({
     queryKey: ["matchDetails", match?.id],
     queryFn: () => (match ? fetchMatchDetails(match.id) : Promise.resolve(null)),
     enabled: false,
@@ -40,6 +36,7 @@ export function MatchDetailsModal({ match, isOpen, onClose }: MatchDetailsModalP
           exit={{ opacity: 0 }}
           className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm"
           onClick={onClose}
+          data-testid="modal-overlay"
         >
           <motion.div
             initial={{ scale: 0.9, opacity: 0, y: 20 }}
@@ -48,8 +45,9 @@ export function MatchDetailsModal({ match, isOpen, onClose }: MatchDetailsModalP
             transition={{ type: "spring", duration: 0.5 }}
             className="w-full max-w-3xl max-h-[90vh] overflow-hidden"
             onClick={(e) => e.stopPropagation()}
+            data-testid="modal-content"
           >
-            <Card className="border-2 border-emerald-200 shadow-2xl bg-white">
+            <Card className="border-2 border-emerald-200 shadow-2xl">
               <CardContent className="p-0">
                 <div className="bg-gradient-to-r from-emerald-500 to-teal-500 p-6 text-white relative">
                   <Button
@@ -63,21 +61,24 @@ export function MatchDetailsModal({ match, isOpen, onClose }: MatchDetailsModalP
                   </Button>
 
                   <div className="text-center">
-                    <Badge className="mb-3 bg-white/20 text-white border-0">
+                    <Badge className="mb-3 bg-white/20 text-white border-0" data-testid="badge-modal-stage">
                       {match.stage} - {match.tournamentYear}
                     </Badge>
-                    <div className="flex items-center justify-center gap-4 mb-2">
-                      <span className="text-kid-2xl md:text-kid-3xl font-bold">
+                    <div className="flex items-center justify-center gap-4 mb-2 flex-wrap">
+                      <span className="text-kid-2xl md:text-kid-3xl font-bold" data-testid="text-modal-home-team">
                         {match.homeTeam}
                       </span>
-                      <span className="text-kid-4xl md:text-kid-5xl font-bold font-mono bg-white/20 px-6 py-2 rounded-2xl">
+                      <span 
+                        className="text-kid-4xl md:text-kid-5xl font-bold font-mono bg-white/20 px-6 py-2 rounded-2xl"
+                        data-testid="text-modal-score"
+                      >
                         {match.homeScore} - {match.awayScore}
                       </span>
-                      <span className="text-kid-2xl md:text-kid-3xl font-bold">
+                      <span className="text-kid-2xl md:text-kid-3xl font-bold" data-testid="text-modal-away-team">
                         {match.awayTeam}
                       </span>
                     </div>
-                    <p className="text-kid-base opacity-90">
+                    <p className="text-kid-base opacity-90" data-testid="text-modal-venue">
                       {match.stadium}, {match.city}
                     </p>
                   </div>
@@ -86,7 +87,7 @@ export function MatchDetailsModal({ match, isOpen, onClose }: MatchDetailsModalP
                 <ScrollArea className="max-h-[50vh]">
                   <div className="p-6">
                     {!isFetched && !isLoading && (
-                      <div className="text-center py-12">
+                      <div className="text-center py-12" data-testid="load-details-prompt">
                         <p className="text-kid-lg text-muted-foreground mb-6">
                           Want to see more details about this match?
                         </p>
@@ -102,7 +103,7 @@ export function MatchDetailsModal({ match, isOpen, onClose }: MatchDetailsModalP
                     )}
 
                     {isLoading && (
-                      <div className="flex flex-col items-center justify-center py-12">
+                      <div className="flex flex-col items-center justify-center py-12" data-testid="loading-state">
                         <Loader2 className="w-12 h-12 text-emerald-500 animate-spin mb-4" />
                         <p className="text-kid-lg text-muted-foreground">
                           Loading match details...
@@ -111,12 +112,12 @@ export function MatchDetailsModal({ match, isOpen, onClose }: MatchDetailsModalP
                     )}
 
                     {isError && (
-                      <div className="text-center py-12">
+                      <div className="text-center py-12" data-testid="error-state">
                         <AlertCircle className="w-12 h-12 text-red-500 mx-auto mb-4" />
                         <p className="text-kid-lg text-red-600 mb-4">
                           Oops! Couldn't load the details.
                         </p>
-                        <Button onClick={() => refetch()} variant="outline">
+                        <Button onClick={() => refetch()} variant="outline" data-testid="button-retry">
                           Try Again
                         </Button>
                       </div>
@@ -127,27 +128,31 @@ export function MatchDetailsModal({ match, isOpen, onClose }: MatchDetailsModalP
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         className="space-y-6"
+                        data-testid="match-details-content"
                       >
                         <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
                           <StatCard
                             icon={<MapPin className="w-5 h-5 text-emerald-500" />}
                             label="Stadium"
                             value={data.stadium}
+                            testId="stat-stadium"
                           />
                           <StatCard
                             icon={<Users className="w-5 h-5 text-sky-500" />}
                             label="Attendance"
                             value={data.attendance.toLocaleString()}
+                            testId="stat-attendance"
                           />
                           <StatCard
                             icon={<User className="w-5 h-5 text-violet-500" />}
                             label="Referee"
                             value={data.referee}
+                            testId="stat-referee"
                           />
                         </div>
 
                         {data.goals.length > 0 && (
-                          <div>
+                          <div data-testid="goals-section">
                             <h3 className="text-kid-xl font-bold text-foreground mb-3 flex items-center gap-2">
                               <span className="text-2xl">⚽</span> Goals
                             </h3>
@@ -158,7 +163,8 @@ export function MatchDetailsModal({ match, isOpen, onClose }: MatchDetailsModalP
                                   initial={{ x: -20, opacity: 0 }}
                                   animate={{ x: 0, opacity: 1 }}
                                   transition={{ delay: index * 0.1 }}
-                                  className="flex items-center gap-3 p-3 rounded-xl bg-emerald-50"
+                                  className="flex items-center gap-3 p-3 rounded-xl bg-emerald-50 flex-wrap"
+                                  data-testid={`goal-${index}`}
                                 >
                                   <span className="font-mono text-kid-lg font-bold text-emerald-600">
                                     {goal.minute}'
@@ -181,7 +187,7 @@ export function MatchDetailsModal({ match, isOpen, onClose }: MatchDetailsModalP
                         )}
 
                         {data.cards.length > 0 && (
-                          <div>
+                          <div data-testid="cards-section">
                             <h3 className="text-kid-xl font-bold text-foreground mb-3">
                               Cards
                             </h3>
@@ -195,6 +201,7 @@ export function MatchDetailsModal({ match, isOpen, onClose }: MatchDetailsModalP
                                       ? "bg-amber-50 border-amber-300 text-amber-700"
                                       : "bg-red-50 border-red-300 text-red-700"
                                   }`}
+                                  data-testid={`card-${index}`}
                                 >
                                   {card.minute}' - {card.player}
                                 </Badge>
@@ -204,7 +211,7 @@ export function MatchDetailsModal({ match, isOpen, onClose }: MatchDetailsModalP
                         )}
 
                         {data.substitutions.length > 0 && (
-                          <div>
+                          <div data-testid="substitutions-section">
                             <h3 className="text-kid-xl font-bold text-foreground mb-3">
                               Substitutions
                             </h3>
@@ -212,7 +219,8 @@ export function MatchDetailsModal({ match, isOpen, onClose }: MatchDetailsModalP
                               {data.substitutions.map((sub, index) => (
                                 <div
                                   key={index}
-                                  className="flex items-center gap-2 text-kid-sm text-muted-foreground"
+                                  className="flex items-center gap-2 text-kid-sm text-muted-foreground flex-wrap"
+                                  data-testid={`substitution-${index}`}
                                 >
                                   <span className="font-mono font-bold">{sub.minute}'</span>
                                   <span className="text-red-500">↓ {sub.playerOut}</span>
@@ -240,16 +248,18 @@ function StatCard({
   icon,
   label,
   value,
+  testId,
 }: {
   icon: React.ReactNode;
   label: string;
   value: string;
+  testId: string;
 }) {
   return (
-    <div className="flex flex-col items-center p-4 rounded-xl bg-slate-50 text-center">
+    <div className="flex flex-col items-center p-4 rounded-xl bg-slate-50 text-center" data-testid={testId}>
       <div className="mb-2">{icon}</div>
       <p className="text-kid-xs text-muted-foreground font-medium mb-1">{label}</p>
-      <p className="text-kid-sm font-semibold text-foreground">{value}</p>
+      <p className="text-kid-sm font-semibold text-foreground" data-testid={`${testId}-value`}>{value}</p>
     </div>
   );
 }

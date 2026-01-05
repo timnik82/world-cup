@@ -18,14 +18,18 @@ export function TimelineSlide() {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center h-full px-8 py-12 bg-gradient-to-br from-violet-50 via-fuchsia-50 to-pink-50">
+    <div 
+      className="flex flex-col items-center justify-center h-full px-8 py-12 bg-gradient-to-br from-violet-50 via-fuchsia-50 to-pink-50"
+      data-testid="timeline-slide-content"
+    >
       <motion.h2
         initial={{ y: -20, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         className="text-kid-4xl md:text-kid-5xl font-bold text-foreground mb-8 text-center"
+        data-testid="text-timeline-title"
       >
-        <span className="inline-flex items-center gap-3">
-          <Calendar className="w-12 h-12 text-violet-500" />
+        <span className="inline-flex items-center gap-3 flex-wrap justify-center">
+          <Calendar className="w-12 h-12 text-violet-500" data-testid="icon-calendar" />
           World Cup Timeline
         </span>
       </motion.h2>
@@ -37,7 +41,10 @@ export function TimelineSlide() {
           transition={{ delay: 0.2 }}
           className="text-center mb-6"
         >
-          <span className="text-kid-6xl font-bold text-violet-600 font-mono">
+          <span 
+            className="text-kid-6xl font-bold text-violet-600 font-mono"
+            data-testid="text-selected-year"
+          >
             {selectedYear}
           </span>
         </motion.div>
@@ -52,13 +59,15 @@ export function TimelineSlide() {
             className="w-full cursor-pointer"
             data-testid="slider-year"
           />
-          <div className="flex justify-between mt-3 text-kid-sm font-medium text-muted-foreground">
+          <div className="flex justify-between mt-3 text-kid-sm font-medium text-muted-foreground flex-wrap gap-2">
             {years.map((year) => (
               <span
                 key={year}
-                className={`transition-colors ${
+                className={`transition-colors cursor-pointer ${
                   year === selectedYear ? "text-violet-600 font-bold" : ""
                 }`}
+                onClick={() => setSelectedYear(year)}
+                data-testid={`button-year-${year}`}
               >
                 {year}
               </span>
@@ -87,33 +96,38 @@ export function TimelineSlide() {
 
 function TournamentCard({ tournament }: { tournament: Tournament }) {
   return (
-    <Card className="border-2 border-violet-200 shadow-2xl bg-white/95 backdrop-blur-sm overflow-hidden">
+    <Card 
+      className="border-2 border-violet-200 shadow-2xl overflow-hidden"
+      data-testid={`card-tournament-${tournament.year}`}
+    >
       <CardContent className="p-0">
         <div className="bg-gradient-to-r from-violet-500 to-fuchsia-500 p-6 text-white">
-          <div className="flex items-center justify-center gap-3 mb-2">
-            <MapPin className="w-6 h-6" />
-            <span className="text-kid-2xl md:text-kid-3xl font-bold">{tournament.host}</span>
+          <div className="flex items-center justify-center gap-3 mb-2 flex-wrap">
+            <MapPin className="w-6 h-6" data-testid="icon-mappin" />
+            <span className="text-kid-2xl md:text-kid-3xl font-bold" data-testid="text-host-country">
+              {tournament.host}
+            </span>
           </div>
         </div>
 
         <div className="p-8">
           <div className="text-center mb-8">
-            <div className="flex items-center justify-center gap-4 mb-4">
+            <div className="flex items-center justify-center gap-4 mb-4 flex-wrap">
               <motion.div
                 initial={{ rotate: -180, scale: 0 }}
                 animate={{ rotate: 0, scale: 1 }}
                 transition={{ delay: 0.3, type: "spring" }}
               >
-                <Trophy className="w-14 h-14 text-amber-500" />
+                <Trophy className="w-14 h-14 text-amber-500" data-testid="icon-trophy-champion" />
               </motion.div>
               <div>
                 <p className="text-kid-sm text-muted-foreground font-medium mb-1">Champion</p>
-                <p className="text-kid-3xl md:text-kid-4xl font-bold text-foreground">
+                <p className="text-kid-3xl md:text-kid-4xl font-bold text-foreground" data-testid="text-champion">
                   {tournament.champion}
                 </p>
               </div>
             </div>
-            <p className="text-kid-lg text-muted-foreground">
+            <p className="text-kid-lg text-muted-foreground" data-testid="text-runner-up">
               vs <span className="font-semibold text-foreground">{tournament.runnerUp}</span>
             </p>
           </div>
@@ -125,7 +139,10 @@ function TournamentCard({ tournament }: { tournament: Tournament }) {
             className="text-center mb-8 py-6 bg-gradient-to-r from-violet-100 to-fuchsia-100 rounded-2xl"
           >
             <p className="text-kid-sm text-violet-600 font-semibold mb-2">Final Score</p>
-            <p className="text-kid-5xl md:text-kid-6xl font-bold font-mono text-violet-700">
+            <p 
+              className="text-kid-5xl md:text-kid-6xl font-bold font-mono text-violet-700"
+              data-testid="text-final-score"
+            >
               {tournament.finalScore}
             </p>
           </motion.div>
@@ -135,17 +152,20 @@ function TournamentCard({ tournament }: { tournament: Tournament }) {
               icon={<Users className="w-6 h-6 text-sky-500" />}
               label="Total Matches"
               value={tournament.totalMatches.toString()}
+              testId="stat-total-matches"
             />
             <StatBox
               icon={<span className="text-2xl">⚽</span>}
               label="Total Goals"
               value={tournament.totalGoals.toString()}
+              testId="stat-total-goals"
             />
             {tournament.attendance && (
               <StatBox
                 icon={<Users className="w-6 h-6 text-emerald-500" />}
                 label="Attendance"
                 value={`${(tournament.attendance / 1000000).toFixed(1)}M`}
+                testId="stat-attendance"
               />
             )}
           </div>
@@ -159,15 +179,17 @@ function StatBox({
   icon,
   label,
   value,
+  testId,
 }: {
   icon: React.ReactNode;
   label: string;
   value: string;
+  testId: string;
 }) {
   return (
-    <div className="flex flex-col items-center p-4 rounded-xl bg-slate-50">
+    <div className="flex flex-col items-center p-4 rounded-xl bg-slate-50" data-testid={testId}>
       <div className="mb-2">{icon}</div>
-      <p className="text-kid-2xl font-bold text-foreground">{value}</p>
+      <p className="text-kid-2xl font-bold text-foreground" data-testid={`${testId}-value`}>{value}</p>
       <p className="text-kid-xs text-muted-foreground font-medium">{label}</p>
     </div>
   );

@@ -1,0 +1,52 @@
+.reveal {
+  font-family: var(--font-sans);
+}
+
+.reveal .slides {
+  text-align: left;
+}
+
+.reveal .slides section {
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.reveal .slides > section {
+  height: 100%;
+  width: 100%;
+}
+
+.reveal .controls {
+  color: hsl(142 71% 45%);
+}
+
+.reveal .controls button {
+  transform: scale(1.5);
+}
+
+.reveal .progress {
+  height: 6px;
+  background: rgba(0, 0, 0, 0.1);
+}
+
+.reveal .progress span {
+  background: linear-gradient(90deg, hsl(142 71% 45%), hsl(199 89% 48%));
+}
+
+.reveal .slide-number {
+  font-family: var(--font-mono);
+  font-size: 1rem;
+  font-weight: 600;
+  color: hsl(215 16% 47%);
+  background: hsl(210 40% 96%);
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  right: 1rem;
+  bottom: 1rem;
+}
+
+@media (max-width: 768px) {
+  .reveal .controls button {
+    transform: scale(1.2);
+  }
+}

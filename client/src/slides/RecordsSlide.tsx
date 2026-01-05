@@ -1,8 +1,9 @@
-import { useState, useMemo } from "react";
+import { useState } from "react";
 import { motion } from "framer-motion";
 import { Trophy, RefreshCw, TrendingUp, Target } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
 import { computeStats } from "@/data";
 
 export function RecordsSlide() {
@@ -18,14 +19,20 @@ export function RecordsSlide() {
   };
 
   return (
-    <div className="flex flex-col h-full px-6 py-8 bg-gradient-to-br from-amber-50 via-orange-50 to-rose-50">
+    <div 
+      className="flex flex-col h-full px-6 py-8 bg-gradient-to-br from-amber-50 via-orange-50 to-rose-50"
+      data-testid="records-slide-content"
+    >
       <motion.div
         initial={{ y: -20, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         className="flex flex-col md:flex-row items-center justify-between mb-8 gap-4"
       >
-        <h2 className="text-kid-3xl md:text-kid-4xl font-bold text-foreground flex items-center gap-3">
-          <Trophy className="w-10 h-10 text-amber-500" />
+        <h2 
+          className="text-kid-3xl md:text-kid-4xl font-bold text-foreground flex items-center gap-3 flex-wrap"
+          data-testid="text-records-title"
+        >
+          <Trophy className="w-10 h-10 text-amber-500" data-testid="icon-trophy" />
           Records & Stats
         </h2>
         <Button
@@ -53,6 +60,7 @@ export function RecordsSlide() {
             value={stats.mostGoalsInTournament.totalGoals.toString()}
             subtitle={`${stats.mostGoalsInTournament.host} ${stats.mostGoalsInTournament.year}`}
             color="amber"
+            testId="record-most-goals"
           />
         </motion.div>
 
@@ -67,6 +75,7 @@ export function RecordsSlide() {
             value={stats.totalTournaments.toString()}
             subtitle="World Cup tournaments"
             color="emerald"
+            testId="record-tournaments"
           />
         </motion.div>
 
@@ -81,6 +90,7 @@ export function RecordsSlide() {
             value={stats.totalMatchesInData.toString()}
             subtitle="Historic matches"
             color="sky"
+            testId="record-matches"
           />
         </motion.div>
       </div>
@@ -91,9 +101,12 @@ export function RecordsSlide() {
         transition={{ delay: 0.4 }}
         className="mt-8 max-w-4xl mx-auto w-full"
       >
-        <Card className="border-2 border-orange-200 shadow-xl bg-white/95">
+        <Card className="border-2 border-orange-200 shadow-xl" data-testid="card-top-scoring">
           <CardContent className="p-6">
-            <h3 className="text-kid-xl font-bold text-foreground mb-4 flex items-center gap-2">
+            <h3 
+              className="text-kid-xl font-bold text-foreground mb-4 flex items-center gap-2"
+              data-testid="text-top-scoring-title"
+            >
               <span className="text-2xl">⚽</span> Top Scoring Matches
             </h3>
             <div className="space-y-3">
@@ -103,25 +116,30 @@ export function RecordsSlide() {
                   initial={{ x: -20, opacity: 0 }}
                   animate={{ x: 0, opacity: 1 }}
                   transition={{ delay: 0.5 + index * 0.1 }}
-                  className="flex items-center gap-4 p-4 rounded-xl bg-gradient-to-r from-orange-50 to-amber-50"
+                  className="flex items-center gap-4 p-4 rounded-xl bg-gradient-to-r from-orange-50 to-amber-50 flex-wrap"
+                  data-testid={`top-match-${index}`}
                 >
                   <span className="text-kid-2xl font-bold text-amber-500 w-8">
                     #{index + 1}
                   </span>
-                  <div className="flex-1">
-                    <div className="flex items-center gap-2 text-kid-lg font-bold text-foreground">
-                      <span>{match.homeTeam}</span>
-                      <span className="font-mono text-amber-600">
+                  <div className="flex-1 min-w-0">
+                    <div className="flex items-center gap-2 text-kid-lg font-bold text-foreground flex-wrap">
+                      <span data-testid={`top-match-${index}-home`}>{match.homeTeam}</span>
+                      <span className="font-mono text-amber-600" data-testid={`top-match-${index}-score`}>
                         {match.homeScore} - {match.awayScore}
                       </span>
-                      <span>{match.awayTeam}</span>
+                      <span data-testid={`top-match-${index}-away`}>{match.awayTeam}</span>
                     </div>
                     <p className="text-kid-sm text-muted-foreground">
-                      {match.stage} • {match.tournamentYear}
+                      <Badge variant="secondary" className="mr-2">{match.stage}</Badge>
+                      {match.tournamentYear}
                     </p>
                   </div>
                   <div className="text-right">
-                    <span className="text-kid-3xl font-bold text-amber-500">
+                    <span 
+                      className="text-kid-3xl font-bold text-amber-500"
+                      data-testid={`top-match-${index}-total`}
+                    >
                       {match.totalGoals}
                     </span>
                     <p className="text-kid-xs text-muted-foreground">goals</p>
@@ -142,12 +160,14 @@ function RecordCard({
   value,
   subtitle,
   color,
+  testId,
 }: {
   icon: React.ReactNode;
   title: string;
   value: string;
   subtitle: string;
   color: "amber" | "emerald" | "sky";
+  testId: string;
 }) {
   const bgColors = {
     amber: "from-amber-100 to-orange-100",
@@ -162,7 +182,10 @@ function RecordCard({
   };
 
   return (
-    <Card className={`border-2 ${borderColors[color]} shadow-xl bg-white h-full`}>
+    <Card 
+      className={`border-2 ${borderColors[color]} shadow-xl h-full`}
+      data-testid={testId}
+    >
       <CardContent className="p-6 flex flex-col items-center text-center h-full justify-center">
         <div className={`p-4 rounded-2xl bg-gradient-to-br ${bgColors[color]} mb-4`}>
           {icon}
@@ -173,6 +196,7 @@ function RecordCard({
           initial={{ scale: 0.5, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
           className="text-kid-5xl font-bold text-foreground mb-2"
+          data-testid={`${testId}-value`}
         >
           {value}
         </motion.p>

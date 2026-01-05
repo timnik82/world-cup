@@ -11,7 +11,8 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { getAllYears, getAllStages, getMatchesByYearAndStage, matches as allMatches, type Match } from "@/data";
+import { Badge } from "@/components/ui/badge";
+import { getAllYears, getAllStages, matches as allMatches, type Match } from "@/data";
 import { useFavoritesStore } from "@/store/favorites";
 import { useToast } from "@/hooks/use-toast";
 
@@ -37,13 +38,17 @@ export function MatchesSlide({ onShowDetails }: MatchesSlideProps) {
   }, [selectedYear, selectedStage]);
 
   return (
-    <div className="flex flex-col h-full px-6 py-8 bg-gradient-to-br from-sky-50 via-cyan-50 to-teal-50">
+    <div 
+      className="flex flex-col h-full px-6 py-8 bg-gradient-to-br from-sky-50 via-cyan-50 to-teal-50"
+      data-testid="matches-slide-content"
+    >
       <motion.h2
         initial={{ y: -20, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
-        className="text-kid-3xl md:text-kid-4xl font-bold text-foreground mb-6 text-center flex items-center justify-center gap-3"
+        className="text-kid-3xl md:text-kid-4xl font-bold text-foreground mb-6 text-center flex items-center justify-center gap-3 flex-wrap"
+        data-testid="text-matches-title"
       >
-        <Search className="w-10 h-10 text-sky-500" />
+        <Search className="w-10 h-10 text-sky-500" data-testid="icon-search" />
         Explore Matches
       </motion.h2>
 
@@ -52,9 +57,10 @@ export function MatchesSlide({ onShowDetails }: MatchesSlideProps) {
         animate={{ y: 0, opacity: 1 }}
         transition={{ delay: 0.1 }}
         className="flex flex-wrap justify-center gap-4 mb-6"
+        data-testid="filters-container"
       >
         <div className="flex items-center gap-2">
-          <Filter className="w-5 h-5 text-muted-foreground" />
+          <Filter className="w-5 h-5 text-muted-foreground" data-testid="icon-filter" />
           <Select value={selectedYear} onValueChange={setSelectedYear}>
             <SelectTrigger
               className="w-40 min-h-12 text-kid-base font-medium rounded-xl"
@@ -63,9 +69,9 @@ export function MatchesSlide({ onShowDetails }: MatchesSlideProps) {
               <SelectValue placeholder="Select Year" />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="all">All Years</SelectItem>
+              <SelectItem value="all" data-testid="select-year-option-all">All Years</SelectItem>
               {years.map((year) => (
-                <SelectItem key={year} value={year.toString()}>
+                <SelectItem key={year} value={year.toString()} data-testid={`select-year-option-${year}`}>
                   {year}
                 </SelectItem>
               ))}
@@ -82,9 +88,9 @@ export function MatchesSlide({ onShowDetails }: MatchesSlideProps) {
               <SelectValue placeholder="Select Stage" />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="all">All Stages</SelectItem>
+              <SelectItem value="all" data-testid="select-stage-option-all">All Stages</SelectItem>
               {stages.map((stage) => (
-                <SelectItem key={stage} value={stage}>
+                <SelectItem key={stage} value={stage} data-testid={`select-stage-option-${stage}`}>
                   {stage}
                 </SelectItem>
               ))}
@@ -101,6 +107,7 @@ export function MatchesSlide({ onShowDetails }: MatchesSlideProps) {
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 className="text-center py-12 text-muted-foreground text-kid-lg"
+                data-testid="text-no-matches"
               >
                 No matches found with these filters. Try different options!
               </motion.div>
@@ -151,32 +158,47 @@ function MatchCard({
   };
 
   return (
-    <Card className="border-2 border-sky-100 shadow-lg hover:shadow-xl transition-shadow bg-white/95">
+    <Card 
+      className="border-2 border-sky-100 shadow-lg"
+      data-testid={`card-match-${match.id}`}
+    >
       <CardContent className="p-4 md:p-6">
         <div className="flex flex-col md:flex-row md:items-center gap-4">
           <div className="flex-1">
-            <div className="flex items-center gap-2 mb-2">
-              <span className="px-3 py-1 text-kid-xs font-semibold rounded-full bg-sky-100 text-sky-700">
+            <div className="flex items-center gap-2 mb-2 flex-wrap">
+              <Badge variant="secondary" data-testid={`badge-stage-${match.id}`}>
                 {match.stage}
-              </span>
-              <span className="text-kid-xs text-muted-foreground font-medium">
+              </Badge>
+              <span className="text-kid-xs text-muted-foreground font-medium" data-testid={`text-year-${match.id}`}>
                 {match.tournamentYear}
               </span>
             </div>
 
-            <div className="flex items-center justify-center gap-4 mb-2">
-              <span className="text-kid-lg md:text-kid-xl font-bold text-foreground text-right flex-1">
+            <div className="flex items-center justify-center gap-4 mb-2 flex-wrap">
+              <span 
+                className="text-kid-lg md:text-kid-xl font-bold text-foreground text-right flex-1"
+                data-testid={`text-home-team-${match.id}`}
+              >
                 {match.homeTeam}
               </span>
-              <span className="text-kid-2xl md:text-kid-3xl font-bold font-mono text-sky-600 px-4 py-2 rounded-xl bg-sky-50">
+              <span 
+                className="text-kid-2xl md:text-kid-3xl font-bold font-mono text-sky-600 px-4 py-2 rounded-xl bg-sky-50"
+                data-testid={`text-score-${match.id}`}
+              >
                 {match.homeScore} - {match.awayScore}
               </span>
-              <span className="text-kid-lg md:text-kid-xl font-bold text-foreground text-left flex-1">
+              <span 
+                className="text-kid-lg md:text-kid-xl font-bold text-foreground text-left flex-1"
+                data-testid={`text-away-team-${match.id}`}
+              >
                 {match.awayTeam}
               </span>
             </div>
 
-            <p className="text-kid-sm text-muted-foreground text-center">
+            <p 
+              className="text-kid-sm text-muted-foreground text-center"
+              data-testid={`text-stadium-${match.id}`}
+            >
               {match.stadium}, {match.city}
             </p>
           </div>

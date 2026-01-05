@@ -2,6 +2,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Star, Trash2, Heart, Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { useFavoritesStore } from "@/store/favorites";
 import { useToast } from "@/hooks/use-toast";
@@ -29,13 +30,17 @@ export function FavoritesSlide() {
   const isEmpty = favoriteFacts.length === 0 && favoriteMatches.length === 0;
 
   return (
-    <div className="flex flex-col h-full px-6 py-8 bg-gradient-to-br from-rose-50 via-pink-50 to-fuchsia-50">
+    <div 
+      className="flex flex-col h-full px-6 py-8 bg-gradient-to-br from-rose-50 via-pink-50 to-fuchsia-50"
+      data-testid="favorites-slide-content"
+    >
       <motion.h2
         initial={{ y: -20, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
-        className="text-kid-3xl md:text-kid-4xl font-bold text-foreground mb-8 text-center flex items-center justify-center gap-3"
+        className="text-kid-3xl md:text-kid-4xl font-bold text-foreground mb-8 text-center flex items-center justify-center gap-3 flex-wrap"
+        data-testid="text-favorites-title"
       >
-        <Heart className="w-10 h-10 text-rose-500 fill-rose-500" />
+        <Heart className="w-10 h-10 text-rose-500 fill-rose-500" data-testid="icon-heart" />
         My Favorites
       </motion.h2>
 
@@ -44,14 +49,15 @@ export function FavoritesSlide() {
           initial={{ scale: 0.9, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
           className="flex-1 flex flex-col items-center justify-center text-center"
+          data-testid="empty-state"
         >
           <div className="p-6 rounded-full bg-rose-100 mb-6">
             <Star className="w-16 h-16 text-rose-300" />
           </div>
-          <h3 className="text-kid-2xl font-bold text-foreground mb-3">
+          <h3 className="text-kid-2xl font-bold text-foreground mb-3" data-testid="text-empty-title">
             No favorites yet!
           </h3>
-          <p className="text-kid-lg text-muted-foreground max-w-md">
+          <p className="text-kid-lg text-muted-foreground max-w-md" data-testid="text-empty-message">
             Go explore the other slides and save your favorite facts and matches by clicking
             the star button!
           </p>
@@ -59,7 +65,7 @@ export function FavoritesSlide() {
       ) : (
         <ScrollArea className="flex-1">
           <div className="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto w-full pb-4">
-            <div>
+            <div data-testid="favorite-facts-section">
               <h3 className="text-kid-xl font-bold text-foreground mb-4 flex items-center gap-2">
                 <Sparkles className="w-6 h-6 text-amber-500" />
                 Favorite Facts ({favoriteFacts.length})
@@ -67,7 +73,7 @@ export function FavoritesSlide() {
               <div className="space-y-3">
                 <AnimatePresence>
                   {favoriteFacts.length === 0 ? (
-                    <p className="text-kid-base text-muted-foreground py-4">
+                    <p className="text-kid-base text-muted-foreground py-4" data-testid="text-no-facts">
                       No favorite facts saved yet.
                     </p>
                   ) : (
@@ -79,11 +85,17 @@ export function FavoritesSlide() {
                         exit={{ x: 20, opacity: 0 }}
                         layout
                       >
-                        <Card className="border-2 border-amber-100 shadow-md bg-white">
+                        <Card 
+                          className="border-2 border-amber-100 shadow-md"
+                          data-testid={`favorite-fact-${fact.id}`}
+                        >
                           <CardContent className="p-4">
                             <div className="flex gap-3">
                               <div className="flex-1">
-                                <p className="text-kid-base text-foreground leading-relaxed">
+                                <p 
+                                  className="text-kid-base text-foreground leading-relaxed"
+                                  data-testid={`favorite-fact-text-${fact.id}`}
+                                >
                                   {fact.text}
                                 </p>
                                 {fact.year && (
@@ -96,7 +108,7 @@ export function FavoritesSlide() {
                                 size="icon"
                                 variant="ghost"
                                 onClick={() => handleRemoveFact(fact.id)}
-                                className="flex-shrink-0 text-rose-500 hover:text-rose-600 hover:bg-rose-50"
+                                className="flex-shrink-0 text-rose-500"
                                 data-testid={`button-remove-fact-${fact.id}`}
                               >
                                 <Trash2 className="w-5 h-5" />
@@ -111,7 +123,7 @@ export function FavoritesSlide() {
               </div>
             </div>
 
-            <div>
+            <div data-testid="favorite-matches-section">
               <h3 className="text-kid-xl font-bold text-foreground mb-4 flex items-center gap-2">
                 <span className="text-xl">⚽</span>
                 Favorite Matches ({favoriteMatches.length})
@@ -119,7 +131,7 @@ export function FavoritesSlide() {
               <div className="space-y-3">
                 <AnimatePresence>
                   {favoriteMatches.length === 0 ? (
-                    <p className="text-kid-base text-muted-foreground py-4">
+                    <p className="text-kid-base text-muted-foreground py-4" data-testid="text-no-matches">
                       No favorite matches saved yet.
                     </p>
                   ) : (
@@ -131,19 +143,25 @@ export function FavoritesSlide() {
                         exit={{ x: 20, opacity: 0 }}
                         layout
                       >
-                        <Card className="border-2 border-sky-100 shadow-md bg-white">
+                        <Card 
+                          className="border-2 border-sky-100 shadow-md"
+                          data-testid={`favorite-match-${match.id}`}
+                        >
                           <CardContent className="p-4">
                             <div className="flex gap-3">
                               <div className="flex-1">
-                                <div className="flex items-center gap-2 mb-1">
-                                  <span className="px-2 py-0.5 text-kid-xs font-semibold rounded-full bg-sky-100 text-sky-700">
+                                <div className="flex items-center gap-2 mb-1 flex-wrap">
+                                  <Badge variant="secondary">
                                     {match.stage}
-                                  </span>
+                                  </Badge>
                                   <span className="text-kid-xs text-muted-foreground">
                                     {match.tournamentYear}
                                   </span>
                                 </div>
-                                <div className="flex items-center gap-2 text-kid-lg font-bold text-foreground">
+                                <div 
+                                  className="flex items-center gap-2 text-kid-lg font-bold text-foreground flex-wrap"
+                                  data-testid={`favorite-match-teams-${match.id}`}
+                                >
                                   <span>{match.homeTeam}</span>
                                   <span className="font-mono text-sky-600">
                                     {match.homeScore} - {match.awayScore}
@@ -158,7 +176,7 @@ export function FavoritesSlide() {
                                 size="icon"
                                 variant="ghost"
                                 onClick={() => handleRemoveMatch(match.id)}
-                                className="flex-shrink-0 text-rose-500 hover:text-rose-600 hover:bg-rose-50"
+                                className="flex-shrink-0 text-rose-500"
                                 data-testid={`button-remove-match-${match.id}`}
                               >
                                 <Trash2 className="w-5 h-5" />

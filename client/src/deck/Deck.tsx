@@ -1,79 +1,82 @@
-import { useEffect, useRef, useState, type ReactNode } from "react";
+import { useEffect, useRef, type ReactNode } from "react";
 import Reveal from "reveal.js";
 import "reveal.js/dist/reveal.css";
+import "./reveal-overrides.css";
 import { useSlidesStore } from "@/store/slides";
 
 interface DeckProps {
   children: ReactNode;
 }
 
+let globalReveal: Reveal.Api | null = null;
+
 export function Deck({ children }: DeckProps) {
   const deckRef = useRef<HTMLDivElement>(null);
-  const revealRef = useRef<Reveal.Api | null>(null);
-  const [initialized, setInitialized] = useState(false);
   const setCurrentSlide = useSlidesStore((s) => s.setCurrentSlide);
 
   useEffect(() => {
-    if (!deckRef.current || revealRef.current) return;
+    if (!deckRef.current || globalReveal) return;
 
-    const deck = new Reveal(deckRef.current, {
-      embedded: false,
-      hash: false,
-      controls: true,
-      controlsTutorial: true,
-      controlsLayout: "bottom-right",
-      controlsBackArrows: "faded",
-      progress: true,
-      center: true,
-      touch: true,
-      loop: false,
-      rtl: false,
-      shuffle: false,
-      fragments: true,
-      fragmentInURL: false,
-      help: true,
-      mouseWheel: false,
-      previewLinks: false,
-      transition: "slide",
-      transitionSpeed: "default",
-      backgroundTransition: "fade",
-      viewDistance: 3,
-      width: "100%",
-      height: "100%",
-      margin: 0,
-      minScale: 0.2,
-      maxScale: 2.0,
-    });
+    const initReveal = async () => {
+      if (!deckRef.current) return;
+      
+      try {
+        const deck = new Reveal(deckRef.current, {
+          embedded: false,
+          hash: false,
+          controls: true,
+          controlsTutorial: true,
+          controlsLayout: "bottom-right",
+          controlsBackArrows: "faded",
+          progress: true,
+          center: false,
+          touch: true,
+          loop: false,
+          rtl: false,
+          shuffle: false,
+          fragments: true,
+          fragmentInURL: false,
+          help: true,
+          mouseWheel: false,
+          previewLinks: false,
+          transition: "slide",
+          transitionSpeed: "default",
+          backgroundTransition: "fade",
+          viewDistance: 3,
+          width: "100%",
+          height: "100%",
+          margin: 0,
+          minScale: 1,
+          maxScale: 1,
+          disableLayout: true,
+        });
 
-    deck.initialize().then(() => {
-      revealRef.current = deck;
-      setInitialized(true);
-      setCurrentSlide(deck.getState().indexh);
+        await deck.initialize();
+        globalReveal = deck;
+        
+        const state = deck.getState();
+        if (state) {
+          setCurrentSlide(state.indexh);
+        }
 
-      deck.on("slidechanged", (event: { indexh: number }) => {
-        setCurrentSlide(event.indexh);
-      });
-    });
+        deck.on("slidechanged", (event: { indexh: number }) => {
+          setCurrentSlide(event.indexh);
+        });
+      } catch (error) {
+        console.error("Failed to initialize Reveal.js:", error);
+      }
+    };
+
+    const timer = setTimeout(initReveal, 50);
 
     return () => {
-      if (revealRef.current) {
-        revealRef.current.destroy();
-        revealRef.current = null;
-      }
+      clearTimeout(timer);
     };
   }, [setCurrentSlide]);
 
   return (
-    <div className="reveal h-screen w-screen" ref={deckRef}>
-      <div className="slides">
-        {initialized ? children : (
-          <section className="flex items-center justify-center">
-            <div className="animate-pulse text-kid-2xl font-bold text-foreground">
-              Loading...
-            </div>
-          </section>
-        )}
-      </div>
+    <div className="reveal h-screen w-screen overflow-hidden" ref={deckRef} data-testid="presentation-deck">
+      <div className="slides">{children}</div>
     </div>
   );
 }
@@ -86,15 +89,14 @@ interface SlideProps {
 }
 
 export function Slide({ children, className = "", background, index }: SlideProps) {
-  const isActive = useSlidesStore((s) => s.isSlideActive(index));
-
   return (
     <section
-      className={`h-full w-full ${className}`}
+      className={`h-screen w-screen overflow-auto ${className}`}
       data-background={background}
       data-background-size="cover"
+      data-testid={`slide-${index}`}
     >
-      <div className={`h-full w-full transition-opacity duration-300 ${isActive ? "opacity-100" : "opacity-50"}`}>
+      <div className="h-full w-full">
         {children}
       </div>
     </section>

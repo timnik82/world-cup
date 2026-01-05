@@ -35,31 +35,34 @@ export function IntroSlide() {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center h-full px-8 py-12 bg-gradient-to-br from-emerald-50 via-sky-50 to-amber-50">
+    <div 
+      className="flex flex-col items-center justify-center h-full px-8 py-12 bg-gradient-to-br from-emerald-50 via-sky-50 to-amber-50"
+      data-testid="intro-slide-content"
+    >
       <motion.div
         initial={{ scale: 0.8, opacity: 0 }}
         animate={{ scale: 1, opacity: 1 }}
         transition={{ duration: 0.5, type: "spring" }}
         className="text-center mb-8"
       >
-        <div className="flex items-center justify-center gap-4 mb-4">
+        <div className="flex items-center justify-center gap-4 mb-4 flex-wrap">
           <motion.div
             animate={{ rotate: [0, 10, -10, 0] }}
             transition={{ duration: 2, repeat: Infinity }}
           >
-            <Trophy className="w-16 h-16 text-amber-500" />
+            <Trophy className="w-16 h-16 text-amber-500" data-testid="icon-trophy-left" />
           </motion.div>
-          <h1 className="text-kid-5xl md:text-kid-6xl font-bold text-foreground tracking-tight">
+          <h1 className="text-kid-5xl md:text-kid-6xl font-bold text-foreground tracking-tight" data-testid="text-main-title">
             FIFA World Cup
           </h1>
           <motion.div
             animate={{ rotate: [0, -10, 10, 0] }}
             transition={{ duration: 2, repeat: Infinity, delay: 0.5 }}
           >
-            <Trophy className="w-16 h-16 text-amber-500" />
+            <Trophy className="w-16 h-16 text-amber-500" data-testid="icon-trophy-right" />
           </motion.div>
         </div>
-        <p className="text-kid-xl md:text-kid-2xl text-muted-foreground font-medium">
+        <p className="text-kid-xl md:text-kid-2xl text-muted-foreground font-medium" data-testid="text-subtitle">
           Explore the history of the world's biggest soccer tournament!
         </p>
       </motion.div>
@@ -68,7 +71,7 @@ export function IntroSlide() {
         <Button
           size="lg"
           onClick={handleRandomFact}
-          className="min-h-14 px-8 text-kid-lg font-semibold rounded-2xl bg-gradient-to-r from-emerald-500 to-emerald-600 border-emerald-600 shadow-lg"
+          className="min-h-14 px-8 text-kid-lg font-semibold rounded-2xl"
           data-testid="button-random-fact"
         >
           <Shuffle className="w-6 h-6 mr-2" />
@@ -79,7 +82,7 @@ export function IntroSlide() {
           variant="secondary"
           onClick={handleAddToFavorites}
           disabled={!currentFact}
-          className="min-h-14 px-8 text-kid-lg font-semibold rounded-2xl bg-gradient-to-r from-amber-400 to-amber-500 border-amber-500 text-amber-900 shadow-lg disabled:opacity-50"
+          className="min-h-14 px-8 text-kid-lg font-semibold rounded-2xl disabled:opacity-50"
           data-testid="button-add-favorite"
         >
           <Star className="w-6 h-6 mr-2" />
@@ -97,22 +100,25 @@ export function IntroSlide() {
             transition={{ duration: 0.4, type: "spring" }}
             className="w-full max-w-3xl"
           >
-            <Card className="border-2 border-sky-200 shadow-xl bg-white/90 backdrop-blur-sm">
+            <Card className="border-2 border-sky-200 shadow-xl" data-testid={`card-fact-${currentFact.id}`}>
               <CardContent className="p-8">
                 <div className="flex items-start gap-4">
                   <div className="flex-shrink-0 p-3 rounded-xl bg-sky-100">
-                    <Sparkles className="w-8 h-8 text-sky-500" />
+                    <Sparkles className="w-8 h-8 text-sky-500" data-testid="icon-sparkles" />
                   </div>
                   <div className="flex-1">
-                    <p className="text-kid-xl md:text-kid-2xl font-medium text-foreground leading-relaxed">
+                    <p className="text-kid-xl md:text-kid-2xl font-medium text-foreground leading-relaxed" data-testid="text-fact-content">
                       {currentFact.text}
                     </p>
                     {currentFact.year && (
-                      <p className="mt-3 text-kid-base text-muted-foreground font-medium">
+                      <p className="mt-3 text-kid-base text-muted-foreground font-medium" data-testid="text-fact-year">
                         World Cup {currentFact.year}
                       </p>
                     )}
-                    <span className="inline-block mt-3 px-3 py-1 text-kid-sm font-medium rounded-full bg-sky-100 text-sky-700 capitalize">
+                    <span 
+                      className="inline-block mt-3 px-3 py-1 text-kid-sm font-medium rounded-full bg-sky-100 text-sky-700 capitalize"
+                      data-testid="badge-fact-category"
+                    >
                       {currentFact.category}
                     </span>
                   </div>
@@ -128,8 +134,9 @@ export function IntroSlide() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           className="text-center text-muted-foreground text-kid-lg"
+          data-testid="text-empty-state"
         >
-          <p className="flex items-center gap-2 justify-center">
+          <p className="flex items-center gap-2 justify-center flex-wrap">
             <Sparkles className="w-5 h-5" />
             Click "Random Fun Fact" to discover cool World Cup facts!
           </p>
