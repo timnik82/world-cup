@@ -22,7 +22,7 @@ export function TimelineSlide() {
 
   return (
     <div 
-      className="flex flex-col items-center justify-center h-full px-8 py-12 bg-gradient-to-br from-violet-50 via-fuchsia-50 to-pink-50"
+      className="flex flex-col items-center justify-center min-h-full h-fit px-8 py-20 bg-gradient-to-br from-violet-50 via-fuchsia-50 to-pink-50"
       data-testid="timeline-slide-content"
     >
       <motion.h2
