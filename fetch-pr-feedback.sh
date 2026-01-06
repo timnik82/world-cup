@@ -154,7 +154,8 @@ search_prs_api() {
 
     # URL encode the search query
     local query="repo:$GITHUB_REPO is:pr $search_term in:branch"
-    local encoded_query=$(python3 -c "import urllib.parse; print(urllib.parse.quote('$query'))")
+    local encoded_query
+    encoded_query=$(python3 -c "import urllib.parse, sys; print(urllib.parse.quote(sys.argv[1]))" "$query")
 
     curl -s -L "${HEADERS[@]}" \
         "$GITHUB_API_BASE/search/issues?q=$encoded_query&per_page=20" \

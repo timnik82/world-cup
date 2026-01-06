@@ -1,4 +1,4 @@
-import { useLanguageStore, type Language } from "@/store/language";
+import { useLanguageStore } from "@/store/language";
 
 const translations = {
   en: {
@@ -238,8 +238,9 @@ export type Translations = typeof translations.en;
 
 export function useTranslation() {
   const language = useLanguageStore((state) => state.language);
+  const t = translations[language] ?? translations.en;
   return {
-    t: translations[language],
+    t,
     language,
   };
 }

@@ -8,6 +8,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { useLanguageStore, type Language } from "@/store/language";
 import { useTranslation } from "@/hooks/use-translation";
+import { cn } from "@/lib/utils";
 
 const languages: { code: Language; flag: string }[] = [
   { code: "en", flag: "GB" },
@@ -37,9 +38,10 @@ export function LanguageToggle() {
           <DropdownMenuItem
             key={lang.code}
             onClick={() => setLanguage(lang.code)}
-            className={`text-kid-base font-medium cursor-pointer ${
-              language === lang.code ? "bg-accent" : ""
-            }`}
+            className={cn(
+              "text-kid-base font-medium cursor-pointer",
+              language === lang.code && "bg-accent"
+            )}
             data-testid={`menu-language-${lang.code}`}
           >
             <span className="mr-2">{getFlagEmoji(lang.flag)}</span>
