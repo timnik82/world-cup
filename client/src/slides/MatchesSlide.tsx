@@ -41,7 +41,7 @@ export function MatchesSlide({ onShowDetails }: MatchesSlideProps) {
 
   return (
     <div 
-      className="flex flex-col min-h-full h-fit px-6 py-14 bg-gradient-to-br from-sky-50 via-cyan-50 to-teal-50"
+      className="flex flex-col min-h-full px-6 py-14 bg-gradient-to-br from-sky-50 via-cyan-50 to-teal-50"
       data-testid="matches-slide-content"
     >
       <motion.h2

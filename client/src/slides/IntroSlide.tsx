@@ -39,7 +39,7 @@ export function IntroSlide() {
 
   return (
     <div 
-      className="flex flex-col items-center justify-center min-h-full h-fit px-8 py-14 bg-gradient-to-br from-emerald-50 via-sky-50 to-amber-50 relative"
+      className="flex flex-col items-center justify-center min-h-full px-8 py-14 bg-gradient-to-br from-emerald-50 via-sky-50 to-amber-50 relative"
       data-testid="intro-slide-content"
     >
       <div className="absolute top-4 right-4 z-20">

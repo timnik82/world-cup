@@ -22,7 +22,7 @@ export function TimelineSlide() {
 
   return (
     <div 
-      className="flex flex-col items-center justify-center min-h-full h-fit px-8 py-14 bg-gradient-to-br from-violet-50 via-fuchsia-50 to-pink-50"
+      className="flex flex-col items-center justify-center min-h-full px-8 py-14 bg-gradient-to-br from-violet-50 via-fuchsia-50 to-pink-50"
       data-testid="timeline-slide-content"
     >
       <motion.h2
@@ -104,7 +104,7 @@ function TournamentCard({ tournament }: { tournament: Tournament }) {
       data-testid={`card-tournament-${tournament.year}`}
     >
       <CardContent className="p-0">
-        <div className="bg-gradient-to-r from-violet-500 to-fuchsia-500 p-6 text-white pt-[10px] pb-[10px]">
+        <div className="bg-gradient-to-r from-violet-500 to-fuchsia-500 px-6 py-[10px] text-white">
           <div className="flex items-center justify-center gap-3 mb-2 flex-wrap">
             <MapPin className="w-6 h-6" data-testid="icon-mappin" />
             <span className="text-kid-2xl md:text-kid-3xl font-bold" data-testid="text-host-country">
