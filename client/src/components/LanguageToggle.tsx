@@ -27,6 +27,7 @@ export function LanguageToggle() {
           size="lg"
           className="min-h-12 px-4 text-kid-base font-semibold rounded-xl gap-2"
           data-testid="button-language-toggle"
+          aria-label={language === "en" ? "Switch language" : "Сменить язык"}
         >
           <Globe className="w-5 h-5" />
           <span className="hidden sm:inline">{t.language[language]}</span>
