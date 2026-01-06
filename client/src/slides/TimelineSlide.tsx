@@ -5,11 +5,13 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Slider } from "@/components/ui/slider";
 import { Button } from "@/components/ui/button";
 import { getAllYears, getTournamentByYear, type Tournament } from "@/data";
+import { useTranslation } from "@/hooks/use-translation";
 
 export function TimelineSlide() {
   const years = useMemo(() => getAllYears(), []);
   const [selectedYear, setSelectedYear] = useState(years[years.length - 1]);
   const tournament = useMemo(() => getTournamentByYear(selectedYear), [selectedYear]);
+  const { t } = useTranslation();
 
   const handleYearChange = (value: number[]) => {
     const closestYear = years.reduce((prev, curr) =>
@@ -31,10 +33,9 @@ export function TimelineSlide() {
       >
         <span className="inline-flex items-center gap-3 flex-wrap justify-center">
           <Calendar className="w-12 h-12 text-violet-500" data-testid="icon-calendar" />
-          World Cup Timeline
+          {t.timeline.title}
         </span>
       </motion.h2>
-
       <div className="w-full max-w-2xl mb-10">
         <motion.div
           initial={{ scale: 0.9, opacity: 0 }}
@@ -67,9 +68,7 @@ export function TimelineSlide() {
                 variant="ghost"
                 size="sm"
                 onClick={() => setSelectedYear(year)}
-                className={`text-kid-sm font-medium transition-colors ${
-                  year === selectedYear ? "text-violet-600 font-bold bg-violet-100" : "text-muted-foreground"
-                }`}
+                className="inline-flex items-center justify-center gap-2 whitespace-nowrap focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 hover-elevate active-elevate-2 border border-transparent min-h-8 rounded-md px-3 font-medium transition-colors text-muted-foreground text-[20px]"
                 data-testid={`button-year-${year}`}
               >
                 {year}
@@ -78,7 +77,6 @@ export function TimelineSlide() {
           </div>
         </div>
       </div>
-
       <AnimatePresence mode="wait">
         {tournament && (
           <motion.div
@@ -98,6 +96,8 @@ export function TimelineSlide() {
 }
 
 function TournamentCard({ tournament }: { tournament: Tournament }) {
+  const { t } = useTranslation();
+
   return (
     <Card 
       className="border-2 border-violet-200 shadow-2xl overflow-hidden"
@@ -124,7 +124,7 @@ function TournamentCard({ tournament }: { tournament: Tournament }) {
                 <Trophy className="w-14 h-14 text-amber-500" data-testid="icon-trophy-champion" />
               </motion.div>
               <div>
-                <p className="text-kid-sm text-muted-foreground font-medium mb-1">Champion</p>
+                <p className="text-kid-sm text-muted-foreground font-medium mb-1">{t.timeline.champion}</p>
                 <p className="text-kid-3xl md:text-kid-4xl font-bold text-foreground" data-testid="text-champion">
                   {tournament.champion}
                 </p>
@@ -141,9 +141,9 @@ function TournamentCard({ tournament }: { tournament: Tournament }) {
             transition={{ delay: 0.4 }}
             className="text-center mb-8 py-6 bg-gradient-to-r from-violet-100 to-fuchsia-100 rounded-2xl"
           >
-            <p className="text-kid-sm text-violet-600 font-semibold mb-2">Final Score</p>
+            <p className="text-kid-sm text-violet-600 font-semibold mb-2">{t.timeline.finalScore}</p>
             <p 
-              className="text-kid-5xl md:text-kid-6xl font-bold font-mono text-violet-700"
+              className="md:text-kid-6xl font-bold font-mono text-violet-700 text-[50px]"
               data-testid="text-final-score"
             >
               {tournament.finalScore}
@@ -153,20 +153,20 @@ function TournamentCard({ tournament }: { tournament: Tournament }) {
           <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
             <StatBox
               icon={<Users className="w-6 h-6 text-sky-500" />}
-              label="Total Matches"
+              label={t.timeline.totalMatches}
               value={tournament.totalMatches.toString()}
               testId="stat-total-matches"
             />
             <StatBox
               icon={<span className="text-2xl">⚽</span>}
-              label="Total Goals"
+              label={t.timeline.totalGoals}
               value={tournament.totalGoals.toString()}
               testId="stat-total-goals"
             />
             {tournament.attendance && (
               <StatBox
                 icon={<Users className="w-6 h-6 text-emerald-500" />}
-                label="Attendance"
+                label={t.timeline.attendance}
                 value={`${(tournament.attendance / 1000000).toFixed(1)}M`}
                 testId="stat-attendance"
               />

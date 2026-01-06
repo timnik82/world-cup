@@ -6,11 +6,14 @@ import { Card, CardContent } from "@/components/ui/card";
 import { getRandomFact, type Fact } from "@/data";
 import { useFavoritesStore } from "@/store/favorites";
 import { useToast } from "@/hooks/use-toast";
+import { useTranslation } from "@/hooks/use-translation";
+import { LanguageToggle } from "@/components/LanguageToggle";
 
 export function IntroSlide() {
   const [currentFact, setCurrentFact] = useState<Fact | null>(null);
   const { addFact, isFactFavorite } = useFavoritesStore();
   const { toast } = useToast();
+  const { t } = useTranslation();
 
   const handleRandomFact = () => {
     const fact = getRandomFact();
@@ -21,15 +24,15 @@ export function IntroSlide() {
     if (currentFact) {
       if (isFactFavorite(currentFact.id)) {
         toast({
-          title: "Already saved!",
-          description: "This fact is already in your favorites.",
+          title: t.intro.alreadySaved,
+          description: t.intro.alreadySavedDesc,
         });
         return;
       }
       addFact(currentFact);
       toast({
-        title: "Added to favorites!",
-        description: "You saved this cool fact!",
+        title: t.intro.addedToFavorites,
+        description: t.intro.savedFact,
       });
     }
   };
@@ -39,6 +42,10 @@ export function IntroSlide() {
       className="flex flex-col items-center justify-center h-full px-8 py-12 bg-gradient-to-br from-emerald-50 via-sky-50 to-amber-50"
       data-testid="intro-slide-content"
     >
+      <div className="absolute top-4 right-4 z-10">
+        <LanguageToggle />
+      </div>
+
       <motion.div
         initial={{ scale: 0.8, opacity: 0 }}
         animate={{ scale: 1, opacity: 1 }}
@@ -53,7 +60,7 @@ export function IntroSlide() {
             <Trophy className="w-16 h-16 text-amber-500" data-testid="icon-trophy-left" />
           </motion.div>
           <h1 className="text-kid-5xl md:text-kid-6xl font-bold text-foreground tracking-tight" data-testid="text-main-title">
-            FIFA World Cup
+            {t.intro.title}
           </h1>
           <motion.div
             animate={{ rotate: [0, -10, 10, 0] }}
@@ -63,7 +70,7 @@ export function IntroSlide() {
           </motion.div>
         </div>
         <p className="text-kid-xl md:text-kid-2xl text-muted-foreground font-medium" data-testid="text-subtitle">
-          Explore the history of the world's biggest soccer tournament!
+          {t.intro.subtitle}
         </p>
       </motion.div>
 
@@ -75,7 +82,7 @@ export function IntroSlide() {
           data-testid="button-random-fact"
         >
           <Shuffle className="w-6 h-6 mr-2" />
-          Random Fun Fact
+          {t.intro.randomFact}
         </Button>
         <Button
           size="lg"
@@ -86,7 +93,7 @@ export function IntroSlide() {
           data-testid="button-add-favorite"
         >
           <Star className="w-6 h-6 mr-2" />
-          Save to Favorites
+          {t.intro.saveToFavorites}
         </Button>
       </div>
 
@@ -112,7 +119,7 @@ export function IntroSlide() {
                     </p>
                     {currentFact.year && (
                       <p className="mt-3 text-kid-base text-muted-foreground font-medium" data-testid="text-fact-year">
-                        World Cup {currentFact.year}
+                        {t.intro.worldCup} {currentFact.year}
                       </p>
                     )}
                     <span 
@@ -138,7 +145,7 @@ export function IntroSlide() {
         >
           <p className="flex items-center gap-2 justify-center flex-wrap">
             <Sparkles className="w-5 h-5" />
-            Click "Random Fun Fact" to discover cool World Cup facts!
+            {t.intro.emptyState}
           </p>
         </motion.div>
       )}
