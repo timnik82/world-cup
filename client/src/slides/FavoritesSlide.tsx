@@ -33,7 +33,7 @@ export function FavoritesSlide() {
 
   return (
     <div 
-      className="flex flex-col h-full px-6 py-8 bg-gradient-to-br from-rose-50 via-pink-50 to-fuchsia-50"
+      className="flex flex-col min-h-full h-fit px-6 py-20 bg-gradient-to-br from-rose-50 via-pink-50 to-fuchsia-50"
       data-testid="favorites-slide-content"
     >
       <motion.h2

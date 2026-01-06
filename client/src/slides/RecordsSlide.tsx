@@ -22,7 +22,7 @@ export function RecordsSlide() {
 
   return (
     <div 
-      className="flex flex-col h-full px-6 py-8 bg-gradient-to-br from-amber-50 via-orange-50 to-rose-50"
+      className="flex flex-col min-h-full h-fit px-6 py-20 bg-gradient-to-br from-amber-50 via-orange-50 to-rose-50"
       data-testid="records-slide-content"
     >
       <motion.div
