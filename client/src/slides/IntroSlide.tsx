@@ -39,10 +39,10 @@ export function IntroSlide() {
 
   return (
     <div 
-      className="flex flex-col items-center justify-center h-full px-8 py-12 bg-gradient-to-br from-emerald-50 via-sky-50 to-amber-50"
+      className="flex flex-col items-center justify-center min-h-full h-fit px-8 py-20 bg-gradient-to-br from-emerald-50 via-sky-50 to-amber-50 relative"
       data-testid="intro-slide-content"
     >
-      <div className="absolute top-4 right-4 z-10">
+      <div className="absolute top-4 right-4 z-20">
         <LanguageToggle />
       </div>
 
