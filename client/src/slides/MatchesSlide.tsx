@@ -21,6 +21,12 @@ interface MatchesSlideProps {
   onShowDetails: (match: Match) => void;
 }
 
+/**
+ * Renders a searchable, filterable list of matches with controls for year and stage.
+ *
+ * @param onShowDetails - Callback invoked with a `Match` when a match's Details button is clicked.
+ * @returns The MatchesSlide React element.
+ */
 export function MatchesSlide({ onShowDetails }: MatchesSlideProps) {
   const years = useMemo(() => getAllYears(), []);
   const stages = useMemo(() => getAllStages(), []);

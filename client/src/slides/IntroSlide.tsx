@@ -9,6 +9,14 @@ import { useToast } from "@/hooks/use-toast";
 import { useTranslation } from "@/hooks/use-translation";
 import { LanguageToggle } from "@/components/LanguageToggle";
 
+/**
+ * Renders the introductory slide with controls to generate a random fact and save it to favorites.
+ *
+ * Shows a title and subtitle, language toggle, action buttons for "Random Fact" and "Save to Favorites",
+ * and an animated card displaying the current fact (including text, optional year, and category) or an empty-state message when no fact is selected.
+ *
+ * @returns The IntroSlide React element.
+ */
 export function IntroSlide() {
   const [currentFact, setCurrentFact] = useState<Fact | null>(null);
   const { addFact, isFactFavorite } = useFavoritesStore();
