@@ -36,7 +36,6 @@ export function TimelineSlide() {
           {t.timeline.title}
         </span>
       </motion.h2>
-
       <div className="w-full max-w-2xl mb-10">
         <motion.div
           initial={{ scale: 0.9, opacity: 0 }}
@@ -69,9 +68,7 @@ export function TimelineSlide() {
                 variant="ghost"
                 size="sm"
                 onClick={() => setSelectedYear(year)}
-                className={`text-kid-sm font-medium transition-colors ${
-                  year === selectedYear ? "text-violet-600 font-bold bg-violet-100" : "text-muted-foreground"
-                }`}
+                className="inline-flex items-center justify-center gap-2 whitespace-nowrap focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 hover-elevate active-elevate-2 border border-transparent min-h-8 rounded-md px-3 font-medium transition-colors text-muted-foreground text-[20px]"
                 data-testid={`button-year-${year}`}
               >
                 {year}
@@ -80,7 +77,6 @@ export function TimelineSlide() {
           </div>
         </div>
       </div>
-
       <AnimatePresence mode="wait">
         {tournament && (
           <motion.div
