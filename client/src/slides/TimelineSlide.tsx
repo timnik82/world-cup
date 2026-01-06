@@ -104,7 +104,7 @@ function TournamentCard({ tournament }: { tournament: Tournament }) {
       data-testid={`card-tournament-${tournament.year}`}
     >
       <CardContent className="p-0">
-        <div className="bg-gradient-to-r from-violet-500 to-fuchsia-500 p-6 text-white">
+        <div className="bg-gradient-to-r from-violet-500 to-fuchsia-500 p-6 text-white pt-[10px] pb-[10px]">
           <div className="flex items-center justify-center gap-3 mb-2 flex-wrap">
             <MapPin className="w-6 h-6" data-testid="icon-mappin" />
             <span className="text-kid-2xl md:text-kid-3xl font-bold" data-testid="text-host-country">
