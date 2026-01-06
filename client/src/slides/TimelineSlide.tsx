@@ -143,7 +143,7 @@ function TournamentCard({ tournament }: { tournament: Tournament }) {
           >
             <p className="text-kid-sm text-violet-600 font-semibold mb-2">{t.timeline.finalScore}</p>
             <p 
-              className="md:text-kid-6xl font-bold font-mono text-violet-700 text-[64px]"
+              className="text-kid-3xl md:text-kid-6xl font-bold font-mono text-violet-700"
               data-testid="text-final-score"
             >
               {tournament.finalScore}
