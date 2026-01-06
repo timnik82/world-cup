@@ -7,6 +7,7 @@ import { Badge } from "@/components/ui/badge";
 import { useQuery } from "@tanstack/react-query";
 import type { Match, MatchDetails } from "@/data";
 import { fetchMatchDetails } from "@/lib/api";
+import { useTranslation } from "@/hooks/use-translation";
 
 interface MatchDetailsModalProps {
   match: Match | null;
@@ -15,6 +16,7 @@ interface MatchDetailsModalProps {
 }
 
 export function MatchDetailsModal({ match, isOpen, onClose }: MatchDetailsModalProps) {
+  const { t } = useTranslation();
   const { data, isLoading, isError, refetch, isFetched } = useQuery<MatchDetails | null>({
     queryKey: ["matchDetails", match?.id],
     queryFn: () => (match ? fetchMatchDetails(match.id) : Promise.resolve(null)),
@@ -89,7 +91,7 @@ export function MatchDetailsModal({ match, isOpen, onClose }: MatchDetailsModalP
                     {!isFetched && !isLoading && (
                       <div className="text-center py-12" data-testid="load-details-prompt">
                         <p className="text-kid-lg text-muted-foreground mb-6">
-                          Want to see more details about this match?
+                          {t.modal.wantDetails}
                         </p>
                         <Button
                           size="lg"
@@ -97,7 +99,7 @@ export function MatchDetailsModal({ match, isOpen, onClose }: MatchDetailsModalP
                           className="min-h-14 px-8 text-kid-lg font-semibold rounded-2xl"
                           data-testid="button-load-details"
                         >
-                          Load Match Details
+                          {t.modal.loadDetails}
                         </Button>
                       </div>
                     )}
@@ -106,7 +108,7 @@ export function MatchDetailsModal({ match, isOpen, onClose }: MatchDetailsModalP
                       <div className="flex flex-col items-center justify-center py-12" data-testid="loading-state">
                         <Loader2 className="w-12 h-12 text-emerald-500 animate-spin mb-4" />
                         <p className="text-kid-lg text-muted-foreground">
-                          Loading match details...
+                          {t.modal.loading}
                         </p>
                       </div>
                     )}
@@ -115,10 +117,10 @@ export function MatchDetailsModal({ match, isOpen, onClose }: MatchDetailsModalP
                       <div className="text-center py-12" data-testid="error-state">
                         <AlertCircle className="w-12 h-12 text-red-500 mx-auto mb-4" />
                         <p className="text-kid-lg text-red-600 mb-4">
-                          Oops! Couldn't load the details.
+                          {t.modal.error}
                         </p>
                         <Button onClick={() => refetch()} variant="outline" data-testid="button-retry">
-                          Try Again
+                          {t.modal.tryAgain}
                         </Button>
                       </div>
                     )}
@@ -133,19 +135,19 @@ export function MatchDetailsModal({ match, isOpen, onClose }: MatchDetailsModalP
                         <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
                           <StatCard
                             icon={<MapPin className="w-5 h-5 text-emerald-500" />}
-                            label="Stadium"
+                            label={t.modal.stadium}
                             value={data.stadium}
                             testId="stat-stadium"
                           />
                           <StatCard
                             icon={<Users className="w-5 h-5 text-sky-500" />}
-                            label="Attendance"
+                            label={t.modal.attendance}
                             value={data.attendance.toLocaleString()}
                             testId="stat-attendance"
                           />
                           <StatCard
                             icon={<User className="w-5 h-5 text-violet-500" />}
-                            label="Referee"
+                            label={t.modal.referee}
                             value={data.referee}
                             testId="stat-referee"
                           />
@@ -154,7 +156,7 @@ export function MatchDetailsModal({ match, isOpen, onClose }: MatchDetailsModalP
                         {data.goals.length > 0 && (
                           <div data-testid="goals-section">
                             <h3 className="text-kid-xl font-bold text-foreground mb-3 flex items-center gap-2">
-                              <span className="text-2xl">⚽</span> Goals
+                              <span className="text-2xl">⚽</span> {t.modal.goals}
                             </h3>
                             <div className="space-y-2">
                               {data.goals.map((goal, index) => (
@@ -189,7 +191,7 @@ export function MatchDetailsModal({ match, isOpen, onClose }: MatchDetailsModalP
                         {data.cards.length > 0 && (
                           <div data-testid="cards-section">
                             <h3 className="text-kid-xl font-bold text-foreground mb-3">
-                              Cards
+                              {t.modal.cards}
                             </h3>
                             <div className="flex flex-wrap gap-2">
                               {data.cards.map((card, index) => (
@@ -213,7 +215,7 @@ export function MatchDetailsModal({ match, isOpen, onClose }: MatchDetailsModalP
                         {data.substitutions.length > 0 && (
                           <div data-testid="substitutions-section">
                             <h3 className="text-kid-xl font-bold text-foreground mb-3">
-                              Substitutions
+                              {t.modal.substitutions}
                             </h3>
                             <div className="space-y-2">
                               {data.substitutions.map((sub, index) => (

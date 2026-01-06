@@ -6,24 +6,26 @@ import { Badge } from "@/components/ui/badge";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { useFavoritesStore } from "@/store/favorites";
 import { useToast } from "@/hooks/use-toast";
+import { useTranslation } from "@/hooks/use-translation";
 
 export function FavoritesSlide() {
   const { favoriteFacts, favoriteMatches, removeFact, removeMatch } = useFavoritesStore();
   const { toast } = useToast();
+  const { t } = useTranslation();
 
   const handleRemoveFact = (factId: string) => {
     removeFact(factId);
     toast({
-      title: "Removed!",
-      description: "Fact removed from favorites.",
+      title: t.favorites.removed,
+      description: t.favorites.factRemoved,
     });
   };
 
   const handleRemoveMatch = (matchId: string) => {
     removeMatch(matchId);
     toast({
-      title: "Removed!",
-      description: "Match removed from favorites.",
+      title: t.favorites.removed,
+      description: t.favorites.matchRemoved,
     });
   };
 
@@ -41,7 +43,7 @@ export function FavoritesSlide() {
         data-testid="text-favorites-title"
       >
         <Heart className="w-10 h-10 text-rose-500 fill-rose-500" data-testid="icon-heart" />
-        My Favorites
+        {t.favorites.title}
       </motion.h2>
 
       {isEmpty ? (
@@ -55,11 +57,10 @@ export function FavoritesSlide() {
             <Star className="w-16 h-16 text-rose-300" />
           </div>
           <h3 className="text-kid-2xl font-bold text-foreground mb-3" data-testid="text-empty-title">
-            No favorites yet!
+            {t.favorites.noFavorites}
           </h3>
           <p className="text-kid-lg text-muted-foreground max-w-md" data-testid="text-empty-message">
-            Go explore the other slides and save your favorite facts and matches by clicking
-            the star button!
+            {t.favorites.emptyMessage}
           </p>
         </motion.div>
       ) : (
@@ -68,13 +69,13 @@ export function FavoritesSlide() {
             <div data-testid="favorite-facts-section">
               <h3 className="text-kid-xl font-bold text-foreground mb-4 flex items-center gap-2">
                 <Sparkles className="w-6 h-6 text-amber-500" />
-                Favorite Facts ({favoriteFacts.length})
+                {t.favorites.favoriteFacts} ({favoriteFacts.length})
               </h3>
               <div className="space-y-3">
                 <AnimatePresence>
                   {favoriteFacts.length === 0 ? (
                     <p className="text-kid-base text-muted-foreground py-4" data-testid="text-no-facts">
-                      No favorite facts saved yet.
+                      {t.favorites.noFacts}
                     </p>
                   ) : (
                     favoriteFacts.map((fact) => (
@@ -100,7 +101,7 @@ export function FavoritesSlide() {
                                 </p>
                                 {fact.year && (
                                   <p className="text-kid-sm text-muted-foreground mt-2">
-                                    World Cup {fact.year}
+                                    {t.favorites.worldCup} {fact.year}
                                   </p>
                                 )}
                               </div>
@@ -126,13 +127,13 @@ export function FavoritesSlide() {
             <div data-testid="favorite-matches-section">
               <h3 className="text-kid-xl font-bold text-foreground mb-4 flex items-center gap-2">
                 <span className="text-xl">⚽</span>
-                Favorite Matches ({favoriteMatches.length})
+                {t.favorites.favoriteMatches} ({favoriteMatches.length})
               </h3>
               <div className="space-y-3">
                 <AnimatePresence>
                   {favoriteMatches.length === 0 ? (
                     <p className="text-kid-base text-muted-foreground py-4" data-testid="text-no-matches">
-                      No favorite matches saved yet.
+                      {t.favorites.noMatches}
                     </p>
                   ) : (
                     favoriteMatches.map((match) => (

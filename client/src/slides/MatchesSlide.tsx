@@ -15,6 +15,7 @@ import { Badge } from "@/components/ui/badge";
 import { getAllYears, getAllStages, matches as allMatches, type Match } from "@/data";
 import { useFavoritesStore } from "@/store/favorites";
 import { useToast } from "@/hooks/use-toast";
+import { useTranslation } from "@/hooks/use-translation";
 
 interface MatchesSlideProps {
   onShowDetails: (match: Match) => void;
@@ -25,6 +26,7 @@ export function MatchesSlide({ onShowDetails }: MatchesSlideProps) {
   const stages = useMemo(() => getAllStages(), []);
   const [selectedYear, setSelectedYear] = useState<string>("all");
   const [selectedStage, setSelectedStage] = useState<string>("all");
+  const { t } = useTranslation();
 
   const filteredMatches = useMemo(() => {
     let result = allMatches;
@@ -49,7 +51,7 @@ export function MatchesSlide({ onShowDetails }: MatchesSlideProps) {
         data-testid="text-matches-title"
       >
         <Search className="w-10 h-10 text-sky-500" data-testid="icon-search" />
-        Explore Matches
+        {t.matches.title}
       </motion.h2>
 
       <motion.div
@@ -66,10 +68,10 @@ export function MatchesSlide({ onShowDetails }: MatchesSlideProps) {
               className="w-40 min-h-12 text-kid-base font-medium rounded-xl"
               data-testid="select-year"
             >
-              <SelectValue placeholder="Select Year" />
+              <SelectValue placeholder={t.matches.selectYear} />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="all" data-testid="select-year-option-all">All Years</SelectItem>
+              <SelectItem value="all" data-testid="select-year-option-all">{t.matches.allYears}</SelectItem>
               {years.map((year) => (
                 <SelectItem key={year} value={year.toString()} data-testid={`select-year-option-${year}`}>
                   {year}
@@ -85,10 +87,10 @@ export function MatchesSlide({ onShowDetails }: MatchesSlideProps) {
               className="w-44 min-h-12 text-kid-base font-medium rounded-xl"
               data-testid="select-stage"
             >
-              <SelectValue placeholder="Select Stage" />
+              <SelectValue placeholder={t.matches.selectStage} />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="all" data-testid="select-stage-option-all">All Stages</SelectItem>
+              <SelectItem value="all" data-testid="select-stage-option-all">{t.matches.allStages}</SelectItem>
               {stages.map((stage) => (
                 <SelectItem key={stage} value={stage} data-testid={`select-stage-option-${stage}`}>
                   {stage}
@@ -109,7 +111,7 @@ export function MatchesSlide({ onShowDetails }: MatchesSlideProps) {
                 className="text-center py-12 text-muted-foreground text-kid-lg"
                 data-testid="text-no-matches"
               >
-                No matches found with these filters. Try different options!
+                {t.matches.noMatches}
               </motion.div>
             ) : (
               filteredMatches.map((match, index) => (
@@ -140,20 +142,21 @@ function MatchCard({
 }) {
   const { addMatch, isMatchFavorite } = useFavoritesStore();
   const { toast } = useToast();
+  const { t } = useTranslation();
   const isFavorite = isMatchFavorite(match.id);
 
   const handleAddFavorite = () => {
     if (isFavorite) {
       toast({
-        title: "Already saved!",
-        description: "This match is in your favorites.",
+        title: t.matches.alreadySaved,
+        description: t.matches.alreadySavedDesc,
       });
       return;
     }
     addMatch(match);
     toast({
-      title: "Match saved!",
-      description: `${match.homeTeam} vs ${match.awayTeam} added to favorites.`,
+      title: t.matches.matchSaved,
+      description: `${match.homeTeam} vs ${match.awayTeam} ${t.matches.matchSavedDesc}`,
     });
   };
 
@@ -211,7 +214,7 @@ function MatchCard({
               data-testid={`button-details-${match.id}`}
             >
               <Eye className="w-5 h-5 mr-2" />
-              Details
+              {t.matches.details}
             </Button>
             <Button
               size="lg"

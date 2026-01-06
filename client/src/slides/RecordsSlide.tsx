@@ -5,10 +5,12 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { computeStats } from "@/data";
+import { useTranslation } from "@/hooks/use-translation";
 
 export function RecordsSlide() {
   const [stats, setStats] = useState(() => computeStats());
   const [isRecomputing, setIsRecomputing] = useState(false);
+  const { t } = useTranslation();
 
   const handleRecompute = () => {
     setIsRecomputing(true);
@@ -33,7 +35,7 @@ export function RecordsSlide() {
           data-testid="text-records-title"
         >
           <Trophy className="w-10 h-10 text-amber-500" data-testid="icon-trophy" />
-          Records & Stats
+          {t.records.title}
         </h2>
         <Button
           size="lg"
@@ -44,7 +46,7 @@ export function RecordsSlide() {
           data-testid="button-recompute"
         >
           <RefreshCw className={`w-5 h-5 mr-2 ${isRecomputing ? "animate-spin" : ""}`} />
-          Recompute Stats
+          {t.records.recomputeStats}
         </Button>
       </motion.div>
 
@@ -56,7 +58,7 @@ export function RecordsSlide() {
         >
           <RecordCard
             icon={<Trophy className="w-10 h-10 text-amber-500" />}
-            title="Most Goals in a Tournament"
+            title={t.records.mostGoals}
             value={stats.mostGoalsInTournament.totalGoals.toString()}
             subtitle={`${stats.mostGoalsInTournament.host} ${stats.mostGoalsInTournament.year}`}
             color="amber"
@@ -71,9 +73,9 @@ export function RecordsSlide() {
         >
           <RecordCard
             icon={<TrendingUp className="w-10 h-10 text-emerald-500" />}
-            title="Tournaments in Database"
+            title={t.records.tournaments}
             value={stats.totalTournaments.toString()}
-            subtitle="World Cup tournaments"
+            subtitle={t.records.tournamentsSubtitle}
             color="emerald"
             testId="record-tournaments"
           />
@@ -86,9 +88,9 @@ export function RecordsSlide() {
         >
           <RecordCard
             icon={<Target className="w-10 h-10 text-sky-500" />}
-            title="Matches Recorded"
+            title={t.records.matchesRecorded}
             value={stats.totalMatchesInData.toString()}
-            subtitle="Historic matches"
+            subtitle={t.records.historicMatches}
             color="sky"
             testId="record-matches"
           />
@@ -107,7 +109,7 @@ export function RecordsSlide() {
               className="text-kid-xl font-bold text-foreground mb-4 flex items-center gap-2"
               data-testid="text-top-scoring-title"
             >
-              <span className="text-2xl">⚽</span> Top Scoring Matches
+              <span className="text-2xl">⚽</span> {t.records.topScoring}
             </h3>
             <div className="space-y-3">
               {stats.topScoringMatches.map((match, index) => (
@@ -130,10 +132,10 @@ export function RecordsSlide() {
                       </span>
                       <span data-testid={`top-match-${index}-away`}>{match.awayTeam}</span>
                     </div>
-                    <p className="text-kid-sm text-muted-foreground">
-                      <Badge variant="secondary" className="mr-2">{match.stage}</Badge>
-                      {match.tournamentYear}
-                    </p>
+                    <div className="text-kid-sm text-muted-foreground flex items-center flex-wrap gap-1">
+                      <Badge variant="secondary">{match.stage}</Badge>
+                      <span>{match.tournamentYear}</span>
+                    </div>
                   </div>
                   <div className="text-right">
                     <span 
@@ -142,7 +144,7 @@ export function RecordsSlide() {
                     >
                       {match.totalGoals}
                     </span>
-                    <p className="text-kid-xs text-muted-foreground">goals</p>
+                    <p className="text-kid-xs text-muted-foreground">{t.records.goals}</p>
                   </div>
                 </motion.div>
               ))}
