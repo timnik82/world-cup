@@ -12,7 +12,6 @@ import { cn } from "@/lib/utils";
 
 const languages: { code: Language; flag: string }[] = [
   { code: "en", flag: "GB" },
-  { code: "pt", flag: "PT" },
   { code: "ru", flag: "RU" },
 ];
 
