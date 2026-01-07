@@ -7,6 +7,15 @@ import { Button } from "@/components/ui/button";
 import { getAllYears, getTournamentByYear, type Tournament } from "@/data";
 import { useTranslation } from "@/hooks/use-translation";
 
+/**
+ * Render an interactive timeline UI for selecting a year and viewing its tournament details.
+ *
+ * Displays a year slider, quick-access year buttons, the currently selected year, and an animated
+ * tournament card for the chosen year. Uses memoized data from available years and tournaments
+ * and updates selection by snapping the slider value to the nearest available year.
+ *
+ * @returns A React element containing the timeline slider, year controls, and animated tournament card for the selected year.
+ */
 export function TimelineSlide() {
   const years = useMemo(() => getAllYears(), []);
   const [selectedYear, setSelectedYear] = useState(years[years.length - 1]);
@@ -22,7 +31,7 @@ export function TimelineSlide() {
 
   return (
     <div 
-      className="flex flex-col items-center justify-center h-full px-8 py-12 bg-gradient-to-br from-violet-50 via-fuchsia-50 to-pink-50"
+      className="flex flex-col items-center justify-center min-h-full px-8 py-14 bg-gradient-to-br from-violet-50 via-fuchsia-50 to-pink-50"
       data-testid="timeline-slide-content"
     >
       <motion.h2
@@ -95,6 +104,23 @@ export function TimelineSlide() {
   );
 }
 
+/**
+ * Render a card displaying detailed information for a specific tournament year.
+ *
+ * Displays host country, champion and runner-up, final score, and key statistics
+ * (total matches, total goals, and optional attendance) with visual styling and animations.
+ *
+ * @param tournament - Tournament data to display. Expected fields include:
+ *   - year: numeric year of the tournament
+ *   - host: host country name
+ *   - champion: champion team name
+ *   - runnerUp: runner-up team name
+ *   - finalScore: final match score string
+ *   - totalMatches: total number of matches
+ *   - totalGoals: total number of goals
+ *   - attendance (optional): total attendance as a number
+ * @returns The JSX element rendering the tournament card.
+ */
 function TournamentCard({ tournament }: { tournament: Tournament }) {
   const { t } = useTranslation();
 
@@ -104,7 +130,7 @@ function TournamentCard({ tournament }: { tournament: Tournament }) {
       data-testid={`card-tournament-${tournament.year}`}
     >
       <CardContent className="p-0">
-        <div className="bg-gradient-to-r from-violet-500 to-fuchsia-500 p-6 text-white">
+        <div className="bg-gradient-to-r from-violet-500 to-fuchsia-500 px-6 py-[10px] text-white">
           <div className="flex items-center justify-center gap-3 mb-2 flex-wrap">
             <MapPin className="w-6 h-6" data-testid="icon-mappin" />
             <span className="text-kid-2xl md:text-kid-3xl font-bold" data-testid="text-host-country">
@@ -143,7 +169,7 @@ function TournamentCard({ tournament }: { tournament: Tournament }) {
           >
             <p className="text-kid-sm text-violet-600 font-semibold mb-2">{t.timeline.finalScore}</p>
             <p 
-              className="md:text-kid-6xl font-bold font-mono text-violet-700 text-[50px]"
+              className="text-kid-xl sm:text-kid-2xl md:text-kid-6xl font-bold font-mono text-violet-700 whitespace-nowrap overflow-hidden text-ellipsis px-2"
               data-testid="text-final-score"
             >
               {tournament.finalScore}

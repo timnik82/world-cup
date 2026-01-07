@@ -7,6 +7,14 @@ import { Badge } from "@/components/ui/badge";
 import { computeStats } from "@/data";
 import { useTranslation } from "@/hooks/use-translation";
 
+/**
+ * Render the records overview slide showing summary statistics and top-scoring matches.
+ *
+ * Includes statistic cards (most goals, tournaments, matches recorded), a button to
+ * recompute/refresh the displayed statistics, and a list of top-scoring matches with ranks.
+ *
+ * @returns A React element containing the records slide UI with statistic cards, a recompute control, and the top-scoring matches list.
+ */
 export function RecordsSlide() {
   const [stats, setStats] = useState(() => computeStats());
   const [isRecomputing, setIsRecomputing] = useState(false);
@@ -22,7 +30,7 @@ export function RecordsSlide() {
 
   return (
     <div 
-      className="flex flex-col h-full px-6 py-8 bg-gradient-to-br from-amber-50 via-orange-50 to-rose-50"
+      className="flex flex-col min-h-full px-6 py-14 bg-gradient-to-br from-amber-50 via-orange-50 to-rose-50"
       data-testid="records-slide-content"
     >
       <motion.div
