@@ -7,6 +7,15 @@ import { Button } from "@/components/ui/button";
 import { getAllYears, getTournamentByYear, type Tournament } from "@/data";
 import { useTranslation } from "@/hooks/use-translation";
 
+/**
+ * Render an interactive timeline UI for selecting a year and viewing its tournament details.
+ *
+ * Displays a year slider, quick-access year buttons, the currently selected year, and an animated
+ * tournament card for the chosen year. Uses memoized data from available years and tournaments
+ * and updates selection by snapping the slider value to the nearest available year.
+ *
+ * @returns A React element containing the timeline slider, year controls, and animated tournament card for the selected year.
+ */
 export function TimelineSlide() {
   const years = useMemo(() => getAllYears(), []);
   const [selectedYear, setSelectedYear] = useState(years[years.length - 1]);
@@ -95,6 +104,23 @@ export function TimelineSlide() {
   );
 }
 
+/**
+ * Render a card displaying detailed information for a specific tournament year.
+ *
+ * Displays host country, champion and runner-up, final score, and key statistics
+ * (total matches, total goals, and optional attendance) with visual styling and animations.
+ *
+ * @param tournament - Tournament data to display. Expected fields include:
+ *   - year: numeric year of the tournament
+ *   - host: host country name
+ *   - champion: champion team name
+ *   - runnerUp: runner-up team name
+ *   - finalScore: final match score string
+ *   - totalMatches: total number of matches
+ *   - totalGoals: total number of goals
+ *   - attendance (optional): total attendance as a number
+ * @returns The JSX element rendering the tournament card.
+ */
 function TournamentCard({ tournament }: { tournament: Tournament }) {
   const { t } = useTranslation();
 

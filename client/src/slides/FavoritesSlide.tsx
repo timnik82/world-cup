@@ -8,6 +8,14 @@ import { useFavoritesStore } from "@/store/favorites";
 import { useToast } from "@/hooks/use-toast";
 import { useTranslation } from "@/hooks/use-translation";
 
+/**
+ * Render the Favorites slide showing the user's saved facts and matches with UI to remove items.
+ *
+ * Displays an empty-state message when there are no favorites; otherwise renders scrollable lists
+ * of favorite facts and matches with remove buttons that trigger store updates and toast notifications.
+ *
+ * @returns A React element containing the favorites UI, or an empty-state view when no favorites exist.
+ */
 export function FavoritesSlide() {
   const { favoriteFacts, favoriteMatches, removeFact, removeMatch } = useFavoritesStore();
   const { toast } = useToast();
