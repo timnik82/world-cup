@@ -8,6 +8,17 @@ interface DeckProps {
   children: ReactNode;
 }
 
+/**
+ * Custom event fired by Reveal.js when slides change.
+ * @see https://revealjs.com/events/
+ */
+interface SlideChangedEvent {
+  indexh: number;
+  indexv: number;
+  previousSlide: HTMLElement | null;
+  currentSlide: HTMLElement;
+}
+
 let globalReveal: Reveal.Api | null = null;
 
 export function Deck({ children }: DeckProps) {
@@ -59,9 +70,10 @@ export function Deck({ children }: DeckProps) {
           setCurrentSlide(state.indexh);
         }
 
-        deck.on("slidechanged", (event: any) => {
+        // Cast needed because @types/reveal.js doesn't export custom event types
+        deck.on("slidechanged", ((event: SlideChangedEvent) => {
           setCurrentSlide(event.indexh);
-        });
+        }) as unknown as EventListener);
       } catch (error) {
         console.error("Failed to initialize Reveal.js:", error);
       }

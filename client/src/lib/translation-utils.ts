@@ -1,4 +1,12 @@
-import type { useTranslation } from "@/hooks/use-translation";
+import type { Translations, useTranslation } from "@/hooks/use-translation";
+
+/**
+ * Extended translation type that includes optional countries map.
+ * Used for language-specific translations that may or may not have country translations.
+ */
+type TranslationsWithCountries = Translations & {
+    countries?: Record<string, string>;
+};
 
 /**
  * Translates a country name using the current language's country translations.
@@ -22,7 +30,7 @@ export function translateCountry(
         return "";
     }
 
-    // Use Record<string, string> instead of 'as any' for better type safety
-    const countries = (t as { countries?: Record<string, string> }).countries;
-    return countries?.[name] || name;
+    // Type assertion with proper extended type for better safety
+    const translations = t as TranslationsWithCountries;
+    return translations.countries?.[name] ?? name;
 }

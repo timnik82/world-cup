@@ -23,13 +23,11 @@ export function IntroSlide() {
   const { toast } = useToast();
   const { t, language } = useTranslation();
 
-  // Update fact when language changes to prevent stale content
+  // Load a fact on mount and refresh when language changes
+  // This ensures users see a fact immediately and content stays in sync with language
   useEffect(() => {
-    if (currentFact) {
-      const fact = getRandomFact(language);
-      setCurrentFact(fact);
-    }
-  }, [language]); // eslint-disable-line react-hooks/exhaustive-deps
+    setCurrentFact(getRandomFact(language));
+  }, [language]);
 
   const handleRandomFact = () => {
     const fact = getRandomFact(language);
