@@ -24,7 +24,7 @@ export function IntroSlide() {
   const { t } = useTranslation();
 
   const handleRandomFact = () => {
-    const fact = getRandomFact();
+    const fact = getRandomFact(language);
     setCurrentFact(fact);
   };
 

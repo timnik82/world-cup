@@ -1,6 +1,7 @@
 import tournamentsData from "./tournaments.json";
 import matchesData from "./matches.json";
-import factsData from "./facts.json";
+import factsDataEn from "./facts.json";
+import factsDataRu from "./facts_ru.json";
 import matchDetailsData from "./matchDetails.json";
 import {
   TournamentsDataSchema,
@@ -15,7 +16,8 @@ import {
 
 export const tournaments: Tournament[] = TournamentsDataSchema.parse(tournamentsData);
 export const matches: Match[] = MatchesDataSchema.parse(matchesData);
-export const facts: Fact[] = FactsDataSchema.parse(factsData);
+export const factsEn: Fact[] = FactsDataSchema.parse(factsDataEn);
+export const factsRu: Fact[] = FactsDataSchema.parse(factsDataRu);
 
 export const matchDetails: Record<string, MatchDetails> = {};
 for (const [key, value] of Object.entries(matchDetailsData)) {
@@ -38,7 +40,8 @@ export function getMatchesByYearAndStage(year: number, stage: string): Match[] {
   return matches.filter((m) => m.tournamentYear === year && m.stage === stage);
 }
 
-export function getRandomFact(): Fact {
+export function getRandomFact(lang: string = 'en'): Fact {
+  const facts = lang === 'ru' ? factsRu : factsEn;
   const randomIndex = Math.floor(Math.random() * facts.length);
   return facts[randomIndex];
 }
