@@ -59,9 +59,9 @@ export function Deck({ children }: DeckProps) {
           setCurrentSlide(state.indexh);
         }
 
-        deck.on("slidechanged", ((event: { indexh: number }) => {
+        deck.on("slidechanged", (event: any) => { // eslint-disable-line @typescript-eslint/no-explicit-any
           setCurrentSlide(event.indexh);
-        }) as unknown as EventListener);
+        });
       } catch (error) {
         console.error("Failed to initialize Reveal.js:", error);
       }
