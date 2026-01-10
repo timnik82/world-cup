@@ -21,7 +21,7 @@ export function IntroSlide() {
   const [currentFact, setCurrentFact] = useState<Fact | null>(null);
   const { addFact, isFactFavorite } = useFavoritesStore();
   const { toast } = useToast();
-  const { t } = useTranslation();
+  const { t, language } = useTranslation();
 
   const handleRandomFact = () => {
     const fact = getRandomFact(language);
