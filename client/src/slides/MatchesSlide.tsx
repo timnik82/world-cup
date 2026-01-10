@@ -150,6 +150,7 @@ function MatchCard({
   const { toast } = useToast();
   const { t } = useTranslation();
   const isFavorite = isMatchFavorite(match.id);
+  const tc = (name: string) => (t as any).countries?.[name] || name;
 
   const handleAddFavorite = () => {
     if (isFavorite) {
@@ -162,7 +163,7 @@ function MatchCard({
     addMatch(match);
     toast({
       title: t.matches.matchSaved,
-      description: `${match.homeTeam} vs ${match.awayTeam} ${t.matches.matchSavedDesc}`,
+      description: `${tc(match.homeTeam)} vs ${tc(match.awayTeam)} ${t.matches.matchSavedDesc}`,
     });
   };
 
@@ -188,7 +189,7 @@ function MatchCard({
                 className="text-kid-lg md:text-kid-xl font-bold text-foreground text-right flex-1"
                 data-testid={`text-home-team-${match.id}`}
               >
-                {match.homeTeam}
+                {tc(match.homeTeam)}
               </span>
               <span 
                 className="text-kid-2xl md:text-kid-3xl font-bold font-mono text-sky-600 px-4 py-2 rounded-xl bg-sky-50"
@@ -200,7 +201,7 @@ function MatchCard({
                 className="text-kid-lg md:text-kid-xl font-bold text-foreground text-left flex-1"
                 data-testid={`text-away-team-${match.id}`}
               >
-                {match.awayTeam}
+                {tc(match.awayTeam)}
               </span>
             </div>
 

@@ -20,6 +20,7 @@ export function FavoritesSlide() {
   const { favoriteFacts, favoriteMatches, removeFact, removeMatch } = useFavoritesStore();
   const { toast } = useToast();
   const { t } = useTranslation();
+  const tc = (name: string) => (t as any).countries?.[name] || name;
 
   const handleRemoveFact = (factId: string) => {
     removeFact(factId);
@@ -171,11 +172,11 @@ export function FavoritesSlide() {
                                   className="flex items-center gap-2 text-kid-lg font-bold text-foreground flex-wrap"
                                   data-testid={`favorite-match-teams-${match.id}`}
                                 >
-                                  <span>{match.homeTeam}</span>
+                                  <span>{tc(match.homeTeam)}</span>
                                   <span className="font-mono text-sky-600">
                                     {match.homeScore} - {match.awayScore}
                                   </span>
-                                  <span>{match.awayTeam}</span>
+                                  <span>{tc(match.awayTeam)}</span>
                                 </div>
                                 <p className="text-kid-sm text-muted-foreground mt-1">
                                   {match.stadium}

@@ -17,6 +17,7 @@ interface MatchDetailsModalProps {
 
 export function MatchDetailsModal({ match, isOpen, onClose }: MatchDetailsModalProps) {
   const { t } = useTranslation();
+  const tc = (name: string) => (t as any).countries?.[name] || name;
   const { data, isLoading, isError, refetch, isFetched } = useQuery<MatchDetails | null>({
     queryKey: ["matchDetails", match?.id],
     queryFn: () => (match ? fetchMatchDetails(match.id) : Promise.resolve(null)),
@@ -68,7 +69,7 @@ export function MatchDetailsModal({ match, isOpen, onClose }: MatchDetailsModalP
                     </Badge>
                     <div className="flex items-center justify-center gap-4 mb-2 flex-wrap">
                       <span className="text-kid-2xl md:text-kid-3xl font-bold" data-testid="text-modal-home-team">
-                        {match.homeTeam}
+                        {tc(match.homeTeam)}
                       </span>
                       <span 
                         className="text-kid-4xl md:text-kid-5xl font-bold font-mono bg-white/20 px-6 py-2 rounded-2xl"
@@ -77,7 +78,7 @@ export function MatchDetailsModal({ match, isOpen, onClose }: MatchDetailsModalP
                         {match.homeScore} - {match.awayScore}
                       </span>
                       <span className="text-kid-2xl md:text-kid-3xl font-bold" data-testid="text-modal-away-team">
-                        {match.awayTeam}
+                        {tc(match.awayTeam)}
                       </span>
                     </div>
                     <p className="text-kid-base opacity-90" data-testid="text-modal-venue">
@@ -175,7 +176,7 @@ export function MatchDetailsModal({ match, isOpen, onClose }: MatchDetailsModalP
                                     {goal.player}
                                   </span>
                                   <span className="text-kid-sm text-muted-foreground">
-                                    ({goal.team})
+                                    ({tc(goal.team)})
                                   </span>
                                   {goal.type && (
                                     <Badge variant="secondary" className="ml-auto text-kid-xs">
@@ -227,7 +228,7 @@ export function MatchDetailsModal({ match, isOpen, onClose }: MatchDetailsModalP
                                   <span className="font-mono font-bold">{sub.minute}'</span>
                                   <span className="text-red-500">↓ {sub.playerOut}</span>
                                   <span className="text-emerald-500">↑ {sub.playerIn}</span>
-                                  <span>({sub.team})</span>
+                                  <span>({tc(sub.team)})</span>
                                 </div>
                               ))}
                             </div>
