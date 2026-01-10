@@ -19,7 +19,7 @@ export function Deck({ children }: DeckProps) {
 
     const initReveal = async () => {
       if (!deckRef.current) return;
-      
+
       try {
         const deck = new Reveal(deckRef.current, {
           embedded: false,
@@ -53,15 +53,15 @@ export function Deck({ children }: DeckProps) {
 
         await deck.initialize();
         globalReveal = deck;
-        
+
         const state = deck.getState();
         if (state) {
           setCurrentSlide(state.indexh);
         }
 
-        deck.on("slidechanged", (event: { indexh: number }) => {
+        deck.on("slidechanged", ((event: { indexh: number }) => {
           setCurrentSlide(event.indexh);
-        });
+        }) as unknown as EventListener);
       } catch (error) {
         console.error("Failed to initialize Reveal.js:", error);
       }
