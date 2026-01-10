@@ -48,8 +48,14 @@ export function getRandomFact(lang: 'en' | 'ru' | 'pt' = 'en'): Fact {
     ru: factsRu,
     pt: factsEn, // Fallback to English for Portuguese
   };
-  
+
   const facts = factsByLanguage[lang] ?? factsEn;
+
+  // Guard against empty facts array
+  if (facts.length === 0) {
+    throw new Error(`No facts available for language: ${lang}`);
+  }
+
   const randomIndex = Math.floor(Math.random() * facts.length);
   return facts[randomIndex];
 }

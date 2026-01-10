@@ -77,26 +77,6 @@ const translations = {
       pt: "Português",
       ru: "Русский",
     },
-    countries: {
-      "Argentina": "Argentina",
-      "West Germany": "West Germany",
-      "France": "France",
-      "Belgium": "Belgium",
-      "Brazil": "Brazil",
-      "Italy": "Italy",
-      "Sweden": "Sweden",
-      "Bulgaria": "Bulgaria",
-      "Germany": "Germany",
-      "Portugal": "Portugal",
-      "Netherlands": "Netherlands",
-      "Qatar": "Qatar",
-      "Croatia": "Croatia",
-      "Morocco": "Morocco",
-      "England": "England",
-      "Saudi Arabia": "Saudi Arabia",
-      "Mexico": "Mexico",
-      "United States": "United States"
-    },
   },
   pt: {
     intro: {
