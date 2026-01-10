@@ -19,7 +19,7 @@ export function Deck({ children }: DeckProps) {
 
     const initReveal = async () => {
       if (!deckRef.current) return;
-      
+
       try {
         const deck = new Reveal(deckRef.current, {
           embedded: false,
@@ -53,13 +53,13 @@ export function Deck({ children }: DeckProps) {
 
         await deck.initialize();
         globalReveal = deck;
-        
+
         const state = deck.getState();
         if (state) {
           setCurrentSlide(state.indexh);
         }
 
-        deck.on("slidechanged", (event: { indexh: number }) => {
+        deck.on("slidechanged", (event: any) => { // eslint-disable-line @typescript-eslint/no-explicit-any
           setCurrentSlide(event.indexh);
         });
       } catch (error) {
