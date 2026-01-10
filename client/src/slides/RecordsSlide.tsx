@@ -6,6 +6,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { computeStats } from "@/data";
 import { useTranslation } from "@/hooks/use-translation";
+import { translateCountry } from "@/lib/translation-utils";
 
 /**
  * Render the records overview slide showing summary statistics and top-scoring matches.
@@ -19,7 +20,7 @@ export function RecordsSlide() {
   const [stats, setStats] = useState(() => computeStats());
   const [isRecomputing, setIsRecomputing] = useState(false);
   const { t } = useTranslation();
-  const tc = (name: string) => (t as any).countries?.[name] || name;
+  const tc = (name: string) => translateCountry(t, name);
 
   const handleRecompute = () => {
     setIsRecomputing(true);
@@ -30,7 +31,7 @@ export function RecordsSlide() {
   };
 
   return (
-    <div 
+    <div
       className="flex flex-col min-h-full px-6 py-14 bg-gradient-to-br from-amber-50 via-orange-50 to-rose-50"
       data-testid="records-slide-content"
     >
@@ -39,7 +40,7 @@ export function RecordsSlide() {
         animate={{ y: 0, opacity: 1 }}
         className="flex flex-col md:flex-row items-center justify-between mb-8 gap-4"
       >
-        <h2 
+        <h2
           className="text-kid-3xl md:text-kid-4xl font-bold text-foreground flex items-center gap-3 flex-wrap"
           data-testid="text-records-title"
         >
@@ -114,7 +115,7 @@ export function RecordsSlide() {
       >
         <Card className="border-2 border-orange-200 shadow-xl" data-testid="card-top-scoring">
           <CardContent className="p-6">
-            <h3 
+            <h3
               className="text-kid-xl font-bold text-foreground mb-4 flex items-center gap-2"
               data-testid="text-top-scoring-title"
             >
@@ -147,7 +148,7 @@ export function RecordsSlide() {
                     </div>
                   </div>
                   <div className="text-right">
-                    <span 
+                    <span
                       className="text-kid-3xl font-bold text-amber-500"
                       data-testid={`top-match-${index}-total`}
                     >
@@ -193,7 +194,7 @@ function RecordCard({
   };
 
   return (
-    <Card 
+    <Card
       className={`border-2 ${borderColors[color]} shadow-xl h-full`}
       data-testid={testId}
     >

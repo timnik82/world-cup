@@ -7,6 +7,7 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { useFavoritesStore } from "@/store/favorites";
 import { useToast } from "@/hooks/use-toast";
 import { useTranslation } from "@/hooks/use-translation";
+import { translateCountry } from "@/lib/translation-utils";
 
 /**
  * Render the Favorites slide showing the user's saved facts and matches with UI to remove items.
@@ -20,7 +21,7 @@ export function FavoritesSlide() {
   const { favoriteFacts, favoriteMatches, removeFact, removeMatch } = useFavoritesStore();
   const { toast } = useToast();
   const { t } = useTranslation();
-  const tc = (name: string) => (t as any).countries?.[name] || name;
+  const tc = (name: string) => translateCountry(t, name);
 
   const handleRemoveFact = (factId: string) => {
     removeFact(factId);
@@ -41,7 +42,7 @@ export function FavoritesSlide() {
   const isEmpty = favoriteFacts.length === 0 && favoriteMatches.length === 0;
 
   return (
-    <div 
+    <div
       className="flex flex-col min-h-full px-6 py-14 bg-gradient-to-br from-rose-50 via-pink-50 to-fuchsia-50"
       data-testid="favorites-slide-content"
     >
@@ -95,14 +96,14 @@ export function FavoritesSlide() {
                         exit={{ x: 20, opacity: 0 }}
                         layout
                       >
-                        <Card 
+                        <Card
                           className="border-2 border-amber-100 shadow-md"
                           data-testid={`favorite-fact-${fact.id}`}
                         >
                           <CardContent className="p-4">
                             <div className="flex gap-3">
                               <div className="flex-1">
-                                <p 
+                                <p
                                   className="text-kid-base text-foreground leading-relaxed"
                                   data-testid={`favorite-fact-text-${fact.id}`}
                                 >
@@ -153,7 +154,7 @@ export function FavoritesSlide() {
                         exit={{ x: 20, opacity: 0 }}
                         layout
                       >
-                        <Card 
+                        <Card
                           className="border-2 border-sky-100 shadow-md"
                           data-testid={`favorite-match-${match.id}`}
                         >
@@ -168,7 +169,7 @@ export function FavoritesSlide() {
                                     {match.tournamentYear}
                                   </span>
                                 </div>
-                                <div 
+                                <div
                                   className="flex items-center gap-2 text-kid-lg font-bold text-foreground flex-wrap"
                                   data-testid={`favorite-match-teams-${match.id}`}
                                 >

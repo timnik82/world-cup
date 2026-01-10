@@ -8,6 +8,7 @@ import { useQuery } from "@tanstack/react-query";
 import type { Match, MatchDetails } from "@/data";
 import { fetchMatchDetails } from "@/lib/api";
 import { useTranslation } from "@/hooks/use-translation";
+import { translateCountry } from "@/lib/translation-utils";
 
 interface MatchDetailsModalProps {
   match: Match | null;
@@ -17,7 +18,7 @@ interface MatchDetailsModalProps {
 
 export function MatchDetailsModal({ match, isOpen, onClose }: MatchDetailsModalProps) {
   const { t } = useTranslation();
-  const tc = (name: string) => (t as any).countries?.[name] || name;
+  const tc = (name: string) => translateCountry(t, name);
   const { data, isLoading, isError, refetch, isFetched } = useQuery<MatchDetails | null>({
     queryKey: ["matchDetails", match?.id],
     queryFn: () => (match ? fetchMatchDetails(match.id) : Promise.resolve(null)),
@@ -71,7 +72,7 @@ export function MatchDetailsModal({ match, isOpen, onClose }: MatchDetailsModalP
                       <span className="text-kid-2xl md:text-kid-3xl font-bold" data-testid="text-modal-home-team">
                         {tc(match.homeTeam)}
                       </span>
-                      <span 
+                      <span
                         className="text-kid-4xl md:text-kid-5xl font-bold font-mono bg-white/20 px-6 py-2 rounded-2xl"
                         data-testid="text-modal-score"
                       >
@@ -199,11 +200,10 @@ export function MatchDetailsModal({ match, isOpen, onClose }: MatchDetailsModalP
                                 <Badge
                                   key={index}
                                   variant="outline"
-                                  className={`text-kid-sm py-2 px-3 ${
-                                    card.type === "yellow"
+                                  className={`text-kid-sm py-2 px-3 ${card.type === "yellow"
                                       ? "bg-amber-50 border-amber-300 text-amber-700"
                                       : "bg-red-50 border-red-300 text-red-700"
-                                  }`}
+                                    }`}
                                   data-testid={`card-${index}`}
                                 >
                                   {card.minute}' - {card.player}

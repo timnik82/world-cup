@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Trophy, Star, Sparkles, Shuffle } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -23,6 +23,14 @@ export function IntroSlide() {
   const { toast } = useToast();
   const { t, language } = useTranslation();
 
+  // Update fact when language changes to prevent stale content
+  useEffect(() => {
+    if (currentFact) {
+      const fact = getRandomFact(language);
+      setCurrentFact(fact);
+    }
+  }, [language]); // eslint-disable-line react-hooks/exhaustive-deps
+
   const handleRandomFact = () => {
     const fact = getRandomFact(language);
     setCurrentFact(fact);
@@ -46,7 +54,7 @@ export function IntroSlide() {
   };
 
   return (
-    <div 
+    <div
       className="flex flex-col items-center justify-center min-h-full px-8 py-14 bg-gradient-to-br from-emerald-50 via-sky-50 to-amber-50 relative"
       data-testid="intro-slide-content"
     >
@@ -130,7 +138,7 @@ export function IntroSlide() {
                         {t.intro.worldCup} {currentFact.year}
                       </p>
                     )}
-                    <span 
+                    <span
                       className="inline-block mt-3 px-3 py-1 text-kid-sm font-medium rounded-full bg-sky-100 text-sky-700 capitalize"
                       data-testid="badge-fact-category"
                     >

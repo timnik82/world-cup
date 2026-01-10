@@ -16,6 +16,7 @@ import { getAllYears, getAllStages, matches as allMatches, type Match } from "@/
 import { useFavoritesStore } from "@/store/favorites";
 import { useToast } from "@/hooks/use-toast";
 import { useTranslation } from "@/hooks/use-translation";
+import { translateCountry } from "@/lib/translation-utils";
 
 interface MatchesSlideProps {
   onShowDetails: (match: Match) => void;
@@ -46,7 +47,7 @@ export function MatchesSlide({ onShowDetails }: MatchesSlideProps) {
   }, [selectedYear, selectedStage]);
 
   return (
-    <div 
+    <div
       className="flex flex-col min-h-full px-6 py-14 bg-gradient-to-br from-sky-50 via-cyan-50 to-teal-50"
       data-testid="matches-slide-content"
     >
@@ -150,7 +151,7 @@ function MatchCard({
   const { toast } = useToast();
   const { t } = useTranslation();
   const isFavorite = isMatchFavorite(match.id);
-  const tc = (name: string) => (t as any).countries?.[name] || name;
+  const tc = (name: string) => translateCountry(t, name);
 
   const handleAddFavorite = () => {
     if (isFavorite) {
@@ -168,7 +169,7 @@ function MatchCard({
   };
 
   return (
-    <Card 
+    <Card
       className="border-2 border-sky-100 shadow-lg"
       data-testid={`card-match-${match.id}`}
     >
@@ -185,19 +186,19 @@ function MatchCard({
             </div>
 
             <div className="flex items-center justify-center gap-4 mb-2 flex-wrap">
-              <span 
+              <span
                 className="text-kid-lg md:text-kid-xl font-bold text-foreground text-right flex-1"
                 data-testid={`text-home-team-${match.id}`}
               >
                 {tc(match.homeTeam)}
               </span>
-              <span 
+              <span
                 className="text-kid-2xl md:text-kid-3xl font-bold font-mono text-sky-600 px-4 py-2 rounded-xl bg-sky-50"
                 data-testid={`text-score-${match.id}`}
               >
                 {match.homeScore} - {match.awayScore}
               </span>
-              <span 
+              <span
                 className="text-kid-lg md:text-kid-xl font-bold text-foreground text-left flex-1"
                 data-testid={`text-away-team-${match.id}`}
               >
@@ -205,7 +206,7 @@ function MatchCard({
               </span>
             </div>
 
-            <p 
+            <p
               className="text-kid-sm text-muted-foreground text-center"
               data-testid={`text-stadium-${match.id}`}
             >

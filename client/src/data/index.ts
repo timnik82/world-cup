@@ -40,8 +40,16 @@ export function getMatchesByYearAndStage(year: number, stage: string): Match[] {
   return matches.filter((m) => m.tournamentYear === year && m.stage === stage);
 }
 
-export function getRandomFact(lang: string = 'en'): Fact {
-  const facts = lang === 'ru' ? factsRu : factsEn;
+export function getRandomFact(lang: 'en' | 'ru' | 'pt' = 'en'): Fact {
+  // Map languages to their fact collections
+  // Portuguese ('pt') falls back to English facts for now
+  const factsByLanguage: Record<string, Fact[]> = {
+    en: factsEn,
+    ru: factsRu,
+    pt: factsEn, // Fallback to English for Portuguese
+  };
+  
+  const facts = factsByLanguage[lang] ?? factsEn;
   const randomIndex = Math.floor(Math.random() * facts.length);
   return facts[randomIndex];
 }

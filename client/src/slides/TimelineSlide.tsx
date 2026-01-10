@@ -6,6 +6,7 @@ import { Slider } from "@/components/ui/slider";
 import { Button } from "@/components/ui/button";
 import { getAllYears, getTournamentByYear, type Tournament } from "@/data";
 import { useTranslation } from "@/hooks/use-translation";
+import { translateCountry } from "@/lib/translation-utils";
 
 /**
  * Render an interactive timeline UI for selecting a year and viewing its tournament details.
@@ -30,7 +31,7 @@ export function TimelineSlide() {
   };
 
   return (
-    <div 
+    <div
       className="flex flex-col items-center justify-center min-h-full px-8 py-14 bg-gradient-to-br from-violet-50 via-fuchsia-50 to-pink-50"
       data-testid="timeline-slide-content"
     >
@@ -52,7 +53,7 @@ export function TimelineSlide() {
           transition={{ delay: 0.2 }}
           className="text-center mb-6"
         >
-          <span 
+          <span
             className="text-kid-6xl font-bold text-violet-600 font-mono"
             data-testid="text-selected-year"
           >
@@ -123,10 +124,10 @@ export function TimelineSlide() {
  */
 function TournamentCard({ tournament }: { tournament: Tournament }) {
   const { t } = useTranslation();
-  const tc = (name: string) => (t as any).countries?.[name] || name;
+  const tc = (name: string) => translateCountry(t, name);
 
   return (
-    <Card 
+    <Card
       className="border-2 border-violet-200 shadow-2xl overflow-hidden"
       data-testid={`card-tournament-${tournament.year}`}
     >
@@ -169,7 +170,7 @@ function TournamentCard({ tournament }: { tournament: Tournament }) {
             className="text-center mb-8 py-6 bg-gradient-to-r from-violet-100 to-fuchsia-100 rounded-2xl"
           >
             <p className="text-kid-sm text-violet-600 font-semibold mb-2">{t.timeline.finalScore}</p>
-            <p 
+            <p
               className="text-kid-xl sm:text-kid-2xl md:text-kid-6xl font-bold font-mono text-violet-700 whitespace-nowrap overflow-hidden text-ellipsis px-2"
               data-testid="text-final-score"
             >
