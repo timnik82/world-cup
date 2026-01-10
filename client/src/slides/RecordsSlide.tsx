@@ -19,6 +19,7 @@ export function RecordsSlide() {
   const [stats, setStats] = useState(() => computeStats());
   const [isRecomputing, setIsRecomputing] = useState(false);
   const { t } = useTranslation();
+  const tc = (name: string) => (t as any).countries?.[name] || name;
 
   const handleRecompute = () => {
     setIsRecomputing(true);
@@ -68,7 +69,7 @@ export function RecordsSlide() {
             icon={<Trophy className="w-10 h-10 text-amber-500" />}
             title={t.records.mostGoals}
             value={stats.mostGoalsInTournament.totalGoals.toString()}
-            subtitle={`${stats.mostGoalsInTournament.host} ${stats.mostGoalsInTournament.year}`}
+            subtitle={`${tc(stats.mostGoalsInTournament.host)} ${stats.mostGoalsInTournament.year}`}
             color="amber"
             testId="record-most-goals"
           />
@@ -134,11 +135,11 @@ export function RecordsSlide() {
                   </span>
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center gap-2 text-kid-lg font-bold text-foreground flex-wrap">
-                      <span data-testid={`top-match-${index}-home`}>{match.homeTeam}</span>
+                      <span data-testid={`top-match-${index}-home`}>{tc(match.homeTeam)}</span>
                       <span className="font-mono text-amber-600" data-testid={`top-match-${index}-score`}>
                         {match.homeScore} - {match.awayScore}
                       </span>
-                      <span data-testid={`top-match-${index}-away`}>{match.awayTeam}</span>
+                      <span data-testid={`top-match-${index}-away`}>{tc(match.awayTeam)}</span>
                     </div>
                     <div className="text-kid-sm text-muted-foreground flex items-center flex-wrap gap-1">
                       <Badge variant="secondary">{match.stage}</Badge>
