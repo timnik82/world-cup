@@ -43,8 +43,8 @@ This document provides comprehensive guidance for AI assistants working with the
 
 ## Codebase Structure
 
-```
-/home/user/world-cup/
+```text
+.
 ├── client/                    # Frontend React application
 │   ├── src/
 │   │   ├── components/        # React components (47 UI components)
@@ -55,10 +55,11 @@ This document provides comprehensive guidance for AI assistants working with the
 │   │   │   ├── index.ts      # Data access layer
 │   │   │   └── *.json        # Static data files
 │   │   ├── deck/             # Reveal.js wrapper components
-│   │   ├── slides/           # Slide components (6 slides)
+│   │   ├── slides/           # Slide components (6 slides + modal)
 │   │   │   ├── IntroSlide.tsx
 │   │   │   ├── TimelineSlide.tsx
 │   │   │   ├── MatchesSlide.tsx
+│   │   │   ├── MatchDetailsModal.tsx
 │   │   │   ├── RecordsSlide.tsx
 │   │   │   └── FavoritesSlide.tsx
 │   │   ├── hooks/            # Custom React hooks
@@ -200,11 +201,12 @@ const matches = await apiProvider.getMatches();
 
 Location: `client/src/data/`
 
-```
+```text
 schemas.ts    → Zod schemas (runtime validation + TypeScript types)
 index.ts      → Data access layer with helper functions
-*.json        → Static data files
+*.json        → Static data files (English default)
 *_ru.json     → Localized data files (Russian)
+*_pt.json     → Localized data files (Portuguese, when added)
 ```
 
 **Pattern**: Schema-first approach with centralized data access
@@ -233,7 +235,7 @@ slides.ts       → Current slide tracking
 
 ### 4. Component Architecture
 
-```
+```text
 components/ui/      → Base components (atoms) from shadcn/ui
 components/         → Composite components
 slides/             → Feature components (organisms)
@@ -266,7 +268,7 @@ export type Match = z.infer<typeof matchSchema>;
 - **Components**: PascalCase (`IntroSlide.tsx`, `LanguageToggle.tsx`)
 - **Utilities**: camelCase (`queryClient.ts`, `utils.ts`)
 - **Data Files**: camelCase (`tournaments.json`, `matches_ru.json`)
-- **Types**: Match component name (`IntroSlide.tsx` exports `IntroSlide`)
+- **Component Exports**: Match filename (e.g., `IntroSlide.tsx` exports `function IntroSlide()`)
 
 ### Import Patterns
 
@@ -277,7 +279,7 @@ import { useQuery } from "@tanstack/react-query";
 
 // Alias imports
 import { Button } from "@/components/ui/button";
-import { useMatchesStore } from "@/store/matches";
+import { useFavoritesStore } from "@/store/favorites";
 
 // Relative imports last
 import { MatchCard } from "./MatchCard";
@@ -382,11 +384,13 @@ export const useNewData = () => {
 
 ### Adding Translations
 
-1. Add translation key to language store
-2. Add English text in `client/src/data/*.json`
-3. Add Russian text in `client/src/data/*_ru.json`
-4. Add Portuguese text in `client/src/data/*_pt.json` (if applicable)
-5. Use translation hook: `const t = useTranslation();`
+The project uses a file-based localization approach where data files have language-specific variants:
+
+1. Add English content in base file: `client/src/data/<name>.json`
+2. Add Russian content in: `client/src/data/<name>_ru.json`
+3. Add Portuguese content in: `client/src/data/<name>_pt.json` (if applicable)
+4. The language store (`client/src/store/language.ts`) manages the active language preference
+5. Components load the appropriate file based on the selected language
 
 ### Database Schema Changes
 
@@ -624,7 +628,7 @@ npm run db:push    # Update database schema
 ```
 
 ### Important Paths
-```
+```text
 client/src/components/ui/    # Base UI components
 client/src/slides/           # Main slide components
 client/src/data/             # Data layer
@@ -664,4 +668,3 @@ For AI assistants: This document should provide sufficient context to work effec
 
 **Last Updated**: 2026-01-11
 **Repository**: timnik82/world-cup
-**Branch**: claude/add-claude-documentation-AMUvN
