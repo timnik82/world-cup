@@ -11,7 +11,10 @@
     "typecheck": "tsc",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
-    "db:push": "drizzle-kit push"
+    "db:push": "drizzle-kit push",
+    "test": "node tests/run-tests.cjs",
+    "test:quick": "bash tests/quick-validate.sh",
+    "test:docs": "node tests/run-tests.cjs"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.10.0",
