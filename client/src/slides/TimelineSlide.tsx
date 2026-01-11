@@ -71,14 +71,17 @@ export function TimelineSlide() {
             className="w-full cursor-pointer"
             data-testid="slider-year"
           />
-          <div className="flex justify-between mt-3 flex-wrap gap-2">
+          <div 
+            className="grid mt-3"
+            style={{ gridTemplateColumns: `repeat(${years.length}, 1fr)` }}
+          >
             {years.map((year) => (
               <Button
                 key={year}
                 variant="ghost"
                 size="sm"
                 onClick={() => setSelectedYear(year)}
-                className="inline-flex items-center justify-center gap-2 whitespace-nowrap focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 hover-elevate active-elevate-2 border border-transparent min-h-8 rounded-md px-3 font-medium transition-colors text-muted-foreground text-[20px]"
+                className="inline-flex items-center justify-center gap-2 whitespace-nowrap focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 hover-elevate active-elevate-2 border border-transparent min-h-8 rounded-md px-1 font-medium transition-colors text-muted-foreground text-[18px] sm:text-[20px]"
                 data-testid={`button-year-${year}`}
               >
                 {year}
