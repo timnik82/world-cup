@@ -62,15 +62,22 @@ export function TimelineSlide() {
         </motion.div>
 
         <div className="px-4">
-          <Slider
-            value={[selectedYear]}
-            min={years[0]}
-            max={years[years.length - 1]}
-            step={1}
-            onValueChange={handleYearChange}
-            className="w-full cursor-pointer"
-            data-testid="slider-year"
-          />
+          <div 
+            style={{ 
+              paddingLeft: `calc(50% / ${years.length})`, 
+              paddingRight: `calc(50% / ${years.length})` 
+            }}
+          >
+            <Slider
+              value={[selectedYear]}
+              min={years[0]}
+              max={years[years.length - 1]}
+              step={1}
+              onValueChange={handleYearChange}
+              className="w-full cursor-pointer"
+              data-testid="slider-year"
+            />
+          </div>
           <div 
             className="grid mt-3"
             style={{ gridTemplateColumns: `repeat(${years.length}, 1fr)` }}
