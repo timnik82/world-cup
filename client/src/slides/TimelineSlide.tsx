@@ -79,7 +79,8 @@ export function TimelineSlide() {
             />
           </div>
           <div 
-            className="flex flex-wrap justify-center gap-2 mt-3 overflow-x-auto"
+            className="grid mt-3 overflow-x-auto pb-2"
+            style={{ gridTemplateColumns: `repeat(${years.length}, minmax(44px, 1fr))` }}
           >
             {years.map((year) => (
               <Button
@@ -87,7 +88,7 @@ export function TimelineSlide() {
                 variant="ghost"
                 size="default"
                 onClick={() => setSelectedYear(year)}
-                className={`min-h-[44px] min-w-[44px] px-3 text-[18px] sm:text-[20px] ${
+                className={`min-h-[44px] px-1 text-[18px] sm:text-[20px] ${
                   selectedYear === year ? "bg-violet-100 text-violet-700" : "text-muted-foreground"
                 }`}
                 data-testid={`button-year-${year}`}
