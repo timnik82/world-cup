@@ -62,23 +62,35 @@ export function TimelineSlide() {
         </motion.div>
 
         <div className="px-4">
-          <Slider
-            value={[selectedYear]}
-            min={years[0]}
-            max={years[years.length - 1]}
-            step={1}
-            onValueChange={handleYearChange}
-            className="w-full cursor-pointer"
-            data-testid="slider-year"
-          />
-          <div className="flex justify-between mt-3 flex-wrap gap-2">
+          <div 
+            style={{ 
+              paddingLeft: `calc(50% / ${years.length})`, 
+              paddingRight: `calc(50% / ${years.length})` 
+            }}
+          >
+            <Slider
+              value={[selectedYear]}
+              min={years[0]}
+              max={years[years.length - 1]}
+              step={1}
+              onValueChange={handleYearChange}
+              className="w-full cursor-pointer"
+              data-testid="slider-year"
+            />
+          </div>
+          <div 
+            className="grid mt-3 overflow-x-auto pb-2"
+            style={{ gridTemplateColumns: `repeat(${years.length}, minmax(44px, 1fr))` }}
+          >
             {years.map((year) => (
               <Button
                 key={year}
                 variant="ghost"
-                size="sm"
+                size="default"
                 onClick={() => setSelectedYear(year)}
-                className="inline-flex items-center justify-center gap-2 whitespace-nowrap focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 hover-elevate active-elevate-2 border border-transparent min-h-8 rounded-md px-3 font-medium transition-colors text-muted-foreground text-[20px]"
+                className={`min-h-[44px] px-1 text-[18px] sm:text-[20px] ${
+                  selectedYear === year ? "bg-violet-100 text-violet-700" : "text-muted-foreground"
+                }`}
                 data-testid={`button-year-${year}`}
               >
                 {year}
