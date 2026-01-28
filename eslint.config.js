@@ -11,6 +11,7 @@ export default tseslint.config(
             'dist/**',
             'node_modules/**',
             'build/**',
+            'tests/**',
             '*.config.js',
             '*.config.ts',
             'postcss.config.js',
