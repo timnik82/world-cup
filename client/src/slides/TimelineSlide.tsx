@@ -1,4 +1,4 @@
-import { useState, useMemo, useRef, useEffect } from "react";
+import { useState, useMemo, useRef, useEffect, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Trophy, MapPin, Users, Calendar, ChevronLeft, ChevronRight } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
@@ -25,16 +25,19 @@ export function TimelineSlide() {
   const scrollRef = useRef<HTMLDivElement>(null);
   const buttonRefs = useRef<Record<number, HTMLButtonElement | null>>({});
 
+  const setButtonRef = useCallback((el: HTMLButtonElement | null, year: number) => {
+    buttonRefs.current[year] = el;
+  }, []);
+
   useEffect(() => {
-    const btn = buttonRefs.current[selectedYear];
-    const container = scrollRef.current;
-    if (btn && container) {
-      const btnRect = btn.getBoundingClientRect();
-      const containerRect = container.getBoundingClientRect();
-      const offset = btnRect.left - containerRect.left + container.scrollLeft;
-      const scrollTarget = offset - (container.clientWidth / 2) + (btn.offsetWidth / 2);
-      container.scrollTo({ left: scrollTarget, behavior: "smooth" });
-    }
+    requestAnimationFrame(() => {
+      const btn = buttonRefs.current[selectedYear];
+      const container = scrollRef.current;
+      if (btn && container) {
+        const scrollTarget = btn.offsetLeft - (container.clientWidth / 2) + (btn.offsetWidth / 2);
+        container.scrollTo({ left: scrollTarget, behavior: "smooth" });
+      }
+    });
   }, [selectedYear]);
 
   const goToPrev = () => {
@@ -83,11 +86,11 @@ export function TimelineSlide() {
               {years.map((year) => (
                 <Button
                   key={year}
-                  ref={(el) => { buttonRefs.current[year] = el; }}
+                  ref={(el) => setButtonRef(el, year)}
                   variant="ghost"
-                  size="sm"
+                  size="default"
                   onClick={() => setSelectedYear(year)}
-                  className={`shrink-0 text-[14px] sm:text-[16px] font-mono font-semibold transition-all ${
+                  className={`shrink-0 min-h-12 text-[14px] sm:text-[16px] font-mono font-semibold transition-all ${
                     selectedYear === year
                       ? "bg-violet-500 text-white hover:bg-violet-600"
                       : "text-muted-foreground"
@@ -243,7 +246,9 @@ function TournamentCard({ tournament }: { tournament: Tournament }) {
                 label={t.timeline.attendance}
                 value={tournament.attendance >= 1000000
                   ? `${(tournament.attendance / 1000000).toFixed(1)}M`
-                  : `${Math.round(tournament.attendance / 1000)}K`}
+                  : tournament.attendance >= 1000
+                    ? `${Math.round(tournament.attendance / 1000)}K`
+                    : tournament.attendance.toLocaleString()}
                 testId="stat-attendance"
               />
             )}
