@@ -7,6 +7,15 @@ import { getAllYears, getTournamentByYear, type Tournament } from "@/data";
 import { useTranslation } from "@/hooks/use-translation";
 import { translateCountry } from "@/lib/translation-utils";
 
+/**
+ * Render an interactive timeline UI for selecting a World Cup year and viewing tournament details.
+ *
+ * Displays a horizontally scrollable strip of year buttons with prev/next navigation,
+ * dot indicators showing position, and an animated tournament card for the selected year.
+ * Targets 48px minimum touch areas for kid-friendly interaction.
+ *
+ * @returns A React element containing the year navigation controls and animated tournament card.
+ */
 export function TimelineSlide() {
   const years = useMemo(() => getAllYears(), []);
   const [selectedYear, setSelectedYear] = useState(years[years.length - 1]);
@@ -18,8 +27,13 @@ export function TimelineSlide() {
 
   useEffect(() => {
     const btn = buttonRefs.current[selectedYear];
-    if (btn && scrollRef.current) {
-      btn.scrollIntoView({ behavior: "smooth", block: "nearest", inline: "center" });
+    const container = scrollRef.current;
+    if (btn && container) {
+      const btnRect = btn.getBoundingClientRect();
+      const containerRect = container.getBoundingClientRect();
+      const offset = btnRect.left - containerRect.left + container.scrollLeft;
+      const scrollTarget = offset - (container.clientWidth / 2) + (btn.offsetWidth / 2);
+      container.scrollTo({ left: scrollTarget, behavior: "smooth" });
     }
   }, [selectedYear]);
 
@@ -50,10 +64,11 @@ export function TimelineSlide() {
       <div className="w-full max-w-3xl mb-6">
         <div className="flex items-center gap-2 mb-4">
           <Button
-            size="icon"
+            size="icon-lg"
             variant="ghost"
             onClick={goToPrev}
             disabled={selectedIndex === 0}
+            className="shrink-0"
             data-testid="button-year-prev"
           >
             <ChevronLeft className="w-5 h-5" />
@@ -86,10 +101,11 @@ export function TimelineSlide() {
           </div>
 
           <Button
-            size="icon"
+            size="icon-lg"
             variant="ghost"
             onClick={goToNext}
             disabled={selectedIndex === years.length - 1}
+            className="shrink-0"
             data-testid="button-year-next"
           >
             <ChevronRight className="w-5 h-5" />
@@ -110,18 +126,16 @@ export function TimelineSlide() {
           </span>
         </motion.div>
 
-        <div className="flex justify-center gap-1 mb-2">
+        <div className="flex justify-center gap-1 mb-2" aria-hidden="true">
           {years.map((year) => (
-            <button
+            <span
               key={year}
-              onClick={() => setSelectedYear(year)}
               className={`h-1.5 rounded-full transition-all ${
                 selectedYear === year
                   ? "w-4 bg-violet-500"
-                  : "w-1.5 bg-violet-200 hover:bg-violet-300"
+                  : "w-1.5 bg-violet-200"
               }`}
               data-testid={`dot-year-${year}`}
-              aria-label={`Select ${year}`}
             />
           ))}
         </div>
@@ -145,6 +159,15 @@ export function TimelineSlide() {
   );
 }
 
+/**
+ * Render a card displaying detailed information for a specific World Cup tournament.
+ *
+ * Shows host country, champion and runner-up, final score, and key statistics
+ * (total matches, total goals, and attendance formatted as K/M).
+ *
+ * @param tournament - The tournament data object to display.
+ * @returns The JSX element rendering the tournament card.
+ */
 function TournamentCard({ tournament }: { tournament: Tournament }) {
   const { t } = useTranslation();
   const tc = (name: string) => translateCountry(t, name);
@@ -231,6 +254,15 @@ function TournamentCard({ tournament }: { tournament: Tournament }) {
   );
 }
 
+/**
+ * Render a stat box with an icon, label, and value.
+ *
+ * @param icon - The icon element to display.
+ * @param label - The label text below the value.
+ * @param value - The formatted stat value.
+ * @param testId - The data-testid for testing.
+ * @returns The JSX element rendering the stat box.
+ */
 function StatBox({
   icon,
   label,
