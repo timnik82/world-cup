@@ -79,7 +79,7 @@ export function TimelineSlide() {
 
           <div
             ref={scrollRef}
-            className="flex-1 overflow-x-auto scrollbar-hide"
+            className="relative flex-1 overflow-x-auto scrollbar-hide"
             style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
           >
             <div className="flex gap-1 sm:gap-1.5 px-1 py-1">
@@ -90,11 +90,10 @@ export function TimelineSlide() {
                   variant="ghost"
                   size="default"
                   onClick={() => setSelectedYear(year)}
-                  className={`shrink-0 min-h-12 text-[14px] sm:text-[16px] font-mono font-semibold transition-all ${
-                    selectedYear === year
+                  className={`shrink-0 min-h-12 text-[14px] sm:text-[16px] font-mono font-semibold transition-all ${selectedYear === year
                       ? "bg-violet-500 text-white hover:bg-violet-600"
                       : "text-muted-foreground"
-                  }`}
+                    }`}
                   data-testid={`button-year-${year}`}
                 >
                   {year}
@@ -133,11 +132,10 @@ export function TimelineSlide() {
           {years.map((year) => (
             <span
               key={year}
-              className={`h-1.5 rounded-full transition-all ${
-                selectedYear === year
+              className={`h-1.5 rounded-full transition-all ${selectedYear === year
                   ? "w-4 bg-violet-500"
                   : "w-1.5 bg-violet-200"
-              }`}
+                }`}
               data-testid={`dot-year-${year}`}
             />
           ))}
