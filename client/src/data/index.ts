@@ -16,6 +16,17 @@ import {
   type MatchDetails,
 } from "./schemas";
 
+/**
+ * IMPORTANT: When adding a new tournament, update:
+ * 1. tournaments.json (English)
+ * 2. tournaments_ru.json (Russian translations)
+ * 3. tournaments_pt.json (Portuguese translations)
+ * 4. The countries map in use-translation.ts (for runtime translations)
+ * 
+ * This ensures consistency between pre-localized tournament data (used by TimelineSlide)
+ * and runtime country name translations (used by RecordsSlide, MatchesSlide, etc.)
+ */
+
 export const tournaments: Tournament[] = TournamentsDataSchema.parse(tournamentsData);
 export const tournamentsRu: Tournament[] = TournamentsDataSchema.parse(tournamentsDataRu);
 export const tournamentsPt: Tournament[] = TournamentsDataSchema.parse(tournamentsDataPt);
