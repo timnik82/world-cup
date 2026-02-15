@@ -37,3 +37,9 @@ author = "agent"
 task = "shell.exec"
 args = "npm run dev"
 waitForPort = 5000
+
+[userenv]
+
+[userenv.shared]
+GITHUB_REPO = "timnik82/world-cup"
+GITHUB_API_BASE = "https://api.github.com"

@@ -12,7 +12,7 @@ import {
 } from "@/components/ui/select";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Badge } from "@/components/ui/badge";
-import { getAllYears, getAllStages, matches as allMatches, type Match } from "@/data";
+import { getMatchYears, getAllStages, matches as allMatches, type Match } from "@/data";
 import { useFavoritesStore } from "@/store/favorites";
 import { useToast } from "@/hooks/use-toast";
 import { useTranslation } from "@/hooks/use-translation";
@@ -29,7 +29,7 @@ interface MatchesSlideProps {
  * @returns The MatchesSlide React element.
  */
 export function MatchesSlide({ onShowDetails }: MatchesSlideProps) {
-  const years = useMemo(() => getAllYears(), []);
+  const years = useMemo(() => getMatchYears(), []);
   const stages = useMemo(() => getAllStages(), []);
   const [selectedYear, setSelectedYear] = useState<string>("all");
   const [selectedStage, setSelectedStage] = useState<string>("all");

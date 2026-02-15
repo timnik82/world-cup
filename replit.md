@@ -41,7 +41,7 @@ client/src/
 
 ## MVP Features (6 Slides)
 1. **Intro Slide**: Random fact button, add to favorites
-2. **Timeline Slide**: Year slider (1986-2022), tournament card with champion, runner-up, final score
+2. **Timeline Slide**: Scrollable year buttons with prev/next navigation (1930-2022, all 22 World Cups), tournament card with champion, runner-up, final score
 3. **Matches Slide**: Filters (year + stage), match list, show details button
 4. **Match Details Modal**: On-demand API call (TanStack Query with enabled:false)
 5. **Records Slide**: Computed stats from local data, recompute button
@@ -49,7 +49,7 @@ client/src/
 
 ## Data
 - All data lives locally in `/client/src/data/` as JSON
-- Sample data includes 5 World Cup tournaments (1986, 1994, 2006, 2014, 2022)
+- Complete data for all 22 World Cup tournaments (1930-2022)
 - 15 matches with key games from each tournament
 - 15 kid-friendly facts about World Cup history
 - Match details for notable games (1986 Final, 2022 Final, etc.)
@@ -78,6 +78,9 @@ npm run build  # Production build
 ```
 
 ## Recent Changes
+- Added complete World Cup tournament data for all 22 editions (1930-2022)
+- Redesigned Timeline Slide UI with horizontally scrollable year buttons, prev/next arrows, and dot indicator for 22 years
+- Attendance stat now shows "K" for older tournaments under 1M attendance
 - Initial MVP implementation with 6 slides
 - Kid-friendly design with larger buttons and bright colors
 - Zustand store for favorites with localStorage persistence

@@ -1,4 +1,6 @@
 import tournamentsData from "./tournaments.json";
+import tournamentsDataRu from "./tournaments_ru.json";
+import tournamentsDataPt from "./tournaments_pt.json";
 import matchesData from "./matches.json";
 import factsDataEn from "./facts.json";
 import factsDataRu from "./facts_ru.json";
@@ -14,7 +16,20 @@ import {
   type MatchDetails,
 } from "./schemas";
 
+/**
+ * IMPORTANT: When adding a new tournament, update:
+ * 1. tournaments.json (English)
+ * 2. tournaments_ru.json (Russian translations)
+ * 3. tournaments_pt.json (Portuguese translations)
+ * 4. The countries map in use-translation.ts (for runtime translations)
+ * 
+ * This ensures consistency between pre-localized tournament data (used by TimelineSlide)
+ * and runtime country name translations (used by RecordsSlide, MatchesSlide, etc.)
+ */
+
 export const tournaments: Tournament[] = TournamentsDataSchema.parse(tournamentsData);
+export const tournamentsRu: Tournament[] = TournamentsDataSchema.parse(tournamentsDataRu);
+export const tournamentsPt: Tournament[] = TournamentsDataSchema.parse(tournamentsDataPt);
 export const matches: Match[] = MatchesDataSchema.parse(matchesData);
 export const factsEn: Fact[] = FactsDataSchema.parse(factsDataEn);
 export const factsRu: Fact[] = FactsDataSchema.parse(factsDataRu);
@@ -24,8 +39,14 @@ for (const [key, value] of Object.entries(matchDetailsData)) {
   matchDetails[key] = MatchDetailsSchema.parse(value);
 }
 
-export function getTournamentByYear(year: number): Tournament | undefined {
-  return tournaments.find((t) => t.year === year);
+export function getTournamentByYear(year: number, lang: 'en' | 'ru' | 'pt' = 'en'): Tournament | undefined {
+  const tournamentsByLang = {
+    en: tournaments,
+    ru: tournamentsRu,
+    pt: tournamentsPt,
+  };
+  const data = tournamentsByLang[lang] ?? tournaments;
+  return data.find((t) => t.year === year);
 }
 
 export function getMatchesByYear(year: number): Match[] {
@@ -64,6 +85,11 @@ export function getAllYears(): number[] {
   return tournaments.map((t) => t.year).sort((a, b) => a - b);
 }
 
+export function getMatchYears(): number[] {
+  const years = new Set(matches.map((m) => m.tournamentYear));
+  return Array.from(years).sort((a, b) => a - b);
+}
+
 export function getAllStages(): string[] {
   const stages = new Set(matches.map((m) => m.stage));
   return Array.from(stages);
@@ -88,12 +114,15 @@ export function computeStats() {
     t.totalGoals > max.totalGoals ? t : max
   );
 
+  const matchTournamentCount = new Set(matches.map((m) => m.tournamentYear)).size;
+
   return {
     totalGoalsByTournament,
     topScoringMatches,
     mostGoalsInTournament,
     totalTournaments: tournaments.length,
     totalMatchesInData: matches.length,
+    matchTournamentCount,
   };
 }
 
