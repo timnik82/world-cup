@@ -8,7 +8,7 @@
 #   3. Review Comments (line-specific code review comments)
 #
 # Required Environment Variables:
-#   GITHUB_TOKEN - GitHub Personal Access Token
+#   GITHUB_TOKEN - GitHub Personal Access Token (will look for 'gh' CLI if not set)
 #   GITHUB_REPO - Repository in format "owner/repo" (e.g., "owner/repo-name")
 #   GITHUB_API_BASE - GitHub API base URL (default: https://api.github.com)
 #
@@ -22,9 +22,18 @@
 set -e -o pipefail
 
 # Validate environment variables
+# Validate environment variables
 if [ -z "$GITHUB_TOKEN" ]; then
-    echo "Error: GITHUB_TOKEN environment variable is required"
-    exit 1
+    # Try to use gh CLI if available
+    if command -v gh >/dev/null 2>&1; then
+        GITHUB_TOKEN=$(gh auth token 2>/dev/null || true)
+    fi
+
+    if [ -z "$GITHUB_TOKEN" ]; then
+        echo "Error: GITHUB_TOKEN environment variable is required"
+        echo "       (Checked for 'gh' CLI but it was not available or not authenticated)"
+        exit 1
+    fi
 fi
 
 if [ -z "$GITHUB_REPO" ]; then
