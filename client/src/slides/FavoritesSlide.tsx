@@ -7,7 +7,7 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { useFavoritesStore } from "@/store/favorites";
 import { useToast } from "@/hooks/use-toast";
 import { useTranslation } from "@/hooks/use-translation";
-import { translateCountry } from "@/lib/translation-utils";
+import { translateCountry, translateStage } from "@/lib/translation-utils";
 
 /**
  * Render the Favorites slide showing the user's saved facts and matches with UI to remove items.
@@ -22,6 +22,7 @@ export function FavoritesSlide() {
   const { toast } = useToast();
   const { t } = useTranslation();
   const tc = (name: string) => translateCountry(t, name);
+  const ts = (stage: string) => translateStage(t, stage);
 
   const handleRemoveFact = (factId: string) => {
     removeFact(factId);
@@ -163,7 +164,7 @@ export function FavoritesSlide() {
                               <div className="flex-1">
                                 <div className="flex items-center gap-2 mb-1 flex-wrap">
                                   <Badge variant="secondary">
-                                    {match.stage}
+                                    {ts(match.stage)}
                                   </Badge>
                                   <span className="text-kid-xs text-muted-foreground">
                                     {match.tournamentYear}
