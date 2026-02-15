@@ -5,6 +5,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { getAllYears, getTournamentByYear, type Tournament } from "@/data";
 import { useTranslation } from "@/hooks/use-translation";
+import { useLanguageStore } from "@/store/language";
 import { translateCountry } from "@/lib/translation-utils";
 
 /**
@@ -19,19 +20,20 @@ import { translateCountry } from "@/lib/translation-utils";
 export function TimelineSlide() {
   const years = useMemo(() => getAllYears(), []);
   const [selectedYear, setSelectedYear] = useState(years[years.length - 1]);
-  const tournament = useMemo(() => getTournamentByYear(selectedYear), [selectedYear]);
+  const { language } = useLanguageStore();
+  const tournament = useMemo(() => getTournamentByYear(selectedYear, language), [selectedYear, language]);
   const { t } = useTranslation();
   const selectedIndex = years.indexOf(selectedYear);
   const scrollRef = useRef<HTMLDivElement>(null);
   useEffect(() => {
-    const container = scrollRef.current;
-
     // Use requestAnimationFrame to ensure the DOM is ready and layout is stable
     const handle = requestAnimationFrame(() => {
+      const container = scrollRef.current;
       if (!container) return;
 
       const btn = container.querySelector<HTMLElement>(`[data-year="${selectedYear}"]`);
       if (btn) {
+        // offsetLeft is relative to the scroll container because it has position:relative
         const scrollTarget = btn.offsetLeft - (container.clientWidth / 2) + (btn.offsetWidth / 2);
         container.scrollTo({ left: scrollTarget, behavior: "smooth" });
       }
@@ -145,7 +147,6 @@ export function TimelineSlide() {
                 : "w-1.5 bg-violet-200 hover:bg-violet-300"
                 }`}
               data-testid={`dot-year-${year}`}
-              aria-label={`Select ${year}`}
             />
           ))}
         </div>

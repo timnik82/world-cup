@@ -187,7 +187,11 @@ const translations = {
       "Yugoslavia": "Jugoslávia",
       "Austria": "Áustria",
       "Poland": "Polónia",
-      "Turkey": "Turquia"
+      "Russia": "Rússia",
+      "Soviet Union": "União Soviética",
+
+      "Turkey": "Turquia",
+      "South Korea and Japan": "Coreia do Sul e Japão"
     },
   },
   ru: {
@@ -298,7 +302,11 @@ const translations = {
       "Yugoslavia": "Югославия",
       "Austria": "Австрия",
       "Poland": "Польша",
-      "Turkey": "Турция"
+      "Russia": "Россия",
+      "Soviet Union": "СССР",
+
+      "Turkey": "Турция",
+      "South Korea and Japan": "Южная Корея и Япония"
     },
   },
 } as const;

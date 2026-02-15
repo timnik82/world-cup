@@ -28,8 +28,14 @@ for (const [key, value] of Object.entries(matchDetailsData)) {
   matchDetails[key] = MatchDetailsSchema.parse(value);
 }
 
-export function getTournamentByYear(year: number): Tournament | undefined {
-  return tournaments.find((t) => t.year === year);
+export function getTournamentByYear(year: number, lang: 'en' | 'ru' | 'pt' = 'en'): Tournament | undefined {
+  const tournamentsByLang = {
+    en: tournaments,
+    ru: tournamentsRu,
+    pt: tournamentsPt,
+  };
+  const data = tournamentsByLang[lang] ?? tournaments;
+  return data.find((t) => t.year === year);
 }
 
 export function getMatchesByYear(year: number): Match[] {
