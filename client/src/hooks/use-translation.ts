@@ -21,6 +21,7 @@ const translations = {
       totalMatches: "Total Matches",
       totalGoals: "Total Goals",
       attendance: "Attendance",
+      vs: "vs",
     },
     matches: {
       title: "Explore Matches",
@@ -98,6 +99,7 @@ const translations = {
       totalMatches: "Total de Jogos",
       totalGoals: "Total de Golos",
       attendance: "Assistência",
+      vs: "vs",
     },
     matches: {
       title: "Explorar Jogos",
@@ -195,6 +197,7 @@ const translations = {
       totalMatches: "Всего матчей",
       totalGoals: "Всего голов",
       attendance: "Посещаемость",
+      vs: "против",
     },
     matches: {
       title: "Исследовать матчи",

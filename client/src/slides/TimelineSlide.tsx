@@ -1,6 +1,6 @@
-import { useState, useMemo, useRef, useEffect, useCallback } from "react";
+import { useState, useMemo, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Trophy, MapPin, Users, Calendar, ChevronLeft, ChevronRight } from "lucide-react";
+import { Trophy, MapPin, Users, Calendar, ChevronLeft, ChevronRight, Target } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { getAllYears, getTournamentByYear, type Tournament } from "@/data";
@@ -23,26 +23,33 @@ export function TimelineSlide() {
   const { t } = useTranslation();
   const selectedIndex = years.indexOf(selectedYear);
   const scrollRef = useRef<HTMLDivElement>(null);
-  const buttonRefs = useRef<Record<number, HTMLButtonElement | null>>({});
-
-  const setButtonRef = useCallback((el: HTMLButtonElement | null, year: number) => {
-    buttonRefs.current[year] = el;
-  }, []);
-
   useEffect(() => {
-    requestAnimationFrame(() => {
-      const btn = buttonRefs.current[selectedYear];
-      const container = scrollRef.current;
-      if (btn && container) {
+    const container = scrollRef.current;
+
+    // Use requestAnimationFrame to ensure the DOM is ready and layout is stable
+    const handle = requestAnimationFrame(() => {
+      if (!container) return;
+
+      const btn = container.querySelector<HTMLElement>(`[data-year="${selectedYear}"]`);
+      if (btn) {
         const scrollTarget = btn.offsetLeft - (container.clientWidth / 2) + (btn.offsetWidth / 2);
         container.scrollTo({ left: scrollTarget, behavior: "smooth" });
       }
     });
+
+    return () => cancelAnimationFrame(handle);
   }, [selectedYear]);
 
+  /**
+   * Navigate to the previous chronological year.
+   */
   const goToPrev = () => {
     if (selectedIndex > 0) setSelectedYear(years[selectedIndex - 1]);
   };
+
+  /**
+   * Navigate to the next chronological year.
+   */
   const goToNext = () => {
     if (selectedIndex < years.length - 1) setSelectedYear(years[selectedIndex + 1]);
   };
@@ -86,13 +93,13 @@ export function TimelineSlide() {
               {years.map((year) => (
                 <Button
                   key={year}
-                  ref={(el) => setButtonRef(el, year)}
+                  data-year={year}
                   variant="ghost"
                   size="default"
                   onClick={() => setSelectedYear(year)}
                   className={`shrink-0 min-h-12 text-[14px] sm:text-[16px] font-mono font-semibold transition-all ${selectedYear === year
-                      ? "bg-violet-500 text-white hover:bg-violet-600"
-                      : "text-muted-foreground"
+                    ? "bg-violet-500 text-white hover:bg-violet-600"
+                    : "text-muted-foreground"
                     }`}
                   data-testid={`button-year-${year}`}
                 >
@@ -133,8 +140,8 @@ export function TimelineSlide() {
             <span
               key={year}
               className={`h-1.5 rounded-full transition-all ${selectedYear === year
-                  ? "w-4 bg-violet-500"
-                  : "w-1.5 bg-violet-200"
+                ? "w-4 bg-violet-500"
+                : "w-1.5 bg-violet-200"
                 }`}
               data-testid={`dot-year-${year}`}
             />
@@ -206,7 +213,7 @@ function TournamentCard({ tournament }: { tournament: Tournament }) {
               </div>
             </div>
             <p className="text-kid-lg text-muted-foreground" data-testid="text-runner-up">
-              vs <span className="font-semibold text-foreground">{tc(tournament.runnerUp)}</span>
+              {t.timeline.vs} <span className="font-semibold text-foreground">{tc(tournament.runnerUp)}</span>
             </p>
           </div>
 
@@ -233,12 +240,12 @@ function TournamentCard({ tournament }: { tournament: Tournament }) {
               testId="stat-total-matches"
             />
             <StatBox
-              icon={<Trophy className="w-6 h-6 text-amber-500" />}
+              icon={<Target className="w-6 h-6 text-amber-500" />}
               label={t.timeline.totalGoals}
               value={tournament.totalGoals.toString()}
               testId="stat-total-goals"
             />
-            {tournament.attendance && (
+            {tournament.attendance != null && (
               <StatBox
                 icon={<Users className="w-6 h-6 text-emerald-500" />}
                 label={t.timeline.attendance}

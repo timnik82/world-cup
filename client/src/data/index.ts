@@ -1,4 +1,6 @@
 import tournamentsData from "./tournaments.json";
+import tournamentsDataRu from "./tournaments_ru.json";
+import tournamentsDataPt from "./tournaments_pt.json";
 import matchesData from "./matches.json";
 import factsDataEn from "./facts.json";
 import factsDataRu from "./facts_ru.json";
@@ -15,6 +17,8 @@ import {
 } from "./schemas";
 
 export const tournaments: Tournament[] = TournamentsDataSchema.parse(tournamentsData);
+export const tournamentsRu: Tournament[] = TournamentsDataSchema.parse(tournamentsDataRu);
+export const tournamentsPt: Tournament[] = TournamentsDataSchema.parse(tournamentsDataPt);
 export const matches: Match[] = MatchesDataSchema.parse(matchesData);
 export const factsEn: Fact[] = FactsDataSchema.parse(factsDataEn);
 export const factsRu: Fact[] = FactsDataSchema.parse(factsDataRu);
