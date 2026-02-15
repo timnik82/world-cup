@@ -174,7 +174,20 @@ const translations = {
       "England": "Inglaterra",
       "Saudi Arabia": "Arábia Saudita",
       "Mexico": "México",
-      "United States": "Estados Unidos"
+      "United States": "Estados Unidos",
+      "Uruguay": "Uruguai",
+      "Chile": "Chile",
+      "Switzerland": "Suíça",
+      "Hungary": "Hungria",
+      "Czechoslovakia": "Checoslováquia",
+      "South Korea": "Coreia do Sul",
+      "Japan": "Japão",
+      "South Africa": "África do Sul",
+      "Spain": "Espanha",
+      "Yugoslavia": "Jugoslávia",
+      "Austria": "Áustria",
+      "Poland": "Polónia",
+      "Turkey": "Turquia"
     },
   },
   ru: {
@@ -272,7 +285,20 @@ const translations = {
       "England": "Англия",
       "Saudi Arabia": "Саудовская Аравия",
       "Mexico": "Мексика",
-      "United States": "США"
+      "United States": "США",
+      "Uruguay": "Уругвай",
+      "Chile": "Чили",
+      "Switzerland": "Швейцария",
+      "Hungary": "Венгрия",
+      "Czechoslovakia": "Чехословакия",
+      "South Korea": "Южная Корея",
+      "Japan": "Япония",
+      "South Africa": "Южная Африка",
+      "Spain": "Испания",
+      "Yugoslavia": "Югославия",
+      "Austria": "Австрия",
+      "Poland": "Польша",
+      "Turkey": "Турция"
     },
   },
 } as const;

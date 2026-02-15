@@ -137,13 +137,15 @@ export function TimelineSlide() {
 
         <div className="flex justify-center gap-1 mb-2" aria-hidden="true">
           {years.map((year) => (
-            <span
+            <button
               key={year}
-              className={`h-1.5 rounded-full transition-all ${selectedYear === year
+              onClick={() => setSelectedYear(year)}
+              className={`h-1.5 rounded-full transition-all p-3 box-content ${selectedYear === year
                 ? "w-4 bg-violet-500"
-                : "w-1.5 bg-violet-200"
+                : "w-1.5 bg-violet-200 hover:bg-violet-300"
                 }`}
               data-testid={`dot-year-${year}`}
+              aria-label={`Select ${year}`}
             />
           ))}
         </div>
