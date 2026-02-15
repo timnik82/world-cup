@@ -100,7 +100,7 @@ export function RecordsSlide() {
             icon={<Target className="w-10 h-10 text-sky-500" />}
             title={t.records.matchesRecorded}
             value={stats.totalMatchesInData.toString()}
-            subtitle={t.records.historicMatches}
+            subtitle={t.records.historicMatches.replace("{count}", stats.matchTournamentCount.toString())}
             color="sky"
             testId="record-matches"
           />

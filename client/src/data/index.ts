@@ -64,6 +64,11 @@ export function getAllYears(): number[] {
   return tournaments.map((t) => t.year).sort((a, b) => a - b);
 }
 
+export function getMatchYears(): number[] {
+  const years = new Set(matches.map((m) => m.tournamentYear));
+  return Array.from(years).sort((a, b) => a - b);
+}
+
 export function getAllStages(): string[] {
   const stages = new Set(matches.map((m) => m.stage));
   return Array.from(stages);
@@ -88,12 +93,15 @@ export function computeStats() {
     t.totalGoals > max.totalGoals ? t : max
   );
 
+  const matchTournamentCount = new Set(matches.map((m) => m.tournamentYear)).size;
+
   return {
     totalGoalsByTournament,
     topScoringMatches,
     mostGoalsInTournament,
     totalTournaments: tournaments.length,
     totalMatchesInData: matches.length,
+    matchTournamentCount,
   };
 }
 
