@@ -6,7 +6,6 @@ import { Button } from "@/components/ui/button";
 import { getAllYears, getTournamentByYear, type Tournament } from "@/data";
 import { useTranslation } from "@/hooks/use-translation";
 import { useLanguageStore } from "@/store/language";
-import { translateCountry } from "@/lib/translation-utils";
 
 /**
  * Render an interactive timeline UI for selecting a World Cup year and viewing tournament details.
@@ -137,12 +136,16 @@ export function TimelineSlide() {
           </span>
         </motion.div>
 
-        <div className="flex justify-center gap-1 mb-2" aria-hidden="true">
+        <div
+          className="flex justify-center gap-1 mb-2 overflow-x-auto scrollbar-hide"
+          style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
+          aria-hidden="true"
+        >
           {years.map((year) => (
             <button
               key={year}
               onClick={() => setSelectedYear(year)}
-              className={`h-1.5 rounded-full transition-all p-3 box-content ${selectedYear === year
+              className={`h-1.5 rounded-full transition-all p-1 box-content shrink-0 ${selectedYear === year
                 ? "w-4 bg-violet-500"
                 : "w-1.5 bg-violet-200 hover:bg-violet-300"
                 }`}
@@ -181,7 +184,6 @@ export function TimelineSlide() {
  */
 function TournamentCard({ tournament }: { tournament: Tournament }) {
   const { t } = useTranslation();
-  const tc = (name: string) => translateCountry(t, name);
 
   return (
     <Card
@@ -193,7 +195,7 @@ function TournamentCard({ tournament }: { tournament: Tournament }) {
           <div className="flex items-center justify-center gap-3 mb-2 flex-wrap">
             <MapPin className="w-6 h-6" data-testid="icon-mappin" />
             <span className="text-kid-2xl md:text-kid-3xl font-bold" data-testid="text-host-country">
-              {tc(tournament.host)}
+              {tournament.host}
             </span>
           </div>
         </div>
@@ -211,12 +213,12 @@ function TournamentCard({ tournament }: { tournament: Tournament }) {
               <div>
                 <p className="text-kid-sm text-muted-foreground font-medium mb-1">{t.timeline.champion}</p>
                 <p className="text-kid-3xl md:text-kid-4xl font-bold text-foreground" data-testid="text-champion">
-                  {tc(tournament.champion)}
+                  {tournament.champion}
                 </p>
               </div>
             </div>
             <p className="text-kid-lg text-muted-foreground" data-testid="text-runner-up">
-              {t.timeline.vs} <span className="font-semibold text-foreground">{tc(tournament.runnerUp)}</span>
+              {t.timeline.vs} <span className="font-semibold text-foreground">{tournament.runnerUp}</span>
             </p>
           </div>
 
