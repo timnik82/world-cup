@@ -8,6 +8,26 @@ type TranslationsWithCountries = Translations & {
     countries?: Record<string, string>;
 };
 
+type TranslationsWithStages = Translations & {
+    stages?: Record<string, string>;
+};
+
+/**
+ * Translates a stage name using the current language's stage translations.
+ * Falls back to the original name if no translation is found.
+ */
+export function translateStage(
+    t: ReturnType<typeof useTranslation>["t"],
+    stage: string | null | undefined
+): string {
+    if (!stage || stage.trim() === "") {
+        return "";
+    }
+
+    const translations = t as TranslationsWithStages;
+    return translations.stages?.[stage] ?? stage;
+}
+
 /**
  * Translates a country name using the current language's country translations.
  * Falls back to the original name if no translation is found.

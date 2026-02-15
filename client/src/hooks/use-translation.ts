@@ -78,6 +78,12 @@ const translations = {
       pt: "Português",
       ru: "Русский",
     },
+    stages: {
+      "Final": "Final",
+      "Semi-Final": "Semi-Final",
+      "Quarter-Final": "Quarter-Final",
+      "Group Stage": "Group Stage",
+    },
   },
   pt: {
     intro: {
@@ -155,6 +161,12 @@ const translations = {
       en: "English",
       pt: "Português",
       ru: "Русский",
+    },
+    stages: {
+      "Final": "Final",
+      "Semi-Final": "Semifinal",
+      "Quarter-Final": "Quartas de final",
+      "Group Stage": "Fase de grupos",
     },
     countries: {
       "Argentina": "Argentina",
@@ -270,6 +282,12 @@ const translations = {
       en: "English",
       pt: "Português",
       ru: "Русский",
+    },
+    stages: {
+      "Final": "Финал",
+      "Semi-Final": "Полуфинал",
+      "Quarter-Final": "Четвертьфинал",
+      "Group Stage": "Групповой этап",
     },
     countries: {
       "Argentina": "Аргентина",

@@ -8,7 +8,7 @@ import { useQuery } from "@tanstack/react-query";
 import type { Match, MatchDetails } from "@/data";
 import { fetchMatchDetails } from "@/lib/api";
 import { useTranslation } from "@/hooks/use-translation";
-import { translateCountry } from "@/lib/translation-utils";
+import { translateCountry, translateStage } from "@/lib/translation-utils";
 
 interface MatchDetailsModalProps {
   match: Match | null;
@@ -19,6 +19,7 @@ interface MatchDetailsModalProps {
 export function MatchDetailsModal({ match, isOpen, onClose }: MatchDetailsModalProps) {
   const { t } = useTranslation();
   const tc = (name: string) => translateCountry(t, name);
+  const ts = (stage: string) => translateStage(t, stage);
   const { data, isLoading, isError, refetch, isFetched } = useQuery<MatchDetails | null>({
     queryKey: ["matchDetails", match?.id],
     queryFn: () => (match ? fetchMatchDetails(match.id) : Promise.resolve(null)),
@@ -66,7 +67,7 @@ export function MatchDetailsModal({ match, isOpen, onClose }: MatchDetailsModalP
 
                   <div className="text-center">
                     <Badge className="mb-3 bg-white/20 text-white border-0" data-testid="badge-modal-stage">
-                      {match.stage} - {match.tournamentYear}
+                      {ts(match.stage)} - {match.tournamentYear}
                     </Badge>
                     <div className="flex items-center justify-center gap-4 mb-2 flex-wrap">
                       <span className="text-kid-2xl md:text-kid-3xl font-bold" data-testid="text-modal-home-team">

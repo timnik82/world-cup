@@ -16,7 +16,7 @@ import { getMatchYears, getAllStages, matches as allMatches, type Match } from "
 import { useFavoritesStore } from "@/store/favorites";
 import { useToast } from "@/hooks/use-toast";
 import { useTranslation } from "@/hooks/use-translation";
-import { translateCountry } from "@/lib/translation-utils";
+import { translateCountry, translateStage } from "@/lib/translation-utils";
 
 interface MatchesSlideProps {
   onShowDetails: (match: Match) => void;
@@ -34,6 +34,7 @@ export function MatchesSlide({ onShowDetails }: MatchesSlideProps) {
   const [selectedYear, setSelectedYear] = useState<string>("all");
   const [selectedStage, setSelectedStage] = useState<string>("all");
   const { t } = useTranslation();
+  const ts = (stage: string) => translateStage(t, stage);
 
   const filteredMatches = useMemo(() => {
     let result = allMatches;
@@ -100,7 +101,7 @@ export function MatchesSlide({ onShowDetails }: MatchesSlideProps) {
               <SelectItem value="all" data-testid="select-stage-option-all">{t.matches.allStages}</SelectItem>
               {stages.map((stage) => (
                 <SelectItem key={stage} value={stage} data-testid={`select-stage-option-${stage}`}>
-                  {stage}
+                  {ts(stage)}
                 </SelectItem>
               ))}
             </SelectContent>
@@ -152,6 +153,7 @@ function MatchCard({
   const { t } = useTranslation();
   const isFavorite = isMatchFavorite(match.id);
   const tc = (name: string) => translateCountry(t, name);
+  const ts = (stage: string) => translateStage(t, stage);
 
   const handleAddFavorite = () => {
     if (isFavorite) {
@@ -178,7 +180,7 @@ function MatchCard({
           <div className="flex-1">
             <div className="flex items-center gap-2 mb-2 flex-wrap">
               <Badge variant="secondary" data-testid={`badge-stage-${match.id}`}>
-                {match.stage}
+                {ts(match.stage)}
               </Badge>
               <span className="text-kid-xs text-muted-foreground font-medium" data-testid={`text-year-${match.id}`}>
                 {match.tournamentYear}

@@ -6,7 +6,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { computeStats } from "@/data";
 import { useTranslation } from "@/hooks/use-translation";
-import { translateCountry } from "@/lib/translation-utils";
+import { translateCountry, translateStage } from "@/lib/translation-utils";
 
 /**
  * Render the records overview slide showing summary statistics and top-scoring matches.
@@ -21,6 +21,7 @@ export function RecordsSlide() {
   const [isRecomputing, setIsRecomputing] = useState(false);
   const { t } = useTranslation();
   const tc = (name: string) => translateCountry(t, name);
+  const ts = (stage: string) => translateStage(t, stage);
 
   const handleRecompute = () => {
     setIsRecomputing(true);
@@ -143,7 +144,7 @@ export function RecordsSlide() {
                       <span data-testid={`top-match-${index}-away`}>{tc(match.awayTeam)}</span>
                     </div>
                     <div className="text-kid-sm text-muted-foreground flex items-center flex-wrap gap-1">
-                      <Badge variant="secondary">{match.stage}</Badge>
+                      <Badge variant="secondary">{ts(match.stage)}</Badge>
                       <span>{match.tournamentYear}</span>
                     </div>
                   </div>
