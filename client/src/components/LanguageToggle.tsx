@@ -29,7 +29,7 @@ export function LanguageToggle() {
           data-testid="button-language-toggle"
           aria-label={language === "en" ? "Switch language" : "Сменить язык"}
         >
-          <Globe className="w-5 h-5" />
+          <Globe className="w-5 h-5" aria-hidden="true" />
           <span className="hidden sm:inline">{t.language[language]}</span>
         </Button>
       </DropdownMenuTrigger>

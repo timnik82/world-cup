@@ -53,7 +53,7 @@ export function FavoritesSlide() {
         className="text-kid-3xl md:text-kid-4xl font-bold text-foreground mb-8 text-center flex items-center justify-center gap-3 flex-wrap"
         data-testid="text-favorites-title"
       >
-        <Heart className="w-10 h-10 text-rose-500 fill-rose-500" data-testid="icon-heart" />
+        <Heart className="w-10 h-10 text-rose-500 fill-rose-500" aria-hidden="true" data-testid="icon-heart" />
         {t.favorites.title}
       </motion.h2>
 
@@ -65,7 +65,7 @@ export function FavoritesSlide() {
           data-testid="empty-state"
         >
           <div className="p-6 rounded-full bg-rose-100 mb-6">
-            <Star className="w-16 h-16 text-rose-300" />
+            <Star className="w-16 h-16 text-rose-300" aria-hidden="true" />
           </div>
           <h3 className="text-kid-2xl font-bold text-foreground mb-3" data-testid="text-empty-title">
             {t.favorites.noFavorites}
@@ -79,7 +79,7 @@ export function FavoritesSlide() {
           <div className="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto w-full pb-4">
             <div data-testid="favorite-facts-section">
               <h3 className="text-kid-xl font-bold text-foreground mb-4 flex items-center gap-2">
-                <Sparkles className="w-6 h-6 text-amber-500" />
+                <Sparkles className="w-6 h-6 text-amber-500" aria-hidden="true" />
                 {t.favorites.favoriteFacts} ({favoriteFacts.length})
               </h3>
               <div className="space-y-3">
@@ -121,9 +121,10 @@ export function FavoritesSlide() {
                                 variant="ghost"
                                 onClick={() => handleRemoveFact(fact.id)}
                                 className="flex-shrink-0 text-rose-500"
+aria-label={t.favorites.removeFact}
                                 data-testid={`button-remove-fact-${fact.id}`}
                               >
-                                <Trash2 className="w-5 h-5" />
+                                <Trash2 className="w-5 h-5" aria-hidden="true" />
                               </Button>
                             </div>
                           </CardContent>
@@ -189,9 +190,10 @@ export function FavoritesSlide() {
                                 variant="ghost"
                                 onClick={() => handleRemoveMatch(match.id)}
                                 className="flex-shrink-0 text-rose-500"
+aria-label={t.favorites.removeMatch}
                                 data-testid={`button-remove-match-${match.id}`}
                               >
-                                <Trash2 className="w-5 h-5" />
+                                <Trash2 className="w-5 h-5" aria-hidden="true" />
                               </Button>
                             </div>
                           </CardContent>

@@ -22,6 +22,8 @@ const translations = {
       totalGoals: "Total Goals",
       attendance: "Attendance",
       vs: "vs",
+      previousYear: "Previous year",
+      nextYear: "Next year",
     },
     matches: {
       title: "Explore Matches",
@@ -35,6 +37,7 @@ const translations = {
       alreadySavedDesc: "This match is in your favorites.",
       matchSaved: "Match saved!",
       matchSavedDesc: "added to favorites.",
+      addToFavorites: "Add to favorites",
     },
     records: {
       title: "Records & Stats",
@@ -59,6 +62,8 @@ const translations = {
       factRemoved: "Fact removed from favorites.",
       matchRemoved: "Match removed from favorites.",
       worldCup: "World Cup",
+      removeFact: "Remove fact",
+      removeMatch: "Remove match",
     },
     modal: {
       wantDetails: "Want to see more details about this match?",
@@ -72,6 +77,7 @@ const translations = {
       goals: "Goals",
       cards: "Cards",
       substitutions: "Substitutions",
+      close: "Close",
     },
     language: {
       en: "English",
@@ -106,6 +112,8 @@ const translations = {
       totalGoals: "Total de Golos",
       attendance: "Assistência",
       vs: "vs",
+      previousYear: "Ano anterior",
+      nextYear: "Próximo ano",
     },
     matches: {
       title: "Explorar Jogos",
@@ -119,6 +127,7 @@ const translations = {
       alreadySavedDesc: "Este jogo já está nos teus favoritos.",
       matchSaved: "Jogo guardado!",
       matchSavedDesc: "adicionado aos favoritos.",
+      addToFavorites: "Adicionar aos favoritos",
     },
     records: {
       title: "Recordes e Estatísticas",
@@ -143,6 +152,8 @@ const translations = {
       factRemoved: "Facto removido dos favoritos.",
       matchRemoved: "Jogo removido dos favoritos.",
       worldCup: "Copa do Mundo",
+      removeFact: "Remover facto",
+      removeMatch: "Remover jogo",
     },
     modal: {
       wantDetails: "Queres ver mais detalhes sobre este jogo?",
@@ -156,6 +167,7 @@ const translations = {
       goals: "Golos",
       cards: "Cartões",
       substitutions: "Substituições",
+      close: "Fechar",
     },
     language: {
       en: "English",
@@ -227,6 +239,8 @@ const translations = {
       totalGoals: "Всего голов",
       attendance: "Посещаемость",
       vs: "против",
+      previousYear: "Предыдущий год",
+      nextYear: "Следующий год",
     },
     matches: {
       title: "Исследовать матчи",
@@ -240,6 +254,7 @@ const translations = {
       alreadySavedDesc: "Этот матч уже в твоём избранном.",
       matchSaved: "Матч сохранён!",
       matchSavedDesc: "добавлен в избранное.",
+      addToFavorites: "Добавить в избранное",
     },
     records: {
       title: "Рекорды и статистика",
@@ -264,6 +279,8 @@ const translations = {
       factRemoved: "Факт удалён из избранного.",
       matchRemoved: "Матч удалён из избранного.",
       worldCup: "Чемпионат мира",
+      removeFact: "Удалить факт",
+      removeMatch: "Удалить матч",
     },
     modal: {
       wantDetails: "Хочешь увидеть больше деталей об этом матче?",
@@ -277,6 +294,7 @@ const translations = {
       goals: "Голы",
       cards: "Карточки",
       substitutions: "Замены",
+      close: "Закрыть",
     },
     language: {
       en: "English",

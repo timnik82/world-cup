@@ -31,7 +31,7 @@
   --secondary: 45 93% 58%;
   --secondary-foreground: 45 93% 15%;
   --muted: 210 40% 96%;
-  --muted-foreground: 215 16% 47%;
+  --muted-foreground: 215 20% 44%;
   --accent: 199 89% 48%;
   --accent-foreground: 0 0% 100%;
   --destructive: 0 84% 60%;
@@ -178,6 +178,18 @@
 
   body {
     @apply font-sans antialiased bg-background text-foreground;
+  }
+}
+
+/* WCAG 2.3.3 - Reduce motion for users who prefer it */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
   }
 }
 

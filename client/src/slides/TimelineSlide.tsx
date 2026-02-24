@@ -67,7 +67,7 @@ export function TimelineSlide() {
         data-testid="text-timeline-title"
       >
         <span className="inline-flex items-center gap-3 flex-wrap justify-center">
-          <Calendar className="w-12 h-12 text-violet-500" data-testid="icon-calendar" />
+          <Calendar className="w-12 h-12 text-violet-500" aria-hidden="true" data-testid="icon-calendar" />
           {t.timeline.title}
         </span>
       </motion.h2>
@@ -80,9 +80,10 @@ export function TimelineSlide() {
             onClick={goToPrev}
             disabled={selectedIndex === 0}
             className="shrink-0"
+aria-label={t.timeline.previousYear}
             data-testid="button-year-prev"
           >
-            <ChevronLeft className="w-5 h-5" />
+            <ChevronLeft className="w-5 h-5" aria-hidden="true" />
           </Button>
 
           <div
@@ -116,9 +117,10 @@ export function TimelineSlide() {
             onClick={goToNext}
             disabled={selectedIndex === years.length - 1}
             className="shrink-0"
+aria-label={t.timeline.nextYear}
             data-testid="button-year-next"
           >
-            <ChevronRight className="w-5 h-5" />
+            <ChevronRight className="w-5 h-5" aria-hidden="true" />
           </Button>
         </div>
 
@@ -193,7 +195,7 @@ function TournamentCard({ tournament }: { tournament: Tournament }) {
       <CardContent className="p-0">
         <div className="bg-gradient-to-r from-violet-500 to-fuchsia-500 px-6 py-[10px] text-white">
           <div className="flex items-center justify-center gap-3 mb-2 flex-wrap">
-            <MapPin className="w-6 h-6" data-testid="icon-mappin" />
+            <MapPin className="w-6 h-6" aria-hidden="true" data-testid="icon-mappin" />
             <span className="text-kid-2xl md:text-kid-3xl font-bold" data-testid="text-host-country">
               {tournament.host}
             </span>
@@ -208,7 +210,7 @@ function TournamentCard({ tournament }: { tournament: Tournament }) {
                 animate={{ rotate: 0, scale: 1 }}
                 transition={{ delay: 0.3, type: "spring" }}
               >
-                <Trophy className="w-14 h-14 text-amber-500" data-testid="icon-trophy-champion" />
+                <Trophy className="w-14 h-14 text-amber-500" aria-hidden="true" data-testid="icon-trophy-champion" />
               </motion.div>
               <div>
                 <p className="text-kid-sm text-muted-foreground font-medium mb-1">{t.timeline.champion}</p>
@@ -239,20 +241,20 @@ function TournamentCard({ tournament }: { tournament: Tournament }) {
 
           <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
             <StatBox
-              icon={<Users className="w-6 h-6 text-sky-500" />}
+              icon={<Users className="w-6 h-6 text-sky-500" aria-hidden="true" />}
               label={t.timeline.totalMatches}
               value={tournament.totalMatches.toString()}
               testId="stat-total-matches"
             />
             <StatBox
-              icon={<Target className="w-6 h-6 text-amber-500" />}
+              icon={<Target className="w-6 h-6 text-amber-500" aria-hidden="true" />}
               label={t.timeline.totalGoals}
               value={tournament.totalGoals.toString()}
               testId="stat-total-goals"
             />
             {tournament.attendance != null && (
               <StatBox
-                icon={<Users className="w-6 h-6 text-emerald-500" />}
+                icon={<Users className="w-6 h-6 text-emerald-500" aria-hidden="true" />}
                 label={t.timeline.attendance}
                 value={tournament.attendance >= 1000000
                   ? `${(tournament.attendance / 1000000).toFixed(1)}M`

@@ -1,3 +1,4 @@
+import { useEffect, useRef, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { X, Loader2, MapPin, Users, User, AlertCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -20,6 +21,8 @@ export function MatchDetailsModal({ match, isOpen, onClose }: MatchDetailsModalP
   const { t } = useTranslation();
   const tc = (name: string) => translateCountry(t, name);
   const ts = (stage: string) => translateStage(t, stage);
+  const modalRef = useRef<HTMLDivElement>(null);
+  const previousFocusRef = useRef<HTMLElement | null>(null);
   const { data, isLoading, isError, refetch, isFetched } = useQuery<MatchDetails | null>({
     queryKey: ["matchDetails", match?.id],
     queryFn: () => (match ? fetchMatchDetails(match.id) : Promise.resolve(null)),
@@ -30,7 +33,58 @@ export function MatchDetailsModal({ match, isOpen, onClose }: MatchDetailsModalP
     refetch();
   };
 
+  // Focus trap and Escape key handling
+  const handleKeyDown = useCallback(
+    (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        onClose();
+        return;
+      }
+      if (e.key === "Tab" && modalRef.current) {
+        const focusableElements = modalRef.current.querySelectorAll<HTMLElement>(
+          'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+        );
+        const first = focusableElements[0];
+        const last = focusableElements[focusableElements.length - 1];
+        if (e.shiftKey) {
+          if (document.activeElement === first) {
+            e.preventDefault();
+            last?.focus();
+          }
+        } else {
+          if (document.activeElement === last) {
+            e.preventDefault();
+            first?.focus();
+          }
+        }
+      }
+    },
+    [onClose]
+  );
+
+  // Manage focus on open/close
+  useEffect(() => {
+    if (isOpen) {
+      previousFocusRef.current = document.activeElement as HTMLElement;
+      document.addEventListener("keydown", handleKeyDown);
+      // Move focus into modal after animation
+      const timer = setTimeout(() => {
+        const closeBtn = modalRef.current?.querySelector<HTMLElement>('[data-testid="button-close-modal"]');
+        closeBtn?.focus();
+      }, 100);
+      return () => {
+        document.removeEventListener("keydown", handleKeyDown);
+        clearTimeout(timer);
+      };
+    } else {
+      // Restore focus when modal closes
+      previousFocusRef.current?.focus();
+    }
+  }, [isOpen, handleKeyDown]);
+
   if (!match) return null;
+
+  const modalLabel = `${tc(match.homeTeam)} ${match.homeScore} - ${match.awayScore} ${tc(match.awayTeam)}`;
 
   return (
     <AnimatePresence>
@@ -41,9 +95,13 @@ export function MatchDetailsModal({ match, isOpen, onClose }: MatchDetailsModalP
           exit={{ opacity: 0 }}
           className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm"
           onClick={onClose}
+          role="dialog"
+          aria-modal="true"
+          aria-label={modalLabel}
           data-testid="modal-overlay"
         >
           <motion.div
+            ref={modalRef}
             initial={{ scale: 0.9, opacity: 0, y: 20 }}
             animate={{ scale: 1, opacity: 1, y: 0 }}
             exit={{ scale: 0.9, opacity: 0, y: 20 }}
@@ -60,9 +118,10 @@ export function MatchDetailsModal({ match, isOpen, onClose }: MatchDetailsModalP
                     variant="ghost"
                     onClick={onClose}
                     className="absolute top-4 right-4 text-white hover:bg-white/20"
+aria-label={t.modal.close}
                     data-testid="button-close-modal"
                   >
-                    <X className="w-6 h-6" />
+                    <X className="w-6 h-6" aria-hidden="true" />
                   </Button>
 
                   <div className="text-center">
@@ -109,7 +168,7 @@ export function MatchDetailsModal({ match, isOpen, onClose }: MatchDetailsModalP
 
                     {isLoading && (
                       <div className="flex flex-col items-center justify-center py-12" data-testid="loading-state">
-                        <Loader2 className="w-12 h-12 text-emerald-500 animate-spin mb-4" />
+                        <Loader2 className="w-12 h-12 text-emerald-500 animate-spin mb-4" aria-hidden="true" />
                         <p className="text-kid-lg text-muted-foreground">
                           {t.modal.loading}
                         </p>
@@ -118,7 +177,7 @@ export function MatchDetailsModal({ match, isOpen, onClose }: MatchDetailsModalP
 
                     {isError && (
                       <div className="text-center py-12" data-testid="error-state">
-                        <AlertCircle className="w-12 h-12 text-red-500 mx-auto mb-4" />
+                        <AlertCircle className="w-12 h-12 text-red-500 mx-auto mb-4" aria-hidden="true" />
                         <p className="text-kid-lg text-red-600 mb-4">
                           {t.modal.error}
                         </p>
@@ -137,19 +196,19 @@ export function MatchDetailsModal({ match, isOpen, onClose }: MatchDetailsModalP
                       >
                         <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
                           <StatCard
-                            icon={<MapPin className="w-5 h-5 text-emerald-500" />}
+                            icon={<MapPin className="w-5 h-5 text-emerald-500" aria-hidden="true" />}
                             label={t.modal.stadium}
                             value={data.stadium}
                             testId="stat-stadium"
                           />
                           <StatCard
-                            icon={<Users className="w-5 h-5 text-sky-500" />}
+                            icon={<Users className="w-5 h-5 text-sky-500" aria-hidden="true" />}
                             label={t.modal.attendance}
                             value={data.attendance.toLocaleString()}
                             testId="stat-attendance"
                           />
                           <StatCard
-                            icon={<User className="w-5 h-5 text-violet-500" />}
+                            icon={<User className="w-5 h-5 text-violet-500" aria-hidden="true" />}
                             label={t.modal.referee}
                             value={data.referee}
                             testId="stat-referee"
