@@ -71,7 +71,7 @@ export function IntroSlide() {
             animate={{ rotate: [0, 10, -10, 0] }}
             transition={{ duration: 2, repeat: Infinity }}
           >
-            <Trophy className="w-16 h-16 text-amber-500" data-testid="icon-trophy-left" />
+            <Trophy className="w-16 h-16 text-amber-500" aria-hidden="true" data-testid="icon-trophy-left" />
           </motion.div>
           <h1 className="text-kid-5xl md:text-kid-6xl font-bold text-foreground tracking-tight" data-testid="text-main-title">
             {t.intro.title}
@@ -80,7 +80,7 @@ export function IntroSlide() {
             animate={{ rotate: [0, -10, 10, 0] }}
             transition={{ duration: 2, repeat: Infinity, delay: 0.5 }}
           >
-            <Trophy className="w-16 h-16 text-amber-500" data-testid="icon-trophy-right" />
+            <Trophy className="w-16 h-16 text-amber-500" aria-hidden="true" data-testid="icon-trophy-right" />
           </motion.div>
         </div>
         <p className="text-kid-xl md:text-kid-2xl text-muted-foreground font-medium" data-testid="text-subtitle">
@@ -95,7 +95,7 @@ export function IntroSlide() {
           className="min-h-14 px-8 text-kid-lg font-semibold rounded-2xl"
           data-testid="button-random-fact"
         >
-          <Shuffle className="w-6 h-6 mr-2" />
+          <Shuffle className="w-6 h-6 mr-2" aria-hidden="true" />
           {t.intro.randomFact}
         </Button>
         <Button
@@ -106,7 +106,7 @@ export function IntroSlide() {
           className="min-h-14 px-8 text-kid-lg font-semibold rounded-2xl disabled:opacity-50"
           data-testid="button-add-favorite"
         >
-          <Star className="w-6 h-6 mr-2" />
+          <Star className="w-6 h-6 mr-2" aria-hidden="true" />
           {t.intro.saveToFavorites}
         </Button>
       </div>
@@ -125,7 +125,7 @@ export function IntroSlide() {
               <CardContent className="p-8">
                 <div className="flex items-start gap-4">
                   <div className="flex-shrink-0 p-3 rounded-xl bg-sky-100">
-                    <Sparkles className="w-8 h-8 text-sky-500" data-testid="icon-sparkles" />
+                    <Sparkles className="w-8 h-8 text-sky-500" aria-hidden="true" data-testid="icon-sparkles" />
                   </div>
                   <div className="flex-1">
                     <p className="text-kid-xl md:text-kid-2xl font-medium text-foreground leading-relaxed" data-testid="text-fact-content">
@@ -158,7 +158,7 @@ export function IntroSlide() {
           data-testid="text-empty-state"
         >
           <p className="flex items-center gap-2 justify-center flex-wrap">
-            <Sparkles className="w-5 h-5" />
+            <Sparkles className="w-5 h-5" aria-hidden="true" />
             {t.intro.emptyState}
           </p>
         </motion.div>

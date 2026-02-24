@@ -45,7 +45,7 @@ export function RecordsSlide() {
           className="text-kid-3xl md:text-kid-4xl font-bold text-foreground flex items-center gap-3 flex-wrap"
           data-testid="text-records-title"
         >
-          <Trophy className="w-10 h-10 text-amber-500" data-testid="icon-trophy" />
+          <Trophy className="w-10 h-10 text-amber-500" aria-hidden="true" data-testid="icon-trophy" />
           {t.records.title}
         </h2>
         <Button
@@ -56,7 +56,7 @@ export function RecordsSlide() {
           className="min-h-12 px-6 text-kid-base font-semibold rounded-xl"
           data-testid="button-recompute"
         >
-          <RefreshCw className={`w-5 h-5 mr-2 ${isRecomputing ? "animate-spin" : ""}`} />
+          <RefreshCw className={`w-5 h-5 mr-2 ${isRecomputing ? "animate-spin" : ""}`} aria-hidden="true" />
           {t.records.recomputeStats}
         </Button>
       </motion.div>
@@ -68,7 +68,7 @@ export function RecordsSlide() {
           transition={{ delay: 0.1 }}
         >
           <RecordCard
-            icon={<Trophy className="w-10 h-10 text-amber-500" />}
+            icon={<Trophy className="w-10 h-10 text-amber-500" aria-hidden="true" />}
             title={t.records.mostGoals}
             value={stats.mostGoalsInTournament.totalGoals.toString()}
             subtitle={`${tc(stats.mostGoalsInTournament.host)} ${stats.mostGoalsInTournament.year}`}
@@ -83,7 +83,7 @@ export function RecordsSlide() {
           transition={{ delay: 0.2 }}
         >
           <RecordCard
-            icon={<TrendingUp className="w-10 h-10 text-emerald-500" />}
+            icon={<TrendingUp className="w-10 h-10 text-emerald-500" aria-hidden="true" />}
             title={t.records.tournaments}
             value={stats.totalTournaments.toString()}
             subtitle={t.records.tournamentsSubtitle}
@@ -98,7 +98,7 @@ export function RecordsSlide() {
           transition={{ delay: 0.3 }}
         >
           <RecordCard
-            icon={<Target className="w-10 h-10 text-sky-500" />}
+            icon={<Target className="w-10 h-10 text-sky-500" aria-hidden="true" />}
             title={t.records.matchesRecorded}
             value={stats.totalMatchesInData.toString()}
             subtitle={t.records.historicMatches.replace("{count}", stats.matchTournamentCount.toString())}

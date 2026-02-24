@@ -58,7 +58,7 @@ export function MatchesSlide({ onShowDetails }: MatchesSlideProps) {
         className="text-kid-3xl md:text-kid-4xl font-bold text-foreground mb-6 text-center flex items-center justify-center gap-3 flex-wrap"
         data-testid="text-matches-title"
       >
-        <Search className="w-10 h-10 text-sky-500" data-testid="icon-search" />
+        <Search className="w-10 h-10 text-sky-500" aria-hidden="true" data-testid="icon-search" />
         {t.matches.title}
       </motion.h2>
 
@@ -70,7 +70,7 @@ export function MatchesSlide({ onShowDetails }: MatchesSlideProps) {
         data-testid="filters-container"
       >
         <div className="flex items-center gap-2">
-          <Filter className="w-5 h-5 text-muted-foreground" data-testid="icon-filter" />
+          <Filter className="w-5 h-5 text-muted-foreground" aria-hidden="true" data-testid="icon-filter" />
           <Select value={selectedYear} onValueChange={setSelectedYear}>
             <SelectTrigger
               className="w-40 min-h-12 text-kid-base font-medium rounded-xl"
@@ -223,7 +223,7 @@ function MatchCard({
               className="min-h-12 px-6 text-kid-base font-semibold rounded-xl"
               data-testid={`button-details-${match.id}`}
             >
-              <Eye className="w-5 h-5 mr-2" />
+              <Eye className="w-5 h-5 mr-2" aria-hidden="true" />
               {t.matches.details}
             </Button>
             <Button
@@ -231,10 +231,12 @@ function MatchCard({
               variant={isFavorite ? "secondary" : "outline"}
               onClick={handleAddFavorite}
               className="min-h-12 px-4 rounded-xl"
+aria-label={isFavorite ? t.matches.alreadySaved : t.matches.addToFavorites}
               data-testid={`button-favorite-${match.id}`}
             >
               <Star
                 className={`w-5 h-5 ${isFavorite ? "fill-amber-500 text-amber-500" : ""}`}
+                aria-hidden="true"
               />
             </Button>
           </div>
